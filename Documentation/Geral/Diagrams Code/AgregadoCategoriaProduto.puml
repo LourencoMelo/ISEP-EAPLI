@@ -1,0 +1,51 @@
+@startuml
+
+left to right direction
+skinparam linetype ortho
+
+package AgregadoProductCategory{
+
+ProductCategory <<Entity root>>
+
+Code <<Value object>>
+Description <<Value object>>
+
+}
+
+
+package AgregadoProduct {
+
+Product <<Entity root>>
+
+ProductCode <<Value object>>
+ShortDescription <<Value object>>
+ExtendedDescription <<Value object>>
+TechnicalDescription <<Value object>>
+Brand <<Value object>>
+Reference <<Value object>>
+WarehouseLocation <<Value object>>
+note right : Warehouse location added later by salesclerk
+Photo <<Value object>>
+Price <<Value object>>
+
+}
+
+
+ProductCategory --> "0..*" ProductCategory
+ProductCategory --> "1" Code
+ProductCategory --> "1" Description
+
+ProductCategory --> "0..*" Product : contains
+
+Product --> "1" ProductCode
+Product --> "1" ShortDescription
+Product --> "1" ExtendedDescription
+Product --> "1" TechnicalDescription
+Product --> "1" Reference
+Product --> "0..1" WarehouseLocation
+Product --> "1" Brand
+Product --> "1..*" Photo
+Product --> "1" Price : characterized
+note top : This value object is the same of the Order agroupment
+
+@enduml
