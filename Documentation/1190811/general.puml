@@ -1,0 +1,24 @@
+@startuml
+package AggregateWareHousePlant{
+    class WareHousePlant<<entity root>>{
+
+    }
+}
+
+package AggregateAGV{
+    class AGV<<entity root>>{
+
+    }
+}
+
+package AggregateTask{
+    class Task<<Entity root>>{
+
+    }
+}
+
+WareHousePlant "1" -> "*" AGV
+
+AGV "1" -> "1" Task
+
+@enduml
