@@ -1,0 +1,55 @@
+@startuml
+
+left to right direction
+skinparam linetype ortho
+
+
+package AgregadoOrder {
+
+class Order <<Entity>><<root>>{
+    +Integer id
+    +String payment method
+}
+
+
+class Product <<Entity>>
+class Date <<Value object>>
+note right : Date time it has been registerd
+class Address <<Value object>>
+class Price <<Value object>>
+
+}
+
+package AgregadoState {
+
+class Status <<Entity>> <<root>>{}
+
+}
+
+package AgregadoShipmentMethod {
+
+class ShipmentMethod <<Entity>> <<root>>{
+    +Price
+}
+
+}
+
+Customer <<Entity>>
+Salesclerk <<Entity>>
+
+Order --> "1..*" Product : contains
+Customer "1" <-- Order : placedBy
+Salesclerk "1" <-- Order : created on behalf \nof a customer
+
+Order --> "1" Address : has billing
+Order --> "1" Address : has delivering
+
+Order --> "1" Date
+Order --> "1" Status : defined by
+
+Order --> "1" Price : has price without taxes
+Order --> "1" Price : has price with taxes
+
+Order --> "1" ShipmentMethod : contains
+
+@enduml

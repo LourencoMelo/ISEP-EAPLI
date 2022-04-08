@@ -1,0 +1,27 @@
+@startuml
+
+
+left to right direction
+skinparam linetype ortho
+
+class Customer <<Entity>> <<root>>
+
+
+Address <<Value object>>
+Email <<Value object>>
+Password <<Value object>>
+PhoneNumber <<Value object>>
+VAT <<Value object>>
+Gender <<Value object>>
+
+
+Customer -> "1..*" Address
+Customer -> "1" Email
+Customer -> "1" Password
+Customer -> "1" PhoneNumber
+Customer -> "1" VAT
+Customer -> "1" Gender
+Customer -> "1..*" Address : has billing
+Customer -> "1..*" Address : has delivering
+
+@enduml
