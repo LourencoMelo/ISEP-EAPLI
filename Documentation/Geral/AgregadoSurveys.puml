@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Customer <<Entity root>>
+User <<Entity root>>
+package AgregadoSurveys {
+Surveys <<Entity root>>
+Questionnaire <<Entity root>>
+}
+
+Customer "1" -right-> "*" Surveys
+User "1" -left-> "*" Surveys
+Surveys "1" --> "1" Questionnaire
+
+@enduml

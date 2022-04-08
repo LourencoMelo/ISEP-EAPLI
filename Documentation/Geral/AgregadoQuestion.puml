@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+left to right direction
+
+Question <<Entity>>
+package QuestionType {
+QuestionType <<Value Object>>
+FreeTextAndNumeric  <<Value Object>>
+SingleAndMultipleChoice  <<Value Object>>
+ScalingOptions  <<Value Object>>
+SortingOptions  <<Value Object>>
+Option <<Value Object>>
+}
+answerSortingOptions  <<Value Object>>
+answerSingleAndMultipleChoice <<Value Object>>
+answerScalingOptions <<Value Object>>
+answerFreeTextAndNumeric <<Value Object>>
+
+QuestionType "1" --> "0..*" FreeTextAndNumeric
+QuestionType "1" --> "0..*" SingleAndMultipleChoice
+QuestionType "1" --> "0..*" ScalingOptions
+QuestionType "1" --> "0..*" SortingOptions
+SingleAndMultipleChoice "1" -up> "*" Option
+Question "1" --> "0..*" answerFreeTextAndNumeric
+Question "1" --> "0..*" answerSingleAndMultipleChoice
+Question "1" --> "0..*" answerScalingOptions
+Question "1" --> "0..*" answerSortingOptions
+Question "1" --> "1" QuestionType
+
+@enduml

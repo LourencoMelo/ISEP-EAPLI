@@ -1,0 +1,88 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+title Surveys Model Domain
+
+class Surveys <<Entity root>> {
+
+}
+
+class Questionnaire <<Entity root>> {
+
+}
+
+class Section <<Entity root>>{
+
+}
+
+class Question <<Entity root>>{
+
+}
+
+class QuestionType <<Value Object>>{
+
+}
+
+class Customer <<Entity root>>{
+
+}
+
+class User <<Entity root>>{
+
+}
+
+class FreeTextAndNumeric <<Value Object>>{
+
+}
+
+class answerFreeTextAndNumeric<<Value Object>>{
+
+}
+
+class SingleAndMultipleChoice <<Value Object>>{
+
+}
+
+class answerSingleAndMultipleChoice <<Value Object>>{
+
+}
+
+class Option <<Value Object>>{
+
+}
+
+class ScalingOptions <<Value Object>>{
+
+}
+
+class SortingOptions <<Value Object>> {
+}
+
+class answerScalingOptions <<Value Object>>{
+
+}
+
+class answerSortingOptions <<Value Object>>{
+}
+
+left to right direction
+
+Customer "1" --> "*" Surveys : \tcheck status or answer
+User "1" --> "*" Surveys : \tcarry out
+Surveys "1" --> "1" Questionnaire : \thas
+Questionnaire "1" --> "*" Section : \thas
+Section "1" --> "*" Question : \thas
+Question "1" -left-> "1" QuestionType : \thas
+QuestionType "1" -up-> "0..*" FreeTextAndNumeric : \tcan be
+QuestionType "1" -left-> "0..*" SingleAndMultipleChoice : \tcan be
+QuestionType "1" --> "0..*" ScalingOptions : \tcan be
+QuestionType "1" --> "0..*" SortingOptions : \tcan be
+SingleAndMultipleChoice "1" -left> "*" Option : \thas
+Question "1" --> "0..*" answerFreeTextAndNumeric : \thas
+Question "1" --> "0..*" answerSingleAndMultipleChoice : \thas
+Question "1" --> "0..*" answerScalingOptions : \thas
+Question "1" --> "0..*" answerSortingOptions : \thas
+
+
+
+@enduml
