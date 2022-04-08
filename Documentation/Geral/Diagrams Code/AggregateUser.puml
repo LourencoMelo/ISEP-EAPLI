@@ -1,0 +1,31 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+
+package AggregateUser{
+
+class User <<Entity Root>> {
+  +Boolean state
+}
+
+Enum UserRoles <<Value object>> {
+  +enum description
+}
+note right : Sales Clerck,Admin,Sales Manager, \n Costumer,Warehouse employee
+
+Password <<Value object>>
+Email <<Value object>>
+Gender <<Value object>>
+Name <<Value object>>
+
+}
+User -->"1..*" UserRoles
+User *->"1" Password
+User *->"1" Email
+User *->"1" Gender
+User *->"1" Name
+User <|-down- Costumer
+
+class Costumer {
+}
+@enduml
