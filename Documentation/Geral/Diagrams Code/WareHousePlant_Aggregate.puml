@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+
+class WareHousePlant<<entity root>> {
+}
+
+class Ailes<<entity>>{
+
+}
+
+class Rows<<entity>>{
+
+}
+
+class AVGDocks<<entity>>{
+
+}
+
+class Accessibility<<value object>>{
+
+}
+
+WareHousePlant "1" -> "*"  AVGDocks
+WareHousePlant "1" -> "*" Ailes
+Ailes "1" -> "1*" Rows
+Ailes "1" -> "1" Accessibility
+
+@enduml
