@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.bitbucket.pag_isep.eapliframework:eapli.framework.core:v18.1.0_CORE">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bitbucket/pag_isep/eapliframework/eapli.framework.core/v18.1.0_CORE/eapli.framework.core-v18.1.0_CORE.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bitbucket/pag_isep/eapliframework/eapli.framework.core/v18.1.0_CORE/eapli.framework.core-v18.1.0_CORE-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bitbucket/pag_isep/eapliframework/eapli.framework.core/v18.1.0_CORE/eapli.framework.core-v18.1.0_CORE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

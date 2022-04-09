@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.bitbucket.pag_isep.eapliframework:eapli.framework.infrastructure.pubsub:v16.7.0_PUBSUB">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bitbucket/pag_isep/eapliframework/eapli.framework.infrastructure.pubsub/v16.7.0_PUBSUB/eapli.framework.infrastructure.pubsub-v16.7.0_PUBSUB.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bitbucket/pag_isep/eapliframework/eapli.framework.infrastructure.pubsub/v16.7.0_PUBSUB/eapli.framework.infrastructure.pubsub-v16.7.0_PUBSUB-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bitbucket/pag_isep/eapliframework/eapli.framework.infrastructure.pubsub/v16.7.0_PUBSUB/eapli.framework.infrastructure.pubsub-v16.7.0_PUBSUB-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

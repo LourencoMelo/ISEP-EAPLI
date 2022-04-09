@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.bitbucket.pag_isep.eapliframework:eapli.framework.infrastructure.authz:v17.4.0_AUTHZ">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bitbucket/pag_isep/eapliframework/eapli.framework.infrastructure.authz/v17.4.0_AUTHZ/eapli.framework.infrastructure.authz-v17.4.0_AUTHZ.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bitbucket/pag_isep/eapliframework/eapli.framework.infrastructure.authz/v17.4.0_AUTHZ/eapli.framework.infrastructure.authz-v17.4.0_AUTHZ-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bitbucket/pag_isep/eapliframework/eapli.framework.infrastructure.authz/v17.4.0_AUTHZ/eapli.framework.infrastructure.authz-v17.4.0_AUTHZ-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

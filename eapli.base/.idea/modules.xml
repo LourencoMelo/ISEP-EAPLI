@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/base.iml" filepath="$PROJECT_DIR$/eapli.base/base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/base.app.backoffice.console/base.app.backoffice.console.iml" filepath="$PROJECT_DIR$/eapli.base/base.app.backoffice.console/base.app.backoffice.console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/base.app.bootstrap/base.app.bootstrap.iml" filepath="$PROJECT_DIR$/eapli.base/base.app.bootstrap/base.app.bootstrap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/base.app.common.console/base.app.common.console.iml" filepath="$PROJECT_DIR$/eapli.base/base.app.common.console/base.app.common.console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/base.app.other.console/base.app.other.console.iml" filepath="$PROJECT_DIR$/eapli.base/base.app.other.console/base.app.other.console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/base.app.user.console/base.app.user.console.iml" filepath="$PROJECT_DIR$/eapli.base/base.app.user.console/base.app.user.console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/base.bootstrappers/base.bootstrappers.iml" filepath="$PROJECT_DIR$/eapli.base/base.bootstrappers/base.bootstrappers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/base.core/base.core.iml" filepath="$PROJECT_DIR$/eapli.base/base.core/base.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/base.persistence.impl/base.persistence.impl.iml" filepath="$PROJECT_DIR$/eapli.base/base.persistence.impl/base.persistence.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/eapli.base.iml" filepath="$PROJECT_DIR$/.idea/eapli.base.iml" />
+    </modules>
+  </component>
+</project>

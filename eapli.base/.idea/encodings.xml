@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.backoffice.console/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.backoffice.console/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.bootstrap/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.bootstrap/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.common.console/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.common.console/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.other.console/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.other.console/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.user.console/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.app.user.console/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.bootstrappers/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.bootstrappers/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.persistence.impl/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/base.persistence.impl/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eapli.base/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
