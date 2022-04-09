@@ -4,8 +4,8 @@
 Surveys <<Entity root>>
 package AgregadoQuestionnaire {
 Questionnaire <<Entity root>>
-Section <<Entity root>>
-Question <<Entity root>>
+Section <<Entity>>
+Question <<Entity>>
 }
 
 Surveys "1" -right-> "1" Questionnaire

@@ -1,27 +1,86 @@
 @startuml
-'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+left to right direction
+'skinparam linetype ortho
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+class User <<Entity>> <<root>>{
+ +Boolean state
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+class Customer <<Entity>> <<root>> {}
+
+class Order <<Entity>> <<root>> {}
+
+class Name <<Value object>> {}
+
+class Gender <<Value object>> {}
+
+class Email <<Value object>> {}
+
+class Password <<Value object>>
+
+enum UserRoles <<Value object>> {}
+
+User --> "1" Name
+User --> "1" Gender
+User --> "1" Email
+User --> "1" Password
+User --> "1..*" UserRoles
+
+Customer --|> User
+
+
+class VAT <<Value object>>{}
+class PhoneNumber <<Value object>>{}
+class Address <<Value object>>{}
+class Date <<Value object>>
+
+Customer --> "1" VAT
+Customer --> "1..*" Address
+Customer --> "1" PhoneNumber
+Customer --> "1" Date : birthdate
+
+class Price <<Value object>>{}
+class Status <<Entity>> <<root>>{}
+class ShipmentMethod <<Entity>> <<root>>{
+    +Price
 }
+
+Order --> Customer : placedBy
+Order --> Date :  regist date
+Order --> Price
+Order --> Price
+Order --> Address
+Order --> Address
+Order --> Status : state
+Order --> ShipmentMethod
+
+class Product <<Entity>> <<root>>{}
+class ProductCategory <<Entity>> <<root>>{}
+
+Order --> "1..*" Product
+
+ProductCategory --> "1..*" Product
+
+User ..> ProductCategory
+User ..> Product
+User ..> "1" User : credential
+User ..> "1" Customer : new
+User <.. "1" Order : clerk
+
+class WareHousePlant<<entity root>> {}
+class AGV<<entity root>>{}
+
+User ..> "1" WareHousePlant : setup
+User ..> "*" AGV : manage
+
+class Survey <<Entity>> <<root>>{}
+class Questionnaire <<Entity root>>{}
+
+User ..> "1..*" Survey
+Customer ..> "1..*" Survey : answer
+Survey --> "1" Questionnaire
+
+
 
 @enduml
