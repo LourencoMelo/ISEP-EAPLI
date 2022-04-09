@@ -3,9 +3,9 @@
 
 left to right direction
 
-Question <<Entity>>
+Question <<Entity root>>
 package QuestionType {
-QuestionType <<Value Object>>
+QuestionType <<Entity root>>
 FreeTextAndNumeric  <<Value Object>>
 SingleAndMultipleChoice  <<Value Object>>
 ScalingOptions  <<Value Object>>

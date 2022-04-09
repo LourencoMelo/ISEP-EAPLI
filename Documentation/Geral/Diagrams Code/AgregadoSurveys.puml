@@ -5,7 +5,7 @@ Customer <<Entity root>>
 User <<Entity root>>
 package AgregadoSurveys {
 Surveys <<Entity root>>
-Questionnaire <<Entity root>>
+Questionnaire <<Entity>>
 }
 
 Customer "1" -right-> "*" Surveys
