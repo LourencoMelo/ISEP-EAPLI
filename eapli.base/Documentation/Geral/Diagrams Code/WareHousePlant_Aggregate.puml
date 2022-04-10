@@ -5,7 +5,7 @@ skinparam linetype ortho
 class WareHousePlant<<entity root>> {
 }
 
-class Ailes<<entity>>{
+class Aisles<<entity>>{
 
 }
 
@@ -22,8 +22,8 @@ class Accessibility<<value object>>{
 }
 
 WareHousePlant "1" -> "*"  AVGDocks
-WareHousePlant "1" -> "*" Ailes
-Ailes "1" -> "1*" Rows
-Ailes "1" -> "1" Accessibility
+WareHousePlant "1" -> "*" Aisles
+Aisles "1" -> "1*" Rows
+Aisles "1" -> "1" Accessibility
 
 @enduml
