@@ -69,10 +69,32 @@ User ..> "1" Customer : new
 User <.. "1" Order : clerk
 
 class WareHousePlant<<entity root>> {}
+class Aisles <<entity>> {}
+class Accessibility <<value object>> {}
+class Rows <<entity>> {}
+class AGVDocks <<entity>> {}
 class AGV<<entity root>>{}
+class StatusAGV<<value object>>{}
+class AutonomyHours<<value object>>{}
+class MaxVolume<<value object>>{}
+class MaxWeight<<value object>>{}
+class Position<<value object>>{}
+class Task<<entity root>>{}
+class StatusTask<<value object>>{}
 
 User ..> "1" WareHousePlant : setup
-User ..> "*" AGV : manage
+WareHousePlant "1" ..> "*" AGVDocks : contains
+WareHousePlant "1" ..> "*" Aisles
+Aisles "1" ..> "*" Rows
+Aisles "1" ..> "1" Accessibility
+WareHousePlant "1"..> "*" AGV : houses
+AGV "1" ..> "1" StatusAGV
+AGV "1" ..> "1" AutonomyHours
+AGV "1" ..> "1" MaxVolume
+AGV "1" ..> "1" MaxWeight
+AGV "1" ..> "1" Position
+AGV "1"..> "1" Task : is responsible for
+Task "1" ..> "1" StatusTask
 
 class Survey <<Entity>> <<root>>{}
 class Questionnaire <<Entity root>>{}

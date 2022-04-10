@@ -40,8 +40,8 @@
 | ShipmentMethod        | it's an entity that represents the shipment method of an order.
 | ShortDescription      | it's a value object that represents a text with 30 chars maximum describing the text.
 | Status                | it's an entity that represents the state of a specific process.
-| Status                | it's a value object that represents the current status of an AGV.
-| Status                | it's a value object that represents the current status of an Task.
+| StatusAGV             | it's a value object that represents the current status of an AGV.
+| StatusTask            | it's a value object that represents the current status of an Task.
 | Task                  | it's an entity that represents a responsibility of actions done by an AGV.
 | TechnicalDescription  | it's a value object that represents multiple lines of text describing the product.
 | Value-Added Tax (VAT) | it's a value object that represents a costumer Value-Added Tax (VAT).

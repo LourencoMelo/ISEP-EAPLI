@@ -11,7 +11,7 @@ class AutonomyHours<<value object>>{
 
 }
 
-class Status<<value object>>{
+class StatusAGV<<value object>>{
 
 }
 
@@ -36,7 +36,7 @@ Task "1" <-> "1" AGV
 AGV "1" -> "1" MaxWeight
 AGV "1" -> "1" MaxVolume
 AGV "1" -> "1" AutonomyHours
-AGV "1" -> "1" Status
+AGV "1" -> "1" StatusAGV
 
 
 @enduml

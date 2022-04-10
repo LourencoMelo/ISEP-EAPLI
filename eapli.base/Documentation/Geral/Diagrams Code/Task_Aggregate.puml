@@ -3,7 +3,7 @@
 class Task<<entity root>>{
 }
 
-class Status<<value object>>{
+class StatusTask<<value object>>{
 
 }
 
@@ -12,7 +12,7 @@ class AGV<<entity>>{
 }
 
 AGV "1" -> "1" Task
-Task "1" -> "1" Status
+Task "1" -> "1" StatusTask
 
 
 @enduml
