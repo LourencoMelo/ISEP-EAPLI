@@ -4,9 +4,10 @@
 |:----------------------| :----------------------------------------------------------------------------------- |
 | Administrator         | responsible for managing system users (e.g. creation, activation, granting permissions) and general system maintenance and configuration.          
 | Address               | it's a value object that represents an address.
-| AggreggateCustomer    | it's a aggregate that contains customer's entity as well as the respective value objects.
+| AggregateCustomer    | it's a aggregate that contains customer's entity as well as the respective value objects.
 | AggregateOrder        | it's a aggregate that contains order's entity, ShipmentMethod entity and Status entity as well as the respective value objects.
 | AggregateProductCategory| it's a aggregate that contains the product's category entity and the product's entity as well as the respective value objects.
+| AggregateUser         | it's a aggregate that contains user's entity as well as the respective value objects.
 | Birthdate             | it's a value object that represents the user birthdate.
 | Brand                 | it's a value object that represents a text with 50 chars maximum representing product's brand. 
 | Code                  | it's a value object that represents the alphanumeric code of a category.
@@ -31,7 +32,7 @@
 | Status                | it's a entity object that represents the state of a specific proccess.
 | TechnicalDescription  | it's a value object thta represents multiple lines of text describin the product.
 | Value-Added Tax (VAT) | it's a value object that represents a costumer Value-Added Tax (VAT).
-| User                  | users can represent people or external systems that access the system and use it in diverse ways.
+| User                  | it's a entity that can represent people or external systems that access the system and use it in diverse ways.
 | User role             | it's a value object that represents the role given to a user in the system.
 | WarehouseLocation     | it's a value object that represents the warehouse location of the specific product.
 
