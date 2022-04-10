@@ -3,15 +3,16 @@
 left to right direction
 'skinparam linetype ortho
 
+
+package AggregateUser{
+
 class User <<Entity>> <<root>>{
  +Boolean state
 }
 
-class Customer <<Entity>> <<root>> {}
+class Name <<Value object>> {}
 
-class Order <<Entity>> <<root>> {}
-
-
+class Gender <<Value object>> {}
 
 class Email <<Value object>> {}
 
@@ -19,30 +20,46 @@ class Password <<Value object>>
 
 enum UserRoles <<Value object>> {}
 
-User --> "1" Name
-User --> "1" Gender
-User --> "1" Email
-User --> "1" Password
-User ..> UserRoles : managedByAdmin
-User --> "1..*" UserRoles
 
-Customer --|> User
+}
+
+User -up-> "1" Name
+User -down-> "1" Gender
+User -left-> "1" Email
+User -right-> "1" Password
+User .left.> UserRoles : managedByAdmin
+User --left> "1..*" UserRoles
 
 
+package AggregateCustomer{
+
+class Customer <<Entity>> <<root>> {}
 class VAT <<Value object>>{}
 class PhoneNumber <<Value object>>{}
+
+}
+
+Customer -left-|> User
+
 class Address <<Value object>>{}
-class Date <<Value object>>
+note right : Used by Order and Customer
 
 Customer --> "1" VAT
 Customer --> "1..*" Address
 Customer --> "1" PhoneNumber
 Customer --> "1" Date : birthdate
 
+package AggregateOrder{
+
+class Order <<Entity>> <<root>> {}
 class Price <<Value object>>{}
 class Status <<Entity>> <<root>>{}
 class ShipmentMethod <<Entity>> <<root>>{
     +Price
+}
+class Date <<Value object>>
+note right : Used by Customer and Order
+
 }
 
 Order --> Customer : placedBy
@@ -54,8 +71,19 @@ Order --> Address
 Order --> Status : state
 Order --> ShipmentMethod
 
+package Product{
+
 class Product <<Entity>> <<root>>{}
+
+}
+
+package ProductCategory{
+
 class ProductCategory <<Entity>> <<root>>{}
+
+
+}
+
 
 Order --> "1..*" Product
 
@@ -67,19 +95,35 @@ User ..> "1" User : credential
 User ..> "1" Customer : newByAdmin
 User <.. "1" Order : clerk
 
+
+package AggregateWarehousePlant{
+
 class WareHousePlant<<entity root>> {}
 class Aisles <<entity>> {}
 class Accessibility <<value object>> {}
 class Rows <<entity>> {}
 class AGVDocks <<entity>> {}
+
+}
+
+package AggregateAVG{
+
 class AGV<<entity root>>{}
 class StatusAGV<<value object>>{}
 class AutonomyHours<<value object>>{}
 class MaxVolume<<value object>>{}
 class MaxWeight<<value object>>{}
 class Position<<value object>>{}
+
+}
+
+package AggregateTask{
+
 class Task<<entity root>>{}
 class StatusTask<<value object>>{}
+
+}
+
 
 User ..> "1" WareHousePlant : setupByWarehouseEmployee
 WareHousePlant "1" ..> "*" AGVDocks : contains
@@ -95,8 +139,13 @@ AGV "1" ..> "1" Position
 AGV "1"..> "1" Task : is responsible for
 Task "1" ..> "1" StatusTask
 
+package AggregateSurvey{
+
 class Survey <<Entity>> <<root>>{}
 class Questionnaire <<Entity root>>{}
+
+}
+
 
 User ..> "1..*" Survey
 Customer ..> "1..*" Survey : answer
