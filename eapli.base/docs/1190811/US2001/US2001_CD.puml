@@ -1,0 +1,39 @@
+@startuml
+
+Entity WareHousePlant<<entity root>> {
+ -int id **PRIMARY KEY**;
+ -int length
+ -int square
+ -String unit
+ -List<Aisles> listAisles
+}
+
+Entity Aisles<<entity>>{
+    -int id **PRIMARY KEY**;
+    -int idWareHouse **FOREIGN KEY**;
+    -Accessibility accessibility;
+    -List<Rows> listRows;
+}
+
+Entity Rows<<entity>>{
+    -int id **PRIMARY KEY**;
+    -int idAisles **FOREIGN KEY**;
+    -int shelves;
+}
+
+Entity AVGDocks<<entity>>{
+    -int id **PRIMARY KEY**;
+    -Accessibility accessibility;
+}
+
+class Accessibility<<value object>>{
+    -String accessibility;
+
+}
+
+WareHousePlant "1" -> "*"  AVGDocks
+WareHousePlant "1" -> "*" Aisles
+Aisles "1" -> "1*" Rows
+Aisles "1" -> "1" Accessibility
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+
+autonumber
+
+actor WarehouseEmployee
+
+System -> System: System boots up and imports automatically the JSON File.
+
+group WarehouseEmployee wants to use another file to set up the Warehouse
+WarehouseEmployee -> System : wants to import a new JSON file.
+System -> WarehouseEmployee : asks for which file wants to be imported
+WarehouseEmployee -> System : says which file will set up the warehouse
+System -> WarehouseEmployee : Successful set up
+end
+
+@enduml
