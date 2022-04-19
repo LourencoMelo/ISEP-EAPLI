@@ -1,0 +1,34 @@
+@startuml
+
+Entity ProductCategory {
+
+-code : Code
+-description: String
+
+}
+
+Entity User {
++state : Boolean
+-name : String
+-gender : String
+-email : Email
+-password : Password
+-role : UserRole
+}
+
+Entity Product {
+-category : ProductCategory
+-code : Code
+-shortDescription : String
+-extendedDescription : String
+-technicalDescription : String
+-listOfPhotos : TO DETERMINE
+-brandName : String
+-reference: String
+}
+
+User -up> ProductCategory : choose a productCategory
+User -> Product : creates
+Product "1" -> "1" ProductCategory : has
+
+@enduml
