@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor SalesClerk
+
+SalesClerk -> System : Specify a new product for sale.
+System --> SalesClerk : Shows all the ProductCategory for the User \nto choose where is going to create the product or create a new ProductCategory.
+
+group User choose to create a new ProductCategory
+SalesClerk -> System : Specify a new ProductCategory.
+System --> SalesClerk : Asks for the description.
+
+SalesClerk -> System : Enters the requested data.
+System --> SalesClerk : Saves the entered data.
+end
+
+SalesClerk -> System : Enters the code of the ProductCategory to create the new product.
+System --> SalesClerk : Request a short and an extended \ndescription as well as a more technical \ndescription, a set of photos, a brand \nname and reference.
+
+SalesClerk -> System : Enters the requested data.
+System --> SalesClerk : Validates and displays the data, asking for confirmation.
+
+SalesClerk -> System : Confirms.
+System --> SalesClerk : Confirms that the operation has been successful.
+
+@enduml
