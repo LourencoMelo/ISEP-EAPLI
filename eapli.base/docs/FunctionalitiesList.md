@@ -18,22 +18,22 @@ João Beires Nº[1190718](./)
 
 ==============================================
 
-José Soares Nº[1190782](/docs/1190782)
+José Soares Nº[1190782](./docs/1190782)
 ===============================
 
 
 ### Índice das Funcionalidade Desenvolvidas ###
 
 
-| Sprint | Funcionalidade                 |
-|--------|--------------------------------|
-| **B**  | [US1001](/docs/1190782/US1001) |
-| **B**  | [US1900](/docs/1190782/US1900) |
-| **C**  | [USDemo3](USDemo3)             |
-| **C**  | [USDemo3](USDemo4)             |
-| **D**  | [USDemo3](USDemo5)             |
-| **D**  | [USDemo3](USDemo6)             |
-| **D**  | [USDemo3](USDemo7)             |
+| Sprint | Funcionalidade                  |
+|--------|---------------------------------|
+| **B**  | [US1001](./docs/1190782/US1001) |
+| **B**  | [US1900](./docs/1190782/US1900) |
+| **C**  | [USDemo3](USDemo3)              |
+| **C**  | [USDemo3](USDemo4)              |
+| **D**  | [USDemo3](USDemo5)              |
+| **D**  | [USDemo3](USDemo6)              |
+| **D**  | [USDemo3](USDemo7)              |
 
 
 ==============================================
