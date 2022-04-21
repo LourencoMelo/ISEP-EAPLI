@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="198px" preserveAspectRatio="none" style="width:833px;height:198px;background:#FFFFFF;" version="1.1" viewBox="0 0 833 198" width="833px" zoomAndPan="magnify"><defs/><g><!--MD5=[f49853a17072e4691a3e79b33ad6fb64]
+cluster OrdersSystem--><g id="cluster_OrdersSystem"><rect height="98" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;fill:none;" width="528" x="93" y="86.34"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="99" x="307.5" y="102.8732">OrdersSystem</text></g><g id="elem_log"><ellipse cx="566.0624" cy="145.2917" fill="#F1F1F1" rx="39.0624" ry="15.4517" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="39" x="546.5624" y="149.0202">Log in</text></g><g id="elem_create"><ellipse cx="388.1395" cy="145.4679" fill="#F1F1F1" rx="103.6395" ry="23.1279" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169" x="303.6395" y="149.1964">Create new products order</text></g><g id="elem_catalog"><ellipse cx="179.1531" cy="145.2706" fill="#F1F1F1" rx="70.1531" ry="16.4306" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="88" x="132.1531" y="149.7872">View products</text></g><!--MD5=[a8f5248b80dcb29929f854e57a213deb]
+entity SalesClerk--><g id="elem_SalesClerk"><ellipse cx="40" cy="114.84" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M40,122.84 L40,149.84 M27,130.84 L53,130.84 M40,149.84 L27,164.84 M40,149.84 L53,164.84 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="6" y="180.8732">SalesClerk</text></g><!--MD5=[ae78ca0dd1f49bdd788e5556d70823ac]
+entity Customer--><g id="elem_Customer"><ellipse cx="796" cy="114.84" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M796,122.84 L796,149.84 M783,130.84 L809,130.84 M796,149.84 L783,164.84 M796,149.84 L809,164.84 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="61" x="765.5" y="180.8732">Customer</text></g><!--MD5=[39222abbbfd087a4fdab60e627dc976f]
+entity Auth--><g id="elem_Auth"><ellipse cx="685" cy="106.34" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M685,114.34 L685,141.34 M672,122.34 L698,122.34 M685,141.34 L672,156.34 M685,141.34 L698,156.34 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63" x="648" y="172.3732">«Service»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="90" x="640" y="189.9826">Authentication</text></g><!--MD5=[a7f5f4cd24200ac70069c5bf1463fa8a]
+link SalesClerk to log--><g id="link_SalesClerk_log"><path d="M57.44,105.91 C69.13,84.69 86.76,60.44 110.5,48.34 C185.94,9.91 415.56,10.91 491.5,48.34 C526.16,65.42 549.2,107.24 559.61,129.99 " fill="none" id="SalesClerk-log" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[bbd254ad29458dd12cc42e300271a669]
+link log to Auth--><g id="link_log_Auth"><path d="M605.05,145.34 C616.6,145.34 628.16,145.34 639.71,145.34 " fill="none" id="log-Auth" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[ed673714ddb5386db2a4ebae6682a2a2]
+link SalesClerk to create--><g id="link_SalesClerk_create"><path d="M57.44,105.91 C69.13,84.69 86.76,60.44 110.5,48.34 C165.55,20.3 190.58,29.76 249.5,48.34 C295.69,62.91 339.88,98.99 365.45,122.81 " fill="none" id="SalesClerk-create" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[df35a6f000245d53bcf141cf7da42d32]
+link SalesClerk to catalog--><g id="link_SalesClerk_catalog"><path d="M74.21,145.34 C85.67,145.34 97.13,145.34 108.59,145.34 " fill="none" id="SalesClerk-catalog" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[78604aa2e94a5d81a1ac38250b8e0a2e]
+link Customer to create--><g id="link_Customer_create"><path d="M780.48,105.99 C769.84,84.79 753.47,60.54 730.5,48.34 C650.83,6 613.59,21.35 527.5,48.34 C481.06,62.9 436.53,98.99 410.74,122.8 " fill="none" id="Customer-create" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[c1cb8506f2a315528771323667ca1900]
+@startuml
+
+
+actor SalesClerk
+actor Customer
+:  <<Service>>\nAuthentication: as Auth
+
+rectangle OrdersSystem{
+(Log in) as (log)
+(Create new products order) as (create)
+(View products) as (catalog)
+}
+
+SalesClerk - (log)
+(log) - Auth
+
+SalesClerk - (create)
+SalesClerk - (catalog)
+
+Customer - (create)
+
+@enduml
+
+PlantUML version 1.2022.4(Sat Apr 09 14:29:17 BST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>

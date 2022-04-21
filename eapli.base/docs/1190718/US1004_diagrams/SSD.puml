@@ -1,0 +1,19 @@
+@startuml
+
+autonumber
+skinparam defaultTextAlignment center
+
+actor SalesClerk as SC
+
+SC -> System : Logs in with credentials and chooses the option to create a new order on behalf of a given customer
+System --> SC : Requests customer identification
+
+SC -> System : Enters customer's proper identification
+System --> SC : Validates the customer and requests information for the new products order
+
+SC -> System : Enters the information for the products order
+System --> SC : Informs about the operation success
+
+
+
+@enduml

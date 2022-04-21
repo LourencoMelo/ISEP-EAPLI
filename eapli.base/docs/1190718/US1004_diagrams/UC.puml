@@ -1,0 +1,22 @@
+@startuml
+
+
+actor SalesClerk
+actor Customer
+:  <<Service>>\nAuthentication: as Auth
+
+rectangle OrdersSystem{
+(Log in) as (log)
+(Create new products order) as (create)
+(View products) as (catalog)
+}
+
+SalesClerk - (log)
+(log) - Auth
+
+SalesClerk - (create)
+SalesClerk - (catalog)
+
+Customer - (create)
+
+@enduml
