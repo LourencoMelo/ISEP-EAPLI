@@ -36,6 +36,11 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
     public boolean execute() {
         registerAdmin("admin", TestDataConstants.PASSWORD1, "Jane", "Doe Admin",
                 "jane.doe@email.local");
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(BaseRoles.SALES_CLERK);
+
+        registerUser("salesclerk", TestDataConstants.PASSWORD1, "Ramiro", "Aleixo", "ramiro.aleixo@email.local", roles );
         return true;
     }
 

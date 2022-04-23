@@ -38,6 +38,12 @@ public final class BaseRoles {
      * Utente
      */
     public static final Role CLIENT_USER = Role.valueOf("CLIENT_USER");
+
+    /**
+     * Sales clerk
+     */
+    public static final Role SALES_CLERK = Role.valueOf("SALES_CLERK");
+
     /**
      * Base Administrator
      */
@@ -61,7 +67,7 @@ public final class BaseRoles {
      * @return
      */
     public static Role[] nonUserValues() {
-        return new Role[] { ADMIN, KITCHEN_MANAGER, MENU_MANAGER, CASHIER };
+        return new Role[] { ADMIN, SALES_CLERK, KITCHEN_MANAGER, MENU_MANAGER, CASHIER };
     }
 
     public boolean isCollaborator(final Role role) {

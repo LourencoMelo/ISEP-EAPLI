@@ -145,7 +145,7 @@ public class MainMenu extends AbstractUI {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
 
-        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER, BaseRoles.ADMIN)) {
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.SALES_CLERK)) {
             final Menu usersMenu = buildUsersMenu();
             mainMenu.addSubMenu(USERS_OPTION, usersMenu);
             final Menu settingsMenu = buildAdminSettingsMenu();
@@ -160,6 +160,8 @@ public class MainMenu extends AbstractUI {
 
         return mainMenu;
     }
+
+    /////////////////////////////////////////////////////Specific Menus//////////////////////////////////////////////////////////
 
     private Menu buildAdminSettingsMenu() {
         final Menu menu = new Menu("Settings >");
