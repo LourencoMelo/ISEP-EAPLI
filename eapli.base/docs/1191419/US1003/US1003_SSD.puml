@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor SalesClerk
+
+SalesClerk -> System: Wants to register a new costumer
+System --> SalesClerk: Asks for confirmation
+
+SalesClerk -> System: Confirm
+System --> SalesClerk: Asks for the needed data (name,gender,email,phone number,VAT,address)
+
+SalesClerk -> System : Introduces the requested data
+
+System -> System : Validates data
+System --> SalesClerk : Shows the data and asks for confirmation
+
+SalesClerk -> System : Confirms
+System --> SalesClerk : Operation successfully done
+
+@enduml
