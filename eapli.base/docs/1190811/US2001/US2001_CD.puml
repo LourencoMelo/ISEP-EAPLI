@@ -1,28 +1,28 @@
 @startuml
 
 Entity WareHousePlant<<entity root>> {
- -int id **PRIMARY KEY**;
+ -long id **PRIMARY KEY**;
  -int length
  -int square
  -String unit
- -List<Aisles> listAisles
+ -List<Aisle> listAisles
 }
 
-Entity Aisles<<entity>>{
-    -int id **PRIMARY KEY**;
+Entity Aisle<<entity>>{
+    -long id **PRIMARY KEY**;
     -int idWareHouse **FOREIGN KEY**;
     -Accessibility accessibility;
-    -List<Rows> listRows;
+    -List<Row> listRows;
 }
 
-Entity Rows<<entity>>{
-    -int id **PRIMARY KEY**;
+Entity Row<<entity>>{
+    -long id **PRIMARY KEY**;
     -int idAisles **FOREIGN KEY**;
     -int shelves;
 }
 
-Entity AVGDocks<<entity>>{
-    -int id **PRIMARY KEY**;
+Entity AGVDock<<entity>>{
+    -long id **PRIMARY KEY**;
     -Accessibility accessibility;
 }
 
@@ -31,9 +31,34 @@ class Accessibility<<value object>>{
 
 }
 
-WareHousePlant "1" -> "*"  AVGDocks
-WareHousePlant "1" -> "*" Aisles
-Aisles "1" -> "1*" Rows
-Aisles "1" -> "1" Accessibility
+Entity AGV<<entity>>{
+    -long id **PRIMARY KEY**;
+    -String description;
+    -String model;
+    -double maxWeight;
+    -double maxVolume;
+    -boolean status;
+    -int positionX;
+    -int positionY;
+    -int autonomyHours;
+    -Task task;
+    -AGVDock agvDock;
+}
+
+Entity Task<<entity>>{
+    -long id **PRIMARY KEY**;
+    -AGV agvResp;
+    -String status;
+    -List<Products> listProducts;
+}
+
+WareHousePlant "1" -> "*"  AGVDock
+WareHousePlant "1" -> "*" AGV
+WareHousePlant "1" -> "*" Aisle
+Aisle "1" -> "1*" Row
+Aisle "1" -> "1" Accessibility
+AGV "1" -> "1" AGVDock
+AGV "1" -> "1" Task
+AGVDock "1" -> "1" Accessibility
 
 @enduml
