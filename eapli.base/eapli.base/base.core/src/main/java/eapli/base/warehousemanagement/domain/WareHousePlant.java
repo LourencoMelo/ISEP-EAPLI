@@ -7,11 +7,11 @@ import javax.persistence.OneToMany;
 
 public class WareHousePlant {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private String description;
 
     private int length;
+
+    private int width;
 
     private int square;
 
@@ -20,11 +20,16 @@ public class WareHousePlant {
     @OneToMany
     private Aisle aisle;
 
-    public WareHousePlant(long id, int length, int square, String unit, Aisle aisle) {
-        this.id = id;
+    @OneToMany
+    private AGVDock agvDock;
+
+    public WareHousePlant(String description, int length, int width, int square, String unit, Aisle aisle, AGVDock agvDock) {
+        this.description = description;
         this.length = length;
+        this.width = width;
         this.square = square;
         this.unit = unit;
         this.aisle = aisle;
+        this.agvDock = agvDock;
     }
 }

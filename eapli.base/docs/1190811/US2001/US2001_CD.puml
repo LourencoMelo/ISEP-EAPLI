@@ -1,11 +1,13 @@
 @startuml
 
 Entity WareHousePlant<<entity root>> {
- -long id **PRIMARY KEY**;
+ -String description
  -int length
+ -int width
  -int square
  -String unit
  -List<Aisle> listAisles
+ -List<AGVDock> listAGVDock
 }
 
 Entity Aisle<<entity>>{
