@@ -12,12 +12,12 @@ import eapli.framework.representations.Representationable;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
+@Entity
 public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>, Representationable {
 
     /**
@@ -82,6 +82,14 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      * Price of the product
      */
     private Money unitaryPrice;
+
+    /**
+     * Unique category from the product. One category has many products.
+     */
+    @XmlElement
+    @JsonProperty
+    @ManyToOne(optional = false)
+    private ProductCategory category;
 
 
     /**
