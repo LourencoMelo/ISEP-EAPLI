@@ -1,15 +1,18 @@
-package eapli.base.warehousemanagement;
+package eapli.base.warehousemanagement.domain;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-public class Row {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private int shelves;
+    private AGV agvResp;
 
+    //private List<Products> listProducts;
+
+    private String status;
 }

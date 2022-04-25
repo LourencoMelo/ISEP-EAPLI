@@ -1,0 +1,26 @@
+@startuml
+
+Entity AGV<<entity>>{
+    -String id **PRIMARY KEY**;
+    -String description;
+    -String model;
+    -double maxWeight;
+    -double maxVolume;
+    -boolean status;
+    -int positionX;
+    -int positionY;
+    -int autonomyMin;
+    -Task task;
+    -AGVDock agvDock;
+}
+
+Entity AGVDock<<entity>>{
+    -long id **PRIMARY KEY**;
+    -Accessibility accessibility;
+}
+
+AGV "1" -> "1" AGVDock
+
+AGVDock "1" -> "1" Accessibility
+
+@enduml

@@ -40,7 +40,7 @@ Entity AGV<<entity>>{
     -boolean status;
     -int positionX;
     -int positionY;
-    -int autonomyHours;
+    -int autonomyMin;
     -Task task;
     -AGVDock agvDock;
 }

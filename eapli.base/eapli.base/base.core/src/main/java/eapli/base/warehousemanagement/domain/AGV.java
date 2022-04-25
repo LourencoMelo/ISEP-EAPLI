@@ -1,9 +1,8 @@
-package eapli.base.warehousemanagement;
+package eapli.base.warehousemanagement.domain;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 public class AGV {
 
@@ -25,7 +24,7 @@ public class AGV {
 
     private int positionY;
 
-    private int autonomyHours;
+    private int autonomyMin;
 
     //@OneToOne
     //private Task task
@@ -40,6 +39,6 @@ public class AGV {
         this.status = status;
         this.positionX = positionX;
         this.positionY = positionY;
-        this.autonomyHours = autonomyHours;
+        this.autonomyMin = autonomyHours;
     }
 }

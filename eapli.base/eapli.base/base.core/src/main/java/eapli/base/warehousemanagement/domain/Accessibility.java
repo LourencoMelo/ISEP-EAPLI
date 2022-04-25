@@ -1,4 +1,4 @@
-package eapli.base.warehousemanagement;
+package eapli.base.warehousemanagement.domain;
 
 public class Accessibility {
 

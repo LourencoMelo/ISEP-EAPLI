@@ -1,4 +1,4 @@
-package eapli.base.warehousemanagement;
+package eapli.base.warehousemanagement.domain;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
