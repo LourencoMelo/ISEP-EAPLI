@@ -4,7 +4,7 @@ import eapli.base.costumermanagement.dto.CustomerDto;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.Name;
-import eapli.framework.infrastructure.authz.domain.model.Password;
+import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,8 +12,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Customer class
+ */
 @Entity
-public class Customer implements AggregateRoot<Long> {
+public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
 
     @Id
     @GeneratedValue
@@ -26,8 +29,6 @@ public class Customer implements AggregateRoot<Long> {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    private Password passWord;
-
     private PhoneNumber phoneNumber;
 
     private VAT vat;
@@ -36,6 +37,9 @@ public class Customer implements AggregateRoot<Long> {
 
     private Date birthDate;
 
+    /**
+     * Empty constructor
+     */
     public Customer(){
 
     }
@@ -45,15 +49,13 @@ public class Customer implements AggregateRoot<Long> {
      * @param name customer name
      * @param email customer email
      * @param gender customer gender
-     * @param passWord customer password
      * @param phoneNumber customer phone number
      * @param vat customer value-added tax
      */
-    public Customer(Name name, EmailAddress email, Gender gender, Password passWord, PhoneNumber phoneNumber, VAT vat,Date birthDate){
+    public Customer(Name name, EmailAddress email, Gender gender, PhoneNumber phoneNumber, VAT vat,Date birthDate){
         this.name = name;
         this.email = email;
         this.gender = gender;
-        this.passWord = passWord;
         this.phoneNumber = phoneNumber;
         this.vat = vat;
         this.birthDate = birthDate;
@@ -76,9 +78,6 @@ public class Customer implements AggregateRoot<Long> {
         return name;
     }
 
-    public Password getPassWord() {
-        return passWord;
-    }
 
     public PhoneNumber getPhoneNumber() {
         return phoneNumber;
@@ -99,6 +98,15 @@ public class Customer implements AggregateRoot<Long> {
      */
     public boolean addAddresses(Address address){
         return addresses.add(address);
+    }
+
+    /**
+     * Converts a customer object to a data transfer object
+     * @return customerDto
+     */
+    @Override
+    public CustomerDto toDTO(){
+        return new CustomerDto(name.firstName(),name.lastName(),email.toString(),gender.toString(),phoneNumber.toString(),vat.toString());
     }
 
     @Override

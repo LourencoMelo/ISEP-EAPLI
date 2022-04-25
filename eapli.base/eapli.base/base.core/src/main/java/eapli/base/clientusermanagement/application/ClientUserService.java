@@ -47,8 +47,7 @@ public class ClientUserService {
     public Optional<ClientUser> findClientUserByMecNumber(
             final String mecNumber) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
-                BaseRoles.ADMIN,
-                BaseRoles.CASHIER);
+                BaseRoles.ADMIN);
         return repo.ofIdentity(MecanographicNumber.valueOf(mecNumber));
     }
 
