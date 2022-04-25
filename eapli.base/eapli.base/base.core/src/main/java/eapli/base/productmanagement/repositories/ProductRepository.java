@@ -7,4 +7,5 @@ import eapli.framework.general.domain.model.Designation;
 public interface ProductRepository extends DomainRepository<Designation, Product> {
 
 
+
 }
