@@ -1,4 +1,4 @@
-package eapli.base.app.backoffice.console.presentation.authz;
+package eapli.base.app.backoffice.console.presentation.Products.UI;
 
 import eapli.base.app.backoffice.console.presentation.Products.Printer.ProductCategoryPrinter;
 import eapli.base.productmanagement.application.AddProductController;
@@ -14,25 +14,25 @@ public class AddProductUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        final Iterable<eapli.base.productmanagement.domain.ProductCategory> productCategories = this.theController.productCategories();
+        final Iterable<ProductCategory> productCategories = this.theController.productCategories();
 
-        final SelectWidget<eapli.base.productmanagement.domain.ProductCategory> selector = new SelectWidget<>("Product Categories:", productCategories,
+        final SelectWidget<ProductCategory> selector = new SelectWidget<>("Product Categories:", productCategories,
                 new ProductCategoryPrinter());
         selector.show();
-        final ProductCategory productCategory = selector.selectedElement();
+        final ProductCategory theProductCategory = selector.selectedElement();
 
         final String name = Console.readLine("Name: ");
-        final String shortDescription = Console.readLine("Short Description: ");
-        final String extendedDescription = Console.readLine("ExtendedDescription: ");
-        final String technicalDescription = Console.readLine("Technical Description: ");
+        final String shortDescription = Console.readLine("Short description: ");
+        final String extendedDescription = Console.readLine("Extended description: ");
+        final String techincalDescription = Console.readLine("Technical description: ");
         final String brand = Console.readLine("Brand: ");
         final String reference = Console.readLine("Reference: ");
-        final double unitaryPreTaxPrice = Console.readDouble("Unitary price befores taxes ");
-        final double unitaryPosTaxPrice = Console.readDouble("Unitary price after taxes: ");
+        final double preTaxPrice = Console.readDouble("Price before taxes: ");
+        final double posTaxPrice = Console.readDouble("Price after taxes: ");
 
         try {
-            this.theController.addProduct(productCategory, name, shortDescription, extendedDescription, technicalDescription
-                    , brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
+            this.theController.addProduct(theProductCategory,name,shortDescription,extendedDescription
+                    , techincalDescription,brand,reference,preTaxPrice,posTaxPrice);
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter a product which already exists in the database.");
         }
