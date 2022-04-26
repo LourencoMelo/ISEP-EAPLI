@@ -6,8 +6,9 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 
 public class InMemoryProductCategoryRepository extends InMemoryDomainRepository<ProductCategory, String> implements ProductCategoryRepository {
 
-    static {
-        InMemoryInitializer.init();
-    }
 
+    @Override
+    public Iterable<ProductCategory> activeProductCategories() {
+        return null;
+    }
 }

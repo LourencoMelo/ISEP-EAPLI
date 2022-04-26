@@ -25,6 +25,8 @@ import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.costumermanagement.repositories.CustomerRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.productmanagement.repositories.ProductCategoryRepository;
+import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -77,6 +79,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public ProductRepository products() {
+        return null;
+    }
+
+    @Override
     public SignupRequestRepository signupRequests(final TransactionalContext tx) {
         return new InMemorySignupRequestRepository();
     }
@@ -85,6 +92,14 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public TransactionalContext newTransactionalContext() {
         // in memory does not support transactions...
         return null;
+    }
+
+    public ProductCategoryRepository productCategories() {
+        return productCategories(null);
+    }
+
+    public ProductCategoryRepository productCategories(TransactionalContext autoTx) {
+        return new InMemoryProductCategoryRepository();
     }
 
 }
