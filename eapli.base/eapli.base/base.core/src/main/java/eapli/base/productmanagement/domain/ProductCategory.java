@@ -1,6 +1,7 @@
 package eapli.base.productmanagement.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import eapli.base.productmanagement.dto.ProductCategoryDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
@@ -126,9 +127,17 @@ public class ProductCategory implements AggregateRoot<String> {
         return identity();
     }
 
+    public AlphanumericCode getCode() {
+        return code;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);
+    }
+
+    public ProductCategoryDTO toDTO() {
+        return new ProductCategoryDTO(String.valueOf(code), String.valueOf(description), active);
     }
 
     @Override

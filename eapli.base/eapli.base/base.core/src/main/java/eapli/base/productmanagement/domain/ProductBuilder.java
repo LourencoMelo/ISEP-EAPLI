@@ -71,11 +71,11 @@ public class ProductBuilder implements DomainFactory<Product> {
     }
 
     public ProductBuilder referenced(String reference) {
-        return referenced(Designation.valueOf(reference));
+        return referenced(Reference.valueOf(reference));
     }
 
-    public ProductBuilder referenced(Designation reference) {
-        this.brand = reference;
+    public ProductBuilder referenced(Reference reference) {
+        this.reference = reference;
         return this;
     }
 

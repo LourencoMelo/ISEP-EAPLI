@@ -15,4 +15,6 @@ public class ProductCategoryDTO {
 
     private String description;
 
+    private boolean active;
+
 }

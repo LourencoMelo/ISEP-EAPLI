@@ -123,6 +123,10 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         return brand;
     }
 
+    public Reference getReference() {
+        return reference;
+    }
+
     public Money getUnitaryPreTaxPrice() {
         return unitaryPreTaxPrice;
     }
