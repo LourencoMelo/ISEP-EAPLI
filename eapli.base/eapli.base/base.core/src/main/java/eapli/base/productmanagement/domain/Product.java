@@ -79,9 +79,14 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     private boolean active;
 
     /**
-     * Price of the product
+     * Price of the product before taxes
      */
-    private Money unitaryPrice;
+    private Money unitaryPreTaxPrice;
+
+    /**
+     * Price of the product after taxes
+     */
+    private Money unitaryPosTaxPrice;
 
     /**
      * Unique category from the product. One category has many products.
@@ -98,12 +103,14 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      * @param technicalDescription more technical description
      * @param brand                brand name
      * @param reference            reference of brand
-     * @param price                unitary price
+     * @param unitaryPreTaxPrice   unitary price pre tax
+     * @param unitaryPosTaxPrice   unitary price pos tax
      */
-    protected Product(Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Money price) {
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Money unitaryPreTaxPrice, Money unitaryPosTaxPrice) {
 
-        Preconditions.noneNull(shortDescription, extendedDescription, technicalDescription, brand, reference, price);
+        Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
 
+        this.category = category;
         this.name = name;
         this.shortDescription = shortDescription;
         this.extendedDescription = extendedDescription;
@@ -111,7 +118,8 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         this.brand = brand;
         this.reference = reference;
         this.active = true;
-        this.unitaryPrice = price;
+        this.unitaryPreTaxPrice = unitaryPreTaxPrice;
+        this.unitaryPosTaxPrice = unitaryPosTaxPrice;
     }
 
     protected Product() {
@@ -143,7 +151,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
             return true;
         }
 
-        return identity().equals(that.identity()) && unitaryPrice.equals(that.unitaryPrice) && active == that.active;
+        return identity().equals(that.identity()) && unitaryPreTaxPrice.equals(that.unitaryPreTaxPrice) && unitaryPosTaxPrice.equals(that.unitaryPosTaxPrice) && active == that.active;
     }
 
     /**
@@ -158,7 +166,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      * @return Price of the product
      */
     public Money currentPrice() {
-        return this.unitaryPrice;
+        return this.unitaryPosTaxPrice;
     }
 
     /**
@@ -178,18 +186,14 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         return isActive();
     }
 
-    /**
-     * Changes the product price to a new price.
-     *
-     * @param newPrice the new price of this product
-     */
-    public void changePriceTo(final Money newPrice) {
-        unitaryPrice = newPrice;
+    public void changePriceTo(final Money preNewPrice, Money pewPosPrice) {
+        unitaryPreTaxPrice = preNewPrice;
+        unitaryPosTaxPrice = pewPosPrice;
     }
 
     @Override
     public ProductDTO toDTO() {
-        return new ProductDTO(name.toString(), shortDescription.toString(), extendedDescription.toString(), technicalDescription.toString(), brand.toString(), reference.toString(), active, unitaryPrice.amountAsDouble());
+        return new ProductDTO(category.identity(), name.toString(), shortDescription.toString(), extendedDescription.toString(), technicalDescription.toString(), brand.toString(), reference.toString(), active, unitaryPreTaxPrice.amountAsDouble(), unitaryPosTaxPrice.amountAsDouble());
     }
 
     @Override

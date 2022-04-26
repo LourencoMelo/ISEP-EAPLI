@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductDTO {
 
+    private String productCategory;
+
     private String name;
 
     private String shortDescription;
@@ -26,6 +28,8 @@ public class ProductDTO {
 
     private boolean active;
 
-    private double price;
+    private double prePrice;
+
+    private double posPrice;
 
 }
