@@ -27,6 +27,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @GeneratedValue
     private Long internalCode;
 
+    @Embedded
     @XmlElement
     @JsonProperty
     private Designation name;
@@ -34,6 +35,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     /**
      * Short description of the product
      */
+    @Embedded
     @XmlElement
     @JsonProperty
     @AttributeOverride(name = "value", column = @Column(name = "shortDescription"))
@@ -42,6 +44,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     /**
      * Extended description of the product
      */
+    @Embedded
     @XmlElement
     @JsonProperty
     @AttributeOverride(name = "value", column = @Column(name = "extendedDescription"))
@@ -50,6 +53,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     /**
      * Technical description of the product
      */
+    @Embedded
     @XmlElement
     @JsonProperty
     @AttributeOverride(name = "value", column = @Column(name = "technicalDescription"))
@@ -58,6 +62,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     /**
      * Brand name of the product
      */
+    @Embedded
     @XmlElement
     @JsonProperty
     @AttributeOverride(name = "value", column = @Column(name = "brand"))
@@ -81,11 +86,13 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     /**
      * Price of the product before taxes
      */
+    @Embedded
     private Money unitaryPreTaxPrice;
 
     /**
      * Price of the product after taxes
      */
+    @Embedded
     private Money unitaryPosTaxPrice;
 
     /**
@@ -95,6 +102,34 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @JsonProperty
     @ManyToOne(optional = false)
     private ProductCategory category;
+
+    public Designation getName() {
+        return name;
+    }
+
+    public Description getShortDescription() {
+        return shortDescription;
+    }
+
+    public Description getExtendedDescription() {
+        return extendedDescription;
+    }
+
+    public Description getTechnicalDescription() {
+        return technicalDescription;
+    }
+
+    public Designation getBrand() {
+        return brand;
+    }
+
+    public Money getUnitaryPreTaxPrice() {
+        return unitaryPreTaxPrice;
+    }
+
+    public Money getUnitaryPosTaxPrice() {
+        return unitaryPosTaxPrice;
+    }
 
 
     /**
@@ -162,11 +197,19 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         return this.name;
     }
 
+
     /**
      * @return Price of the product
      */
-    public Money currentPrice() {
+    public Money getPosPrice() {
         return this.unitaryPosTaxPrice;
+    }
+
+    /**
+     * @return Price of the product
+     */
+    public Money getPrePrice() {
+        return this.unitaryPreTaxPrice;
     }
 
     /**
