@@ -1,4 +1,4 @@
-package eapli.base.warehousemanagement.domain;
+package eapli.base.warehousemanagement.domain.methods;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
