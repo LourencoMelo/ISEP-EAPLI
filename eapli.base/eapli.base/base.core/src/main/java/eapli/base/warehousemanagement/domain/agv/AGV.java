@@ -1,11 +1,13 @@
 package eapli.base.warehousemanagement.domain.agv;
 
+import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.Description;
 
 import javax.persistence.*;
 
 @Entity
-public class AGV {
+@Embeddable
+public class AGV implements AggregateRoot<AGVId> {
 
     /**
      * Id of the AGV
@@ -48,17 +50,17 @@ public class AGV {
      */
     private AutonomyMin autonomyMin;
 
-    /**
-     * His AGV Dock where it charges
-     */
-    @OneToOne(mappedBy = "AGVDock")
-    private AGVDock agvDock;
-
-    /**
-     * His task
-     */
-    @OneToOne(mappedBy = "Task")
-    private Task task;
+//    /**
+//     * His AGV Dock where it charges
+//     */
+//    @OneToOne(mappedBy = "agvResp", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+//    private AGVDock agvDock;
+//
+//    /**
+//     * His task
+//     */
+//    @OneToOne(mappedBy = "agvResp", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+//    private Task task;
 
 
     /**
@@ -74,7 +76,7 @@ public class AGV {
      */
     public AGV(AGVId id, Description description, Model model, MaxWeight maxWeight, MaxVolume maxVolume, Status status, Position position, AutonomyMin autonomyHours) {
         this.id = id;
-        this.setDescription(description);
+        this.description = description;
         this.model = model;
         this.maxWeight = maxWeight;
         this.maxVolume = maxVolume;
@@ -90,21 +92,23 @@ public class AGV {
 
     }
 
-    /**
-     * Business Restrictions in description
-     * @param description
-     */
-    public void setDescription(Description description) {
-        try{
-            if (description.length() < 30){
-                this.description = description;
-            }else{
-                throw new IllegalArgumentException();
-            }
-        }catch (IllegalArgumentException illegalArgumentException){
-            System.out.println("The description of the AGV should be less than 30");
-        }
-
+    @Override
+    public boolean sameAs(Object other) {
+        return false;
     }
 
+    @Override
+    public int compareTo(AGVId other) {
+        return AggregateRoot.super.compareTo(other);
+    }
+
+    @Override
+    public AGVId identity() {
+        return this.id;
+    }
+
+    @Override
+    public boolean hasIdentity(AGVId id) {
+        return AggregateRoot.super.hasIdentity(id);
+    }
 }

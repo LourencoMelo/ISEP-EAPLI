@@ -53,6 +53,10 @@ public final class BaseRoles {
      * Customer
      */
     public static final Role CUSTOMER = Role.valueOf("CUSTOMER");
+    /**
+     * Warehouse Employee
+     */
+    public static final Role WAREHOUSE_EMPLOYEE = Role.valueOf("WAREHOUSE_EMPLOYEE");
 
     /**
      * get available role types for adding new users
@@ -60,7 +64,7 @@ public final class BaseRoles {
      * @return
      */
     public static Role[] nonUserValues() {
-        return new Role[] { ADMIN, SALES_CLERK,CUSTOMER };
+        return new Role[] { ADMIN, SALES_CLERK,CUSTOMER, WAREHOUSE_EMPLOYEE };
     }
 
     public boolean isCollaborator(final Role role) {

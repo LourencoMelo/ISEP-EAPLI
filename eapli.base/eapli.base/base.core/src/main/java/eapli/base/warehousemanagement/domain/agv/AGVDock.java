@@ -1,13 +1,14 @@
 package eapli.base.warehousemanagement.domain.agv;
 
-import eapli.base.warehousemanagement.domain.Accessibility;
-import eapli.base.warehousemanagement.domain.Begin;
-import eapli.base.warehousemanagement.domain.Depth;
-import eapli.base.warehousemanagement.domain.End;
+import eapli.base.warehousemanagement.domain.warehouse.Accessibility;
+import eapli.base.warehousemanagement.domain.warehouse.Begin;
+import eapli.base.warehousemanagement.domain.warehouse.Depth;
+import eapli.base.warehousemanagement.domain.warehouse.End;
 
 import javax.persistence.*;
 
 @Entity
+@Embeddable
 public class AGVDock {
 
     /**
@@ -39,9 +40,9 @@ public class AGVDock {
     /**
      * The AGV that can charge there
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "agvId", referencedColumnName = "id")
-    private AGV agvResp;
+    //@OneToOne(fetch = FetchType.LAZY)
+    //@MapsId
+    //private AGV agvResp;
 
     /**
      * Constructor for the AGV Dock
@@ -57,7 +58,7 @@ public class AGVDock {
         this.end = end;
         this.depth = depth;
         this.accessibility = accessibility;
-        this.agvResp = null;
+        //this.agvResp = null;
     }
 
     /**
@@ -66,4 +67,8 @@ public class AGVDock {
     public AGVDock() {
 
     }
+
+    //public void setAgvResp(AGV agvResp) {
+    //    this.agvResp = agvResp;
+    //}
 }

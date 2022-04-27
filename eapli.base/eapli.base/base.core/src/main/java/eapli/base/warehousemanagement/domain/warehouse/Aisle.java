@@ -1,14 +1,6 @@
 package eapli.base.warehousemanagement.domain.warehouse;
 
-import eapli.base.warehousemanagement.domain.Accessibility;
-import eapli.base.warehousemanagement.domain.Begin;
-import eapli.base.warehousemanagement.domain.Depth;
-import eapli.base.warehousemanagement.domain.End;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -46,6 +38,10 @@ public class Aisle {
     @OneToMany(mappedBy = "aisle", cascade = CascadeType.ALL)
     private List<Row> listRow;
 
+    @ManyToOne
+    @JoinColumn(name = "WareHouse")
+    private WareHousePlant wareHousePlant;
+
     /**
      * Constructor of the Aisle
      * @param id Id of the Aisle
@@ -53,14 +49,16 @@ public class Aisle {
      * @param end Where the Aisle ends
      * @param depth The depth of the Aisle
      * @param accessibility Accessibility of the Aisle
-     * @param listRow of the Aisle
      */
-    public Aisle(long id, Begin begin, End end, Depth depth, Accessibility accessibility, List<Row> listRow) {
+    public Aisle(long id, Begin begin, End end, Depth depth, Accessibility accessibility) {
         this.id = id;
         this.begin = begin;
         this.end = end;
         this.depth = depth;
         this.accessibility = accessibility;
+    }
+
+    public void setListRow(List<Row> listRow) {
         this.listRow = listRow;
     }
 

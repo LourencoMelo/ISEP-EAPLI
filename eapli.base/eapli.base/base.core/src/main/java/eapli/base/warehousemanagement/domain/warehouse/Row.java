@@ -1,10 +1,9 @@
 package eapli.base.warehousemanagement.domain.warehouse;
 
-import eapli.base.warehousemanagement.domain.Begin;
-import eapli.base.warehousemanagement.domain.End;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Row {
@@ -29,6 +28,10 @@ public class Row {
      * Number the shelves that divide the row
      */
     private int shelves;
+
+    @ManyToOne
+    @JoinColumn(name = "Aisle")
+    private Aisle aisle;
 
     /**
      * Constructor of the Row

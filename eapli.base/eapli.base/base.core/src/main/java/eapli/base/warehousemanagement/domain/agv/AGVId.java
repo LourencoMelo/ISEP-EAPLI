@@ -2,7 +2,7 @@ package eapli.base.warehousemanagement.domain.agv;
 
 import eapli.framework.domain.model.ValueObject;
 
-public class AGVId implements ValueObject {
+public class AGVId implements ValueObject, Comparable<AGVId> {
 
     /**
      * AgvId
@@ -31,5 +31,10 @@ public class AGVId implements ValueObject {
         }catch (IllegalArgumentException illegalArgumentException){
             System.out.println("The Id shouldn't be empty and less than 8 chars");
         }
+    }
+
+    @Override
+    public int compareTo(AGVId o) {
+        return 0;
     }
 }

@@ -26,6 +26,7 @@ import eapli.base.costumermanagement.repositories.CustomerRepository;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
+import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -99,6 +100,10 @@ public interface RepositoryFactory {
     ProductRepository products();
 
     ProductCategoryRepository productCategories();
+
+    AGVRepository agv();
+
+    AGVRepository agv(TransactionalContext autoTx);
 
     /**
      * Orders repository will be created in auto transaction mode

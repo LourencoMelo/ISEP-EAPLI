@@ -1,4 +1,4 @@
-package eapli.base.warehousemanagement.domain;
+package eapli.base.warehousemanagement.domain.warehouse;
 
 import eapli.framework.domain.model.ValueObject;
 

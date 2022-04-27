@@ -27,6 +27,7 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
+import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.JpaAutoTxUserRepository;
@@ -87,6 +88,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public ProductCategoryRepository productCategories() {
         return new JpaProductCategoryRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public AGVRepository agv() {
+        return new JpaAGVRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public AGVRepository agv(TransactionalContext autoTx) {
+        return new JpaAGVRepository(autoTx);
     }
 
     @Override

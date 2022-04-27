@@ -1,4 +1,4 @@
-package eapli.base.warehousemanagement.domain;
+package eapli.base.warehousemanagement.domain.warehouse;
 
 import eapli.framework.domain.model.ValueObject;
 
@@ -14,9 +14,13 @@ public class Accessibility implements ValueObject {
      * @param accessibility
      */
     public Accessibility(String accessibility) {
-        this.accessibility = accessibility;
+        this.setAccessibility(accessibility);
     }
 
+    /**
+     * Setter of the Accessibility
+     * @param accessibility
+     */
     public void setAccessibility(String accessibility) {
         try{
             if(accessibility.equalsIgnoreCase("l+") ||

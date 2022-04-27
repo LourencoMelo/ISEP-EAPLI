@@ -15,8 +15,8 @@ public class Task {
     /**
      * The AGV Responsible for the Task
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "agvId", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private AGV agvResp;
 
     /**
