@@ -1,6 +1,9 @@
 package eapli.base.ordermanagement.repositories;
 
-public interface OrderRepository{
+import eapli.base.ordermanagement.domain.Order;
+import eapli.framework.domain.repositories.DomainRepository;
+
+public interface OrderRepository extends DomainRepository<Long, Order> {
 
 
 }

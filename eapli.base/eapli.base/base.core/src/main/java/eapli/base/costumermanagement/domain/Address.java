@@ -2,9 +2,12 @@ package eapli.base.costumermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
+
 /**
  * Value Object that represents an address
  */
+@Embeddable
 public class Address implements ValueObject {
 
     public String streetName;
@@ -31,5 +34,9 @@ public class Address implements ValueObject {
         this.postalCode = postalCode;
         this.city = city;
         this.country = country;
+    }
+
+    public Address() {
+        //Empty
     }
 }
