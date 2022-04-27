@@ -23,6 +23,8 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductAction;
+import eapli.base.app.backoffice.console.presentation.authz.AddProductUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -145,8 +147,15 @@ public class MainMenu extends AbstractUI {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
 
-        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.SALES_CLERK)) {
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER, BaseRoles.ADMIN)) {
             final Menu usersMenu = buildUsersMenu();
+            mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            final Menu settingsMenu = buildAdminSettingsMenu();
+            mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
+        }
+
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.SALES_CLERK)) {
+            final Menu usersMenu = buildSalesClerkMenu();
             mainMenu.addSubMenu(USERS_OPTION, usersMenu);
             final Menu settingsMenu = buildAdminSettingsMenu();
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
@@ -181,6 +190,17 @@ public class MainMenu extends AbstractUI {
         menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
         menu.addItem(ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION, "Accept/Refuse Signup Request",
                 new AcceptRefuseSignupRequestAction());
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu buildSalesClerkMenu() {
+        final Menu menu = new Menu("Sales Clerk >");
+
+        menu.addItem(ADD_USER_OPTION, "Add Product", new AddProductUI()::show);
+        menu.addItem(LIST_USERS_OPTION, "List all Products", new ListProductAction());
+        //menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate Product", new DeactivateUserAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
