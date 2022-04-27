@@ -4,8 +4,8 @@ import eapli.base.costumermanagement.domain.Address;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.Designation;
+import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.general.domain.model.Money;
-import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.*;
@@ -39,7 +39,10 @@ public class Order {//implements AggregateRoot<Designation> {
      * Ordered products with their respective quantities
      */
     @ElementCollection
-    private Map<Product, Integer> orderedProducts = new HashMap<>();
+    private Map<Product, Integer> orderedProducts;
+
+    @Embedded
+    private EmailAddress clerkEmail;
 
     /**
      * Total price before taxes
@@ -53,6 +56,14 @@ public class Order {//implements AggregateRoot<Designation> {
     @Embedded
     private Money priceAfterTaxes;
 
+    public EmailAddress getClerkEmail() {
+        return clerkEmail;
+    }
+
+    public void setClerkEmail(EmailAddress clerkEmail) {
+        this.clerkEmail = clerkEmail;
+    }
+
     public Money getPriceAfterTaxes() {
         return priceAfterTaxes;
     }
@@ -65,19 +76,12 @@ public class Order {//implements AggregateRoot<Designation> {
         //Empty
     }
 
-    public Order(Address billing, Address delivering){
+    public Order(Map<Product, Integer> products, Address billing, Address delivering, EmailAddress clerkEmail){
+        this.orderedProducts = products;
         this.billingAddress = billing;
         this.deliveringAddress = delivering;
+        this.clerkEmail = clerkEmail;
         this.registDate = Calendar.getInstance();
-    }
-
-    /**
-     * Adds product to order
-     * @param product product to add
-     * @param quantity quantity of the product
-     */
-    public void addProductTo(Product product, Integer quantity){
-        this.orderedProducts.put(product, quantity);
     }
 
 //    @Override

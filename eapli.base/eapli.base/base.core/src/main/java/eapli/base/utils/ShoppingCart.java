@@ -11,7 +11,7 @@ public class ShoppingCart {
     /**
      * Map containing all items and their respective quantities
      */
-    private Map<Product, Integer> items;
+    private final Map<Product, Integer> items;
 
     /**
      * Initializes hash map
@@ -51,7 +51,7 @@ public class ShoppingCart {
     public Money getTotalAmountWithoutTaxes(){
         Money totalAmount = Money.euros(0.0);
         for (Map.Entry<Product, Integer> entry : items.entrySet()) {
-            double price = entry.getKey().currentPrice().amountAsDouble() * entry.getValue();
+            double price = entry.getKey().getPrePrice().amountAsDouble() * entry.getValue();
             totalAmount.add(Money.euros(price));
         }
 
@@ -60,10 +60,16 @@ public class ShoppingCart {
 
     /**
      * Calculates total amount of money after taxes
-     * @return total amounte of money from the shopping cart with taxes
+     * @return total amount of money from the shopping cart with taxes
      */
     public Money getTotalAmountWithTaxes(){
-        return null;
+        Money totalAmountWithTaxes = Money.euros(0.0);
+        for (Map.Entry<Product, Integer> entry : items.entrySet()) {
+            double price = entry.getKey().getPosPrice().amountAsDouble() * entry.getValue();
+            totalAmountWithTaxes.add(Money.euros(price));
+        }
+
+        return totalAmountWithTaxes;
     }
 
     /**
