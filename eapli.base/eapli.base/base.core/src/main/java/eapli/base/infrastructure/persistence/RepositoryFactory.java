@@ -23,6 +23,7 @@ package eapli.base.infrastructure.persistence;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.costumermanagement.repositories.CustomerRepository;
+import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -98,4 +99,12 @@ public interface RepositoryFactory {
     ProductRepository products();
 
     ProductCategoryRepository productCategories();
+
+    /**
+     * Orders repository will be created in auto transaction mode
+     * @return
+     */
+    OrderRepository orders();
+
+    OrderRepository orders(TransactionalContext autoTx);
 }
