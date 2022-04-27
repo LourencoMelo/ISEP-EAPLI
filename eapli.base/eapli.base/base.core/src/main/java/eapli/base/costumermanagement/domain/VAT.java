@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 
 
 /**
- * Object that represents the phoneNumber and its validations
+ * Object that represents the vat and its validations
  */
 @Embeddable
 public class VAT implements ValueObject {

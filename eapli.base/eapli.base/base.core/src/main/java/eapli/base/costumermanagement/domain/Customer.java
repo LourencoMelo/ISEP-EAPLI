@@ -7,10 +7,7 @@ import eapli.framework.infrastructure.authz.domain.model.Name;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Customer class
@@ -22,20 +19,29 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
     @GeneratedValue
     private Long id;
 
+    @Embedded
     private Name name;
 
+    @Embedded
     private EmailAddress email;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Embedded
     private PhoneNumber phoneNumber;
 
+    @Embedded
     private VAT vat;
 
-    private List<Address> addresses;
+    @ElementCollection
+    private final Set<Address> addresses = new HashSet<>();
 
     private Date birthDate;
+
+    public EmailAddress getEmail() {
+        return email;
+    }
 
     /**
      * Empty constructor
@@ -59,7 +65,6 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
         this.phoneNumber = phoneNumber;
         this.vat = vat;
         this.birthDate = birthDate;
-        addresses = new ArrayList<Address>();
     }
 
     public EmailAddress getEmailAddress(){
@@ -87,8 +92,8 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
         return vat;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
     /**
@@ -96,7 +101,7 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
      * @param address address
      * @return true if address added
      */
-    public boolean addAddresses(Address address){
+    public boolean addAddresses(final Address address){
         return addresses.add(address);
     }
 

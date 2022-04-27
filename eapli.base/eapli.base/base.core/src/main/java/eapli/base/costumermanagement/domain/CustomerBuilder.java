@@ -4,15 +4,14 @@ import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.Name;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class creates customer objects (customer builder)
  */
 public class CustomerBuilder implements DomainFactory<Customer> {
+
+    private Customer customer;
 
     private Name name;
 
@@ -27,30 +26,138 @@ public class CustomerBuilder implements DomainFactory<Customer> {
     private Date birthDate;
 
     /**
-     * Creates a new Customer
+     * Name builder
      * @param firstName first name
      * @param lastName last name
-     * @param email customer email
-     * @param gender customer gender
-     * @param phoneNumber phone number
-     * @param vat customer vat
-     * @param year year of birth
-     * @param month month of birth
-     * @param day day of birth
-     * @throws IllegalArgumentException
+     * @return name
      */
-    public void create(String firstName,String lastName,String email,Gender gender,long phoneNumber,String vat,int year,int month,int day) throws IllegalArgumentException{
-        //this.name = new Name(firstName,lastName);
-        //this.email = new EmailAddress(email);
+    public CustomerBuilder named(final String firstName,final String lastName){
+        return named(Name.valueOf(firstName,lastName));
+    }
+
+    private CustomerBuilder named(final Name name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * Email builder
+     * @param email email
+     * @return email address
+     */
+    public CustomerBuilder emailed(final String email){
+        return emailed(EmailAddress.valueOf(email));
+    }
+
+    public CustomerBuilder emailed(final EmailAddress email) {
+        this.email = email;
+        return this;
+    }
+
+    /**
+     * Phone number builder
+     * @param phoneNumber phone number
+     * @return phone number
+     */
+    public CustomerBuilder phoned(final long phoneNumber){
+        return phoned(new PhoneNumber(phoneNumber));
+    }
+
+    public CustomerBuilder phoned(final PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    /**
+     * VAT builder
+     * @param vat vat
+     * @return vat
+     */
+    public CustomerBuilder vated(final String vat){
+        return vated(new VAT(vat));
+    }
+
+    public CustomerBuilder vated(final VAT vat) {
+        this.vat = vat;
+        return this;
+    }
+
+    public CustomerBuilder gendered(final String gender){
+        if(gender.equals("Male")){
+            return gendered(Gender.Masculine);
+        }else if(gender.equals("Female")){
+            return gendered(Gender.Feminine);
+        }
+        return null;
+    }
+
+    public CustomerBuilder gendered(final Gender gender){
         this.gender = gender;
-        this.phoneNumber = new PhoneNumber(phoneNumber);
-        this.vat = new VAT(vat);
+        return this;
+    }
+
+    /**
+     * Birthdate builder
+     * @param year year
+     * @param month month
+     * @param day day
+     * @return birthday
+     */
+    public CustomerBuilder dated(final int year,final int month,final int day){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month);
         cal.set(Calendar.DAY_OF_MONTH, day);
         this.birthDate = cal.getTime();
-        List<Address> addresses = new ArrayList<Address>();
+        return dated(cal.getTime());
+    }
+
+    public CustomerBuilder dated(final Date birthDate) {
+        this.birthDate = birthDate;
+        return this;
+    }
+
+    private Customer buildOrThrow() {
+        if (customer != null) {
+            return customer;
+        } else if (name != null && vat != null && email != null && phoneNumber != null) {
+            customer = new Customer(name,email,gender,phoneNumber,vat,birthDate);
+            return customer;
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+
+    /**
+     * Single address builder
+     * @param streetName street name
+     * @param doorNumber door number
+     * @param postalCode postal code
+     * @param city city
+     * @param country country
+     * @return address
+     */
+    public Address addressed(String streetName,int doorNumber,String postalCode,String city,String country){
+        return new Address(streetName,doorNumber,postalCode,city,country);
+    }
+
+    /**
+     * Set of addresses builder
+     * @param addresses addresses
+     * @return set
+     */
+    public CustomerBuilder withAddresses(final Set<Address> addresses) {
+        // we will simply ignore if we receive a null set
+        if (addresses != null) {
+            addresses.forEach(this::withAddresses);
+        }
+        return this;
+    }
+
+    public CustomerBuilder withAddresses(final Address address) {
+        buildOrThrow();
+        customer.addAddresses(address);
+        return this;
     }
 
     /**
@@ -59,6 +166,8 @@ public class CustomerBuilder implements DomainFactory<Customer> {
      */
     @Override
     public Customer build() {
-        return new Customer(name,email,gender,phoneNumber,vat,birthDate);
+        final Customer cust = buildOrThrow();
+        customer = null;
+        return cust;
     }
 }
