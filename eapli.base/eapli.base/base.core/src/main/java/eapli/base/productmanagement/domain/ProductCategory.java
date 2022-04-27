@@ -7,8 +7,13 @@ import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
+@Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }) })
 public class ProductCategory implements AggregateRoot<String> {
 
     private static final long serialVersionUID = 1L;
@@ -16,21 +21,34 @@ public class ProductCategory implements AggregateRoot<String> {
     /**
      * Alphanumeric code of the category
      */
+
+    @EmbeddedId
     private AlphanumericCode code;
 
     /**
      * Description of the category
      */
+    @Embedded
     private Description description;
 
     /**
      * Reference to superCategory
      */
+    @ManyToOne
+    @JoinColumn(name = "super_category_ID")
     private ProductCategory superCategory;
 
     @XmlElement
     @JsonProperty
     private boolean active;
+
+    public ProductCategory getSuperCategory() {
+        return superCategory;
+    }
+
+    public Description getDescription() {
+        return description;
+    }
 
     /**
      * Constructor with super category reference

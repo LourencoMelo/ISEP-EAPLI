@@ -41,6 +41,10 @@ public final class TestDataConstants {
     public static final String DISH_NAME_LENTILHAS_SALTEADAS = "lentilhas salteadas";
     public static final String DISH_NAME_TOFU_GRELHADO = "tofu grelhado";
 
+    public static final String PRODUCT_CATEGORY_CLOTHE = "clothe";
+    public static final String PRODUCT_CATEGORY_BEAUTY = "beauty";
+    public static final String PRODUCT_CATEGORY_KITCHEN = "food";
+
     public static final String USER_TEST1 = "user1";
 
     @SuppressWarnings("squid:S2068")

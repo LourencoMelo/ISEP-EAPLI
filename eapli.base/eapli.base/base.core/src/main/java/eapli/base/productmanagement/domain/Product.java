@@ -27,9 +27,10 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @GeneratedValue
     private Long internalCode;
 
-    @Embedded
+    @EmbeddedId
     @XmlElement
     @JsonProperty
+    @AttributeOverride(name = "name", column = @Column(name = "name"))
     private Designation name;
 
     /**
@@ -65,7 +66,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @Embedded
     @XmlElement
     @JsonProperty
-    @AttributeOverride(name = "value", column = @Column(name = "brand"))
+    @AttributeOverride(name = "name", column = @Column(name = "brand"))
     private Designation brand;
 
     /**
@@ -73,7 +74,6 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      */
     @XmlElement
     @JsonProperty
-    @AttributeOverride(name = "value", column = @Column(name = "reference"))
     private Reference reference;
 
     /**
@@ -87,12 +87,14 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      * Price of the product before taxes
      */
     @Embedded
+    @AttributeOverride(name = "currency", column = @Column(name = "unitaryPreTaxPrice"))
     private Money unitaryPreTaxPrice;
 
     /**
      * Price of the product after taxes
      */
     @Embedded
+    @AttributeOverride(name = "amount", column = @Column(name = "unitaryPosTaxPrice"))
     private Money unitaryPosTaxPrice;
 
     /**
@@ -102,6 +104,35 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @JsonProperty
     @ManyToOne(optional = false)
     private ProductCategory category;
+
+    /**
+     * @param shortDescription     short description
+     * @param extendedDescription  extended description
+     * @param technicalDescription more technical description
+     * @param brand                brand name
+     * @param reference            reference of brand
+     * @param unitaryPreTaxPrice   unitary price pre tax
+     * @param unitaryPosTaxPrice   unitary price pos tax
+     */
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Money unitaryPreTaxPrice, Money unitaryPosTaxPrice) {
+
+        Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
+
+        this.category = category;
+        this.name = name;
+        this.shortDescription = shortDescription;
+        this.extendedDescription = extendedDescription;
+        this.technicalDescription = technicalDescription;
+        this.brand = brand;
+        this.reference = reference;
+        this.active = true;
+        this.unitaryPreTaxPrice = unitaryPreTaxPrice;
+        this.unitaryPosTaxPrice = unitaryPosTaxPrice;
+    }
+
+    protected Product() {
+        //Empty
+    }
 
     public Designation getName() {
         return name;
@@ -135,35 +166,6 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         return unitaryPosTaxPrice;
     }
 
-
-    /**
-     * @param shortDescription     short description
-     * @param extendedDescription  extended description
-     * @param technicalDescription more technical description
-     * @param brand                brand name
-     * @param reference            reference of brand
-     * @param unitaryPreTaxPrice   unitary price pre tax
-     * @param unitaryPosTaxPrice   unitary price pos tax
-     */
-    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Money unitaryPreTaxPrice, Money unitaryPosTaxPrice) {
-
-        Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
-
-        this.category = category;
-        this.name = name;
-        this.shortDescription = shortDescription;
-        this.extendedDescription = extendedDescription;
-        this.technicalDescription = technicalDescription;
-        this.brand = brand;
-        this.reference = reference;
-        this.active = true;
-        this.unitaryPreTaxPrice = unitaryPreTaxPrice;
-        this.unitaryPosTaxPrice = unitaryPosTaxPrice;
-    }
-
-    protected Product() {
-        //Empty
-    }
 
     @Override
     public boolean equals(final Object o) {
@@ -245,8 +247,37 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
 
     @Override
     public <R> R buildRepresentation(RepresentationBuilder<R> builder) {
-        return null;
+        builder.startObject("Product").withProperty("Code", internalCode)
+                .withProperty("Category", category.toString())
+                .withProperty("Short description", shortDescription)
+                .withProperty("Extended description", extendedDescription)
+                .withProperty("Technical description", technicalDescription)
+                .withProperty("Brand", brand)
+                .withProperty("Reference", reference.toString())
+                .withProperty("Active", active)
+                .withProperty("Price before taxes", unitaryPreTaxPrice)
+                .withProperty("Price after taxes", unitaryPosTaxPrice)
+                .startObject("ProductCategory")
+                .withProperty("Code", category.getCode().toString())
+                .withProperty("Description", category.description()).endObject();
+
+        return builder.build();
     }
 
-
+    @Override
+    public String toString() {
+        return "Product{" +
+                "internalCode=" + internalCode +
+                ", name=" + name +
+                ", shortDescription=" + shortDescription +
+                ", extendedDescription=" + extendedDescription +
+                ", technicalDescription=" + technicalDescription +
+                ", brand=" + brand +
+                ", reference=" + reference +
+                ", active=" + active +
+                ", unitaryPreTaxPrice=" + unitaryPreTaxPrice +
+                ", unitaryPosTaxPrice=" + unitaryPosTaxPrice +
+                ", category=" + category +
+                '}';
+    }
 }

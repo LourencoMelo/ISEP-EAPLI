@@ -80,11 +80,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public ProductRepository products() {
-        return null;
-    }
-
-    @Override
     public SignupRequestRepository signupRequests(final TransactionalContext tx) {
         return new InMemorySignupRequestRepository();
     }
@@ -95,6 +90,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return null;
     }
 
+    @Override
     public ProductCategoryRepository productCategories() {
         return productCategories(null);
     }
@@ -116,8 +112,14 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return new InMemoryOrderRepository();
     }
 
+    @Override
     public ProductCategoryRepository productCategories(TransactionalContext autoTx) {
         return new InMemoryProductCategoryRepository();
+    }
+
+    @Override
+    public ProductRepository products() {
+        return new InMemoryProductRepository();
     }
 
 }

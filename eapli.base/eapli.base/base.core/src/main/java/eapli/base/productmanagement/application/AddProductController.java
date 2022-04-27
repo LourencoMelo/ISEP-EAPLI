@@ -6,6 +6,7 @@ import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.domain.ProductBuilder;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.base.productmanagement.domain.Reference;
+import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.general.domain.model.Description;
@@ -19,6 +20,7 @@ public class AddProductController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final ListProductCategoryService svcProductCategories = new ListProductCategoryService();
     private final ProductRepository productRepository = PersistenceContext.repositories().products();
+    private final ProductCategoryRepository productCategoryRepository = PersistenceContext.repositories().productCategories();
 
     public Product addProduct(ProductCategory productCategory, String name, String shortDescription, String extendedDescription, String technicalDescription, String brand, String reference, double unitaryPreTaxPrice, double unitaryPosTaxPrice) {
 
@@ -42,7 +44,5 @@ public class AddProductController {
     public Iterable<ProductCategory> productCategories() {
         return svcProductCategories.activeProductCategories();
     }
-
-
 
 }

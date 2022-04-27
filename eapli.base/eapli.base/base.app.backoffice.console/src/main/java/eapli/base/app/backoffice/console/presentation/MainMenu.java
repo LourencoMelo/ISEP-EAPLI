@@ -215,8 +215,4 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
-
-
-
-
 }

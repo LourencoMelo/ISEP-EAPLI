@@ -107,4 +107,7 @@ public interface RepositoryFactory {
     OrderRepository orders();
 
     OrderRepository orders(TransactionalContext autoTx);
+
+    ProductCategoryRepository productCategories(TransactionalContext autoTx);
+
 }
