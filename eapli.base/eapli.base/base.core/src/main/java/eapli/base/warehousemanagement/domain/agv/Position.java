@@ -2,6 +2,9 @@ package eapli.base.warehousemanagement.domain.agv;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Position implements ValueObject {
 
     /**
@@ -21,5 +24,9 @@ public class Position implements ValueObject {
     public Position(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Position() {
+
     }
 }

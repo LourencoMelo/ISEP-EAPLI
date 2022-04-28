@@ -6,48 +6,54 @@ import eapli.framework.general.domain.model.Description;
 import javax.persistence.*;
 
 @Entity
-@Embeddable
 public class AGV implements AggregateRoot<AGVId> {
 
     /**
      * Id of the AGV
      */
-    @Id
+    @EmbeddedId
     private AGVId id;
 
     /**
      * A short description
      */
+    @Embedded
     private Description description;
 
     /**
      * Model of the AGV
      */
+    @Embedded
     private Model model;
 
     /**
      * MaxWeight it can carry
      */
+    @Embedded
     private MaxWeight maxWeight;
 
     /**
      * MaxVolume it can Carry
      */
+    @Embedded
     private MaxVolume maxVolume;
 
     /**
      * Status of the AGV
      */
+    @Embedded
     private Status status;
 
     /**
      * Position of the AGV
      */
+    @Embedded
     private Position position;
 
     /**
      * His autonomy in minutes
      */
+    @Embedded
     private AutonomyMin autonomyMin;
 
 //    /**

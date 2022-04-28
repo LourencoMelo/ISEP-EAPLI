@@ -2,6 +2,9 @@ package eapli.base.warehousemanagement.domain.agv;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Model implements ValueObject {
 
     /**
@@ -16,6 +19,10 @@ public class Model implements ValueObject {
      */
     public Model(String model) {
         this.setModel(model);
+    }
+
+    public Model() {
+
     }
 
     /**

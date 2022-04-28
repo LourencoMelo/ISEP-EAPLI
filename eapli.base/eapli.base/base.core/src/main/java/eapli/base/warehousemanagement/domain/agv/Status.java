@@ -2,6 +2,9 @@ package eapli.base.warehousemanagement.domain.agv;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Status implements ValueObject {
 
     /**
@@ -15,6 +18,10 @@ public class Status implements ValueObject {
      */
     public Status(String statusDescription) {
         this.setStatusDescription(statusDescription);
+    }
+
+    public Status() {
+
     }
 
     /**

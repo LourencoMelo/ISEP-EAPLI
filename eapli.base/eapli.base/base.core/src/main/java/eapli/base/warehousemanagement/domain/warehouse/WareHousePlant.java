@@ -2,20 +2,21 @@ package eapli.base.warehousemanagement.domain.warehouse;
 
 import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.base.warehousemanagement.domain.agv.AGVDock;
+import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.Description;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class WareHousePlant {
+public class WareHousePlant implements AggregateRoot<Integer> {
 
     /**
      * Id of WareHousePlant
      */
     @Id
     @GeneratedValue()
-    private int id;
+    private long id;
 
     /**
      * Description of the WareHousePlant
@@ -109,5 +110,25 @@ public class WareHousePlant {
      */
     public WareHousePlant() {
 
+    }
+
+    @Override
+    public boolean sameAs(Object other) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(Integer other) {
+        return AggregateRoot.super.compareTo(other);
+    }
+
+    @Override
+    public Integer identity() {
+        return null;
+    }
+
+    @Override
+    public boolean hasIdentity(Integer id) {
+        return AggregateRoot.super.hasIdentity(id);
     }
 }

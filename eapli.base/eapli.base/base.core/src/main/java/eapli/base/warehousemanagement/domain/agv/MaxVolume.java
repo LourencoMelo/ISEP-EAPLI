@@ -2,6 +2,9 @@ package eapli.base.warehousemanagement.domain.agv;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class MaxVolume implements ValueObject {
 
     /**
@@ -15,6 +18,10 @@ public class MaxVolume implements ValueObject {
      */
     public MaxVolume(double maxVolume) {
         this.setMaxVolume(maxVolume);
+    }
+
+    public MaxVolume() {
+
     }
 
     /**

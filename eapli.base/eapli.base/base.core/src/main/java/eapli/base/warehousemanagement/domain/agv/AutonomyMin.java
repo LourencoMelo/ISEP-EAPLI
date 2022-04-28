@@ -2,6 +2,9 @@ package eapli.base.warehousemanagement.domain.agv;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class AutonomyMin implements ValueObject {
 
     /**
@@ -15,6 +18,10 @@ public class AutonomyMin implements ValueObject {
      */
     public AutonomyMin(int autonomyMin) {
         this.setAutonomyMin(autonomyMin);
+    }
+
+    public AutonomyMin() {
+
     }
 
     /**

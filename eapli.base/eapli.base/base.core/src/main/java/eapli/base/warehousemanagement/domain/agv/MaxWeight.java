@@ -2,6 +2,9 @@ package eapli.base.warehousemanagement.domain.agv;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class MaxWeight implements ValueObject {
 
     /**
@@ -16,6 +19,10 @@ public class MaxWeight implements ValueObject {
      */
     public MaxWeight(double maxWeight) {
         this.setMaxWeight(maxWeight);
+    }
+
+    public MaxWeight() {
+
     }
 
     /**
