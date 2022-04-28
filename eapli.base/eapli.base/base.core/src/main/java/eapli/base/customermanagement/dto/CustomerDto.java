@@ -1,11 +1,9 @@
-package eapli.base.costumermanagement.dto;
+package eapli.base.customermanagement.dto;
 
 import eapli.framework.representations.dto.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @DTO
 @AllArgsConstructor

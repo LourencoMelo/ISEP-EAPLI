@@ -1,4 +1,4 @@
-package eapli.base.costumermanagement.domain;
+package eapli.base.customermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;

@@ -1,4 +1,4 @@
-package eapli.base.costumermanagement.domain;
+package eapli.base.customermanagement.domain;
 
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.EmailAddress;
@@ -23,7 +23,7 @@ public class CustomerBuilder implements DomainFactory<Customer> {
 
     private VAT vat;
 
-    private Date birthDate;
+    private BirthDate birthDate;
 
     /**
      * Name builder
@@ -88,7 +88,7 @@ public class CustomerBuilder implements DomainFactory<Customer> {
         }else if(gender.equals("Female")){
             return gendered(Gender.Feminine);
         }
-        return null;
+        return gendered(Gender.Non_Defined);
     }
 
     public CustomerBuilder gendered(final Gender gender){
@@ -104,15 +104,13 @@ public class CustomerBuilder implements DomainFactory<Customer> {
      * @return birthday
      */
     public CustomerBuilder dated(final int year,final int month,final int day){
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month);
-        cal.set(Calendar.DAY_OF_MONTH, day);
-        this.birthDate = cal.getTime();
-        return dated(cal.getTime());
+        if(day == 0){
+            return dated(new BirthDate());
+        }
+        return dated(new BirthDate(day,month,year));
     }
 
-    public CustomerBuilder dated(final Date birthDate) {
+    public CustomerBuilder dated(final BirthDate birthDate) {
         this.birthDate = birthDate;
         return this;
     }

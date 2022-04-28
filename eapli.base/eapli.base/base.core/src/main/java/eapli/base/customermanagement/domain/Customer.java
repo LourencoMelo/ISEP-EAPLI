@@ -1,6 +1,6 @@
-package eapli.base.costumermanagement.domain;
+package eapli.base.customermanagement.domain;
 
-import eapli.base.costumermanagement.dto.CustomerDto;
+import eapli.base.customermanagement.dto.CustomerDto;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.Name;
@@ -37,7 +37,9 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
     @ElementCollection
     private final Set<Address> addresses = new HashSet<>();
 
-    private Date birthDate;
+    @Temporal(TemporalType.DATE)
+    @Embedded
+    private BirthDate birthDate;
 
     public EmailAddress getEmail() {
         return email;
@@ -58,7 +60,7 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
      * @param phoneNumber customer phone number
      * @param vat customer value-added tax
      */
-    public Customer(Name name, EmailAddress email, Gender gender, PhoneNumber phoneNumber, VAT vat,Date birthDate){
+    public Customer(Name name, EmailAddress email, Gender gender, PhoneNumber phoneNumber, VAT vat,BirthDate birthDate){
         this.name = name;
         this.email = email;
         this.gender = gender;
@@ -92,7 +94,7 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
         return vat;
     }
 
-    public Date getBirthDate() {
+    public BirthDate getBirthDate() {
         return birthDate;
     }
 

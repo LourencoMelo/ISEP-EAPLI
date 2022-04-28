@@ -22,7 +22,7 @@ package eapli.base.infrastructure.persistence;
 
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.base.costumermanagement.repositories.CustomerRepository;
+import eapli.base.customermanagement.repositories.CustomerRepository;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;

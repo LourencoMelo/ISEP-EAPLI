@@ -1,6 +1,6 @@
 package eapli.base.ordermanagement.domain;
 
-import eapli.base.costumermanagement.domain.Address;
+import eapli.base.customermanagement.domain.Address;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.EmailAddress;

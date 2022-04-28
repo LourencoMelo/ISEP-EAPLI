@@ -1,7 +1,7 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.costumermanagement.domain.Customer;
-import eapli.base.costumermanagement.repositories.CustomerRepository;
+import eapli.base.customermanagement.domain.Customer;
+import eapli.base.customermanagement.repositories.CustomerRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 public class InMemoryCustomerRepository extends InMemoryDomainRepository<Customer, Long>
