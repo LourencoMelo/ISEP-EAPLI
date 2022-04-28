@@ -1,7 +1,7 @@
 package eapli.base.ordermanagement.domain;
 
 /**
- * Enum with possible order status
+ * Enum with possible orders status
  */
 public enum OrderStatus {
 

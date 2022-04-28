@@ -25,6 +25,7 @@ package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductAction;
 import eapli.base.app.backoffice.console.presentation.authz.AddProductUI;
+import eapli.base.app.backoffice.console.presentation.orders.Action.CreateOrderForClientAction;
 import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
 import eapli.base.app.backoffice.console.presentation.warehouseemployee.ConfigureAGVAction;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
@@ -77,6 +78,8 @@ public class MainMenu extends AbstractUI {
     private static final int ADD_PRODUCT = 1;
     private static final int REGISTER_CUSTOMER = 2;
     private static final int LIST_ALL_PRODUCTS = 3;
+
+    private static final int CREATE_ORDER = 4;
 
     //WAREHOUSE_EMPLOYEE
     private static final int CONFIGURE_AGV = 1;
@@ -186,6 +189,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(ADD_PRODUCT, "Add Product", new AddProductUI()::show);
         menu.addItem(REGISTER_CUSTOMER,"Register customer", new RegisterCustomerAction());
         menu.addItem(LIST_ALL_PRODUCTS, "List all Products", new ListProductAction());
+        menu.addItem(CREATE_ORDER, "Create a order for a client", new CreateOrderForClientAction());
         //menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate Product", new DeactivateUserAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

@@ -41,16 +41,32 @@ public class Order implements AggregateRoot<Long> {
      * Billing address
      */
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "streetName", column = @Column(name = "Billing_street")),
+            @AttributeOverride(name = "doorNumber", column = @Column(name = "Billing_doorNumber")),
+            @AttributeOverride(name = "postalCode", column = @Column(name = "Billing_postalCode")),
+            @AttributeOverride(name = "city", column = @Column(name = "Billing_City")),
+            @AttributeOverride(name = "country", column = @Column(name = "Billing_Country"))
+    })
+
     private Address billingAddress;
 
     /**
      * Delivering address
      */
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "streetName", column = @Column(name = "Delivering_street")),
+            @AttributeOverride(name = "doorNumber", column = @Column(name = "Delivering_doorNumber")),
+            @AttributeOverride(name = "postalCode", column = @Column(name = "Delivering_postalCode")),
+            @AttributeOverride(name = "city", column = @Column(name = "Delivering_City")),
+            @AttributeOverride(name = "country", column = @Column(name = "Delivering_Country"))
+    })
+
     private Address deliveringAddress;
 
     /**
-     * Email from clerk who created order
+     * Email from clerk who created orders
      */
     @Embedded
     private EmailAddress clerkEmail;
@@ -63,7 +79,7 @@ public class Order implements AggregateRoot<Long> {
     /**
      * Date when the interaction happened
      */
-    private Date interactionDate;
+    private Calendar interactionDate;
 
     /**
      * Additional comment about the interaction
@@ -74,17 +90,28 @@ public class Order implements AggregateRoot<Long> {
      * Total price before taxes
      */
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "amountBeforeTaxes")),
+            @AttributeOverride(name = "currency", column = @Column(name = "currencyBeforeTaxes") )
+
+    })
     private Money priceBeforeTaxes;
 
     /**
      * Total price after taxes
      */
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "amountAfterTaxes") ),
+            @AttributeOverride(name = "currency", column = @Column(name = "currencyAfterTaxes") )
+
+    })
     private Money priceAfterTaxes;
 
     /**
-     * Current status from the order
+     * Current status from the orders
      */
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     public Address getDeliveringAddress() {
@@ -108,7 +135,7 @@ public class Order implements AggregateRoot<Long> {
     }
 
     /**
-     * Constructor used when order is created by a customer
+     * Constructor used when orders is created by a customer
      *
      * @param products         map of products from shopping cart
      * @param billing          address for billing
@@ -133,7 +160,7 @@ public class Order implements AggregateRoot<Long> {
     }
 
     /**
-     * Constructor used when order is created by a sales clerk on behalf of a given customer
+     * Constructor used when orders is created by a sales clerk on behalf of a given customer
      *
      * @param products         map of products inserted at the time
      * @param billing          address for billing
@@ -142,12 +169,12 @@ public class Order implements AggregateRoot<Long> {
      * @param shipmentMethod   method of shipment
      * @param priceBeforeTaxes price without taxes applied
      * @param priceAfterTaxes  price with taxes applied
-     * @param clerkEmail       email of the sales clerk responsible for the order creation
+     * @param clerkEmail       email of the sales clerk responsible for the orders creation
      * @param method           method of communication between sales clerk and respective client
      * @param interactionDate  date of the interaction
      * @param comment          additional comment
      */
-    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Money priceBeforeTaxes, Money priceAfterTaxes, EmailAddress clerkEmail, String method, Date interactionDate, String comment) {
+    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Money priceBeforeTaxes, Money priceAfterTaxes, EmailAddress clerkEmail, String method, Calendar interactionDate, String comment) {
         this.orderedProducts = products;
         this.billingAddress = billing;
         this.deliveringAddress = delivering;
@@ -191,7 +218,7 @@ public class Order implements AggregateRoot<Long> {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param other order
+     * @param other orders
      * @return true if same
      */
     @Override
