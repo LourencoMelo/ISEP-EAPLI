@@ -7,9 +7,9 @@ import eapli.base.ordermanagement.domain.OrderBuilder;
 import eapli.base.ordermanagement.domain.PaymentMethod;
 import eapli.base.ordermanagement.domain.ShipmentMethod;
 import eapli.base.ordermanagement.repositories.OrderRepository;
+import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
 import eapli.base.usermanagement.domain.BaseRoles;
-import eapli.framework.general.domain.model.Money;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
@@ -63,22 +63,22 @@ public class CreateOrderForClientController {
         return cal1;
     }
 
-    private Money priceWithoutTaxes(final Map<Product, Integer> items){
-        Money totalAmount = Money.euros(0.0);
+    private Cash priceWithoutTaxes(final Map<Product, Integer> items){
+        Cash totalAmount = Cash.euros(0.0);
         for (Map.Entry<Product, Integer> entry : items.entrySet()) {
             double price = entry.getKey().getPrePrice().amountAsDouble() * entry.getValue();
-            totalAmount.add(Money.euros(price));
+            totalAmount.add(Cash.euros(price));
         }
 
         return totalAmount;
 
     }
 
-    private Money priceWithTaxes(final Map<Product, Integer> items){
-        Money totalAmountWithTaxes = Money.euros(0.0);
+    private Cash priceWithTaxes(final Map<Product, Integer> items){
+        Cash totalAmountWithTaxes = Cash.euros(0.0);
         for (Map.Entry<Product, Integer> entry : items.entrySet()) {
             double price = entry.getKey().getPosPrice().amountAsDouble() * entry.getValue();
-            totalAmountWithTaxes.add(Money.euros(price));
+            totalAmountWithTaxes.add(Cash.euros(price));
         }
 
         return totalAmountWithTaxes;

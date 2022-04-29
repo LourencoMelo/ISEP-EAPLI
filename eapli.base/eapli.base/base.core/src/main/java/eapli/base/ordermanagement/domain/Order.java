@@ -1,16 +1,17 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.customermanagement.domain.Address;
+import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.general.domain.model.Money;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Table(name = "ProductsOrder")
 public class Order implements AggregateRoot<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -20,6 +21,7 @@ public class Order implements AggregateRoot<Long> {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Identity")
     private Long pk;
 
     @Version
@@ -29,6 +31,7 @@ public class Order implements AggregateRoot<Long> {
      * Ordered products with their respective quantities
      */
     @ElementCollection
+    @Column(name = "Products")
     private Map<Product, Integer> orderedProducts;
 
     /**
@@ -95,7 +98,7 @@ public class Order implements AggregateRoot<Long> {
             @AttributeOverride(name = "currency", column = @Column(name = "currencyBeforeTaxes") )
 
     })
-    private Money priceBeforeTaxes;
+    private Cash priceBeforeTaxes;
 
     /**
      * Total price after taxes
@@ -106,7 +109,7 @@ public class Order implements AggregateRoot<Long> {
             @AttributeOverride(name = "currency", column = @Column(name = "currencyAfterTaxes") )
 
     })
-    private Money priceAfterTaxes;
+    private Cash priceAfterTaxes;
 
     /**
      * Current status from the orders
@@ -145,7 +148,7 @@ public class Order implements AggregateRoot<Long> {
      * @param priceBeforeTaxes price without taxes applied
      * @param priceAfterTaxes  price with taxes applied
      */
-    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Money priceBeforeTaxes, Money priceAfterTaxes) {
+    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Cash priceBeforeTaxes, Cash priceAfterTaxes) {
         this.orderedProducts = products;
         this.billingAddress = billing;
         this.deliveringAddress = delivering;
@@ -174,7 +177,7 @@ public class Order implements AggregateRoot<Long> {
      * @param interactionDate  date of the interaction
      * @param comment          additional comment
      */
-    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Money priceBeforeTaxes, Money priceAfterTaxes, EmailAddress clerkEmail, String method, Calendar interactionDate, String comment) {
+    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Cash priceBeforeTaxes, Cash priceAfterTaxes, EmailAddress clerkEmail, String method, Calendar interactionDate, String comment) {
         this.orderedProducts = products;
         this.billingAddress = billing;
         this.deliveringAddress = delivering;

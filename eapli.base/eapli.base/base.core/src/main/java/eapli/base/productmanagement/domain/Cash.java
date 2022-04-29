@@ -8,15 +8,14 @@ import eapli.framework.strings.XmlCurrencyAdapter;
 import eapli.framework.validations.Preconditions;
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.Currency;
-import java.util.stream.Collector;
 
+@Embeddable
 public class Cash implements Comparable<Cash>, Serializable, ValueObject, FormattedString {
 
     private static final long serialVersionUID = 1L;
@@ -94,6 +93,11 @@ public class Cash implements Comparable<Cash>, Serializable, ValueObject, Format
 
      */
 
+    public Cash add(final Cash arg) {
+        Preconditions.ensure(this.currency.equals(arg.currency), "Cannot add different currencies");
+        return new Cash(this.amount + arg.amount, this.currency);
+    }
+
     public int compareTo(final Cash arg) {
         Preconditions.areEqual(this.currency, arg.currency, "Cannot add different currencies");
         return this.amount.compareTo(arg.amount);
@@ -128,6 +132,10 @@ public class Cash implements Comparable<Cash>, Serializable, ValueObject, Format
 
         public MoneyCollector(final Cash zero) {
             this.current = zero;
+        }
+
+        public void add(final Cash b) {
+            this.current = this.current.add(b);
         }
     }
 }

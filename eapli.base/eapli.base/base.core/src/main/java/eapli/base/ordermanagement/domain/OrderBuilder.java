@@ -1,6 +1,7 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.customermanagement.domain.Address;
+import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.EmailAddress;
@@ -30,9 +31,9 @@ public class OrderBuilder implements DomainFactory<Order> {
 
     private String comment;
 
-    private Money priceBeforeTaxes;
+    private Cash priceBeforeTaxes;
 
-    private Money priceAfterTaxes;
+    private Cash priceAfterTaxes;
 
 
     public OrderBuilder withProducts(final Map<Product, Integer> products) {
@@ -84,12 +85,12 @@ public class OrderBuilder implements DomainFactory<Order> {
         return this;
     }
 
-    public OrderBuilder withPriceWithoutTaxes(final Money price) {
+    public OrderBuilder withPriceWithoutTaxes(final Cash price) {
         this.priceBeforeTaxes = price;
         return this;
     }
 
-    public OrderBuilder withPriceWithTaxes(final Money price) {
+    public OrderBuilder withPriceWithTaxes(final Cash price) {
         this.priceAfterTaxes = price;
         return this;
     }

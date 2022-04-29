@@ -13,6 +13,7 @@
     <class>eapli.base.clientusermanagement.domain.ClientUser</class>
     <class>eapli.base.clientusermanagement.domain.SignupRequest</class>
     <class>eapli.base.warehousemanagement.domain.agv.AGV</class>
+    <class>eapli.base.ordermanagement.domain.Order</class>
     <class>eapli.base.productmanagement.domain.ProductCategory</class>
     <class>eapli.base.productmanagement.domain.Product</class>
     <class>eapli.base.customermanagement.domain.Customer</class>
