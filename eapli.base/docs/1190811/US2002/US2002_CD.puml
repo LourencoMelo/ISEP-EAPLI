@@ -1,26 +1,61 @@
 @startuml
 
 Entity AGV<<entity>>{
-    -String id **PRIMARY KEY**;
-    -String description;
-    -String model;
-    -double maxWeight;
-    -double maxVolume;
-    -boolean status;
-    -int positionX;
-    -int positionY;
-    -int autonomyMin;
-    -Task task;
-    -AGVDock agvDock;
+    -AGVId agvId **PRIMARY KEY**
 }
 
 Entity AGVDock<<entity>>{
     -long id **PRIMARY KEY**;
-    -Accessibility accessibility;
 }
 
-AGV "1" -> "1" AGVDock
+class AGVId <<value object>>{
+    -String agvId;
+}
 
-AGVDock "1" -> "1" Accessibility
+class Description <<value object>>{
+    -String description;
+}
+
+class Model <<value object>>{
+    -String model;
+}
+
+class MaxWeight <<value object>>{
+    -double maxWeight;
+}
+
+class MaxVolume <<value object>>{
+    -double maxVolume;
+}
+
+class Status <<value object>>{
+    -String status;
+}
+
+class Position <<value object>>{
+    -int x;
+    -int y;
+}
+
+class AutonomyMin <<value object>>{
+    -int autonomyMin;
+}
+
+AGV "1" -down-> "1" AGVId
+AGV "1" -down-> "1" Description
+AGV "1" -down-> "1" Model
+AGV "1" -down-> "1" MaxWeight
+AGV "1" -down-> "1" MaxVolume
+AGV "1" -down-> "1" Status
+AGV "1" -down-> "1" Position
+AGV "1" -down-> "1" AutonomyMin
+
+AGVDock "1" -left-> "1" Accessibility
+AGVDock "1" -left-> "1" Begin
+AGVDock "1" -left-> "1" End
+
+
+AGV "1" -left-> "1" AGVDock
+
 
 @enduml

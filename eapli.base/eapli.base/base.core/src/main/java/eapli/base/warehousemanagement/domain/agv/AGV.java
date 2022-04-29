@@ -4,6 +4,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.Description;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class AGV implements AggregateRoot<AGVId> {
@@ -59,13 +60,12 @@ public class AGV implements AggregateRoot<AGVId> {
 //    /**
 //     * His AGV Dock where it charges
 //     */
-//    @OneToOne(mappedBy = "agvResp", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 //    private AGVDock agvDock;
-//
+
 //    /**
 //     * His task
 //     */
-//    @OneToOne(mappedBy = "agvResp", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+//    @OneToOne
 //    private Task task;
 
 
