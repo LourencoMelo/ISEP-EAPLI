@@ -105,6 +105,8 @@ public interface RepositoryFactory {
 
     AGVRepository agv(TransactionalContext autoTx);
 
+    ProductCategoryRepository productCategories(TransactionalContext autoTx);
+
     /**
      * Orders repository will be created in auto transaction mode
      * @return
@@ -112,7 +114,5 @@ public interface RepositoryFactory {
     OrderRepository orders();
 
     OrderRepository orders(TransactionalContext autoTx);
-
-    ProductCategoryRepository productCategories(TransactionalContext autoTx);
 
 }

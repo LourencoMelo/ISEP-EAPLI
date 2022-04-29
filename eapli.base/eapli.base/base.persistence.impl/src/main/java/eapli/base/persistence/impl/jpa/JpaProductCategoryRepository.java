@@ -6,6 +6,10 @@ import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
+import java.util.Calendar;
+
 public class JpaProductCategoryRepository extends JpaAutoTxRepository<ProductCategory, Long,  String> implements ProductCategoryRepository {
 
     public JpaProductCategoryRepository(final TransactionalContext autoTx) {

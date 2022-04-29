@@ -2,10 +2,7 @@ package eapli.base.productmanagement.application;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.productmanagement.domain.Product;
-import eapli.base.productmanagement.domain.ProductBuilder;
-import eapli.base.productmanagement.domain.ProductCategory;
-import eapli.base.productmanagement.domain.Reference;
+import eapli.base.productmanagement.domain.*;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
@@ -34,8 +31,8 @@ public class AddProductController {
                 .technicalDescriptioned(technicalDescription)
                 .branded(brand)
                 .referenced(reference)
-                .preTaxcosting(Money.euros(unitaryPreTaxPrice))
-                .posTaxcosting(Money.euros(unitaryPosTaxPrice))
+                .preTaxcosting(Cash.euros(unitaryPreTaxPrice))
+                .posTaxcosting(Cash.euros(unitaryPosTaxPrice))
                 .build();
 
         return productRepository.save(newProduct);

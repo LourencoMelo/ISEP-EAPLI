@@ -17,11 +17,11 @@ public class ProductBuilder implements DomainFactory<Product> {
     private Description technicalDescription;
     private Designation brand;
     private Reference reference;
-    private Money pricePreTax;
-    private Money pricePosTax;
+    private Cash pricePreTax;
+    private Cash pricePosTax;
 
     public ProductBuilder ofType(ProductCategory productCategory) {
-        productCategory = productCategory;
+        this.productCategory = productCategory;
         return this;
     }
 
@@ -79,12 +79,12 @@ public class ProductBuilder implements DomainFactory<Product> {
         return this;
     }
 
-    public ProductBuilder preTaxcosting(final Money price) {
+    public ProductBuilder preTaxcosting(final Cash price) {
         this.pricePreTax = price;
         return this;
     }
 
-    public ProductBuilder posTaxcosting(final Money price) {
+    public ProductBuilder posTaxcosting(final Cash price) {
         this.pricePosTax = price;
         return this;
     }

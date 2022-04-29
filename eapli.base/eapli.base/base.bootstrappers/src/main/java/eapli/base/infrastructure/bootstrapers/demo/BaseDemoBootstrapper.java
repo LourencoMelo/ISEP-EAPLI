@@ -50,7 +50,7 @@ public class BaseDemoBootstrapper implements Action {
     public boolean execute() {
         // declare bootstrap actions
         final Action[] actions = { new BackofficeUsersBootstrapper(),
-                new ClientUserBootstrapper(), };
+                new ClientUserBootstrapper(), new ProductCategoryBootstrapper(), new ProductBootstrapper() };
 
         authenticateForBootstrapping();
 

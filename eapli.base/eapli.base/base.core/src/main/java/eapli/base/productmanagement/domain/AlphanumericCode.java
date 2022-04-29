@@ -25,13 +25,14 @@ public class AlphanumericCode implements ValueObject, Comparable<AlphanumericCod
         } else if (alphanumericCode.length() > MAX_CHAR) {
             throw new IllegalArgumentException("Alphanumeric code should not have more than 23 char");
         }
+        this.code = alphanumericCode;
     }
 
-    protected AlphanumericCode(){
-        //Empty
+    public AlphanumericCode() {
+
     }
 
-    public static AlphanumericCode valueOf(final String alphanumericCode){
+    public static AlphanumericCode valueOf(String alphanumericCode){
         return new AlphanumericCode(alphanumericCode);
     }
 

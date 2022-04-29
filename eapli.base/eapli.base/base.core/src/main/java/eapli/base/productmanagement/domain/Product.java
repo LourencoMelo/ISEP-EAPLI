@@ -27,10 +27,10 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @GeneratedValue
     private Long internalCode;
 
-    @EmbeddedId
+    @Embedded
     @XmlElement
     @JsonProperty
-    @AttributeOverride(name = "name", column = @Column(name = "name"))
+    @AttributeOverride(name = "name", column = @Column(name = "designation"))
     private Designation name;
 
     /**
@@ -66,14 +66,16 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @Embedded
     @XmlElement
     @JsonProperty
-    @AttributeOverride(name = "name", column = @Column(name = "brand"))
+    @AttributeOverride(name = "brand", column = @Column(name = "brand"))
     private Designation brand;
 
     /**
      * Brand reference of the product(max 23 char)
      */
+    @Embedded
     @XmlElement
     @JsonProperty
+    @AttributeOverride(name = "reference", column = @Column(name = "reference"))
     private Reference reference;
 
     /**
@@ -84,18 +86,26 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     private boolean active;
 
     /**
-     * Price of the product before taxes
-     */
-    @Embedded
-    @AttributeOverride(name = "currency", column = @Column(name = "unitaryPreTaxPrice"))
-    private Money unitaryPreTaxPrice;
-
-    /**
      * Price of the product after taxes
      */
     @Embedded
-    @AttributeOverride(name = "amount", column = @Column(name = "unitaryPosTaxPrice"))
-    private Money unitaryPosTaxPrice;
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "unitaryPosTaxPrice")),
+            @AttributeOverride(name = "currency", column = @Column(name = "currencyOfUnitaryPosTaxPrice"))
+
+    })
+    private Cash unitaryPosTaxPrice;
+
+    /**
+     * Price of the product before taxes
+     */
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "unitaryPreTaxPrice")),
+            @AttributeOverride(name = "currency", column = @Column(name = "currencyOfUnitaryPreTaxPrice"))
+
+    })
+    private Cash unitaryPreTaxPrice;
 
     /**
      * Unique category from the product. One category has many products.
@@ -104,6 +114,10 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @JsonProperty
     @ManyToOne(optional = false)
     private ProductCategory category;
+
+    public void setName(Designation name) {
+        this.name = name;
+    }
 
     /**
      * @param shortDescription     short description
@@ -114,7 +128,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      * @param unitaryPreTaxPrice   unitary price pre tax
      * @param unitaryPosTaxPrice   unitary price pos tax
      */
-    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Money unitaryPreTaxPrice, Money unitaryPosTaxPrice) {
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice) {
 
         Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
 
@@ -158,11 +172,11 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         return reference;
     }
 
-    public Money getUnitaryPreTaxPrice() {
+    public Cash getUnitaryPreTaxPrice() {
         return unitaryPreTaxPrice;
     }
 
-    public Money getUnitaryPosTaxPrice() {
+    public Cash getUnitaryPosTaxPrice() {
         return unitaryPosTaxPrice;
     }
 
@@ -207,14 +221,14 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     /**
      * @return Price of the product
      */
-    public Money getPosPrice() {
+    public Cash getPosPrice() {
         return this.unitaryPosTaxPrice;
     }
 
     /**
      * @return Price of the product
      */
-    public Money getPrePrice() {
+    public Cash getPrePrice() {
         return this.unitaryPreTaxPrice;
     }
 
@@ -235,14 +249,14 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         return isActive();
     }
 
-    public void changePriceTo(final Money preNewPrice, Money pewPosPrice) {
+    public void changePriceTo(final Cash preNewPrice, Cash pewPosPrice) {
         unitaryPreTaxPrice = preNewPrice;
         unitaryPosTaxPrice = pewPosPrice;
     }
 
     @Override
     public ProductDTO toDTO() {
-        return new ProductDTO(category.identity(), name.toString(), shortDescription.toString(), extendedDescription.toString(), technicalDescription.toString(), brand.toString(), reference.toString(), active, unitaryPreTaxPrice.amountAsDouble(), unitaryPosTaxPrice.amountAsDouble());
+        return new ProductDTO(category.identity().toString(), name.toString(), shortDescription.toString(), extendedDescription.toString(), technicalDescription.toString(), brand.toString(), reference.toString(), active, unitaryPreTaxPrice.amountAsDouble(), unitaryPosTaxPrice.amountAsDouble());
     }
 
     @Override
@@ -255,8 +269,8 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
                 .withProperty("Brand", brand)
                 .withProperty("Reference", reference.toString())
                 .withProperty("Active", active)
-                .withProperty("Price before taxes", unitaryPreTaxPrice)
-                .withProperty("Price after taxes", unitaryPosTaxPrice)
+                .withProperty("Price before taxes", String.valueOf(unitaryPreTaxPrice))
+                .withProperty("Price after taxes", String.valueOf(unitaryPosTaxPrice))
                 .startObject("ProductCategory")
                 .withProperty("Code", category.getCode().toString())
                 .withProperty("Description", category.description()).endObject();

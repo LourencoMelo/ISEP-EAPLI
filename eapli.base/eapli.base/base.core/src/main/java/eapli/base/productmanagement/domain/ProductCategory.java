@@ -7,6 +7,7 @@ import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.strings.util.StringPredicates;
 
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,12 +24,16 @@ public class ProductCategory implements AggregateRoot<String> {
      */
 
     @EmbeddedId
+    @Column(nullable = false)
     private AlphanumericCode code;
 
     /**
      * Description of the category
      */
+
     @Embedded
+    @XmlElement
+    @JsonProperty
     private Description description;
 
     /**
@@ -41,6 +46,14 @@ public class ProductCategory implements AggregateRoot<String> {
     @XmlElement
     @JsonProperty
     private boolean active;
+
+    public void setDescription(Description description) {
+        this.description = description;
+    }
+
+    public void setCode(AlphanumericCode code) {
+        this.code = code;
+    }
 
     public ProductCategory getSuperCategory() {
         return superCategory;
@@ -75,9 +88,11 @@ public class ProductCategory implements AggregateRoot<String> {
         this.active = true;
     }
 
-    protected ProductCategory(){
-        //Empty
+    public ProductCategory() {
+
     }
+
+
 
     /**
      * Setter for new description

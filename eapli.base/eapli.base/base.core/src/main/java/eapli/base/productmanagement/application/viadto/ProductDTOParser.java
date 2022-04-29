@@ -1,5 +1,6 @@
 package eapli.base.productmanagement.application.viadto;
 
+import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.domain.ProductBuilder;
 import eapli.base.productmanagement.domain.ProductCategory;
@@ -31,7 +32,7 @@ public class ProductDTOParser implements DTOParser<ProductDTO, Product> {
         return new ProductBuilder().ofType(type).named(dto.getName())
                 .shortDescriptioned(dto.getShortDescription()).extendedDescriptioned(dto.getExtendedDescription())
                 .technicalDescriptioned(dto.getTechnicalDescription()).branded(dto.getBrand())
-                .referenced(dto.getReference()).preTaxcosting(Money.dollars(dto.getPrePrice()))
-                .posTaxcosting(Money.dollars(dto.getPosPrice())).build();
+                .referenced(dto.getReference()).preTaxcosting(Cash.dollars(dto.getPrePrice()))
+                .posTaxcosting(Cash.dollars(dto.getPosPrice())).build();
     }
 }

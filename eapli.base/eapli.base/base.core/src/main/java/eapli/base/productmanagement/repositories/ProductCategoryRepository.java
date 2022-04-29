@@ -1,5 +1,6 @@
 package eapli.base.productmanagement.repositories;
 
+import eapli.base.productmanagement.domain.AlphanumericCode;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.domain.repositories.LockableDomainRepository;
