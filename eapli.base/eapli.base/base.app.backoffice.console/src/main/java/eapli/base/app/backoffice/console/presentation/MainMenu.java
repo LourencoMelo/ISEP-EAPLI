@@ -230,7 +230,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(ADD_PRODUCT_CATEGORY, "Add Product Category", new AddProductCategoryAction());
         menu.addItem(REGISTER_CUSTOMER,"Register customer", new RegisterCustomerAction());
         menu.addItem(LIST_ALL_PRODUCTS, "List all Products", new ListProductAction());
-        //menu.addItem(CREATE_ORDER, "Create a order for a client", new CreateOrderForClientAction());
+        menu.addItem(CREATE_ORDER, "Create a order for a client", new CreateOrderForClientAction());
         //menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate Product", new DeactivateUserAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
