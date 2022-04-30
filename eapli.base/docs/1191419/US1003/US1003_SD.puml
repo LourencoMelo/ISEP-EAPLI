@@ -1,11 +1,62 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+'http://plantuml.com/skinparam.html
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
 
-autonumber
+actor SalesClerk as Actor
+participant RegisterCustomerUI as UI <<presentation>>
+participant RegisterCustomerController as Controller <<application>>
+participant CustomerBuilder as Builder <<builder>>
+participant "customer:Customer" as Domain <<domain>>
+participant PersistenceContext as Persistence <<persistence>>
+participant RepositoryFactory as Factory <<factory>>
+database CustomerRepository as Repository <<repository>>
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+Actor --> UI: Add Customer
+activate UI
+    UI -> Controller: create
+    UI --> Actor: Ask user information
+    Actor --> UI: First and Last Name, \n phone number, Vat, birthdate, \n gender email
+    loop option != 0
+            UI --> Actor: Asks if he wants to add addresses
+            Actor --> UI: Inserts addresses
+    end
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+    UI -> Controller : registerCustomer(firstName,lastName,\n email,gender \n ,phone,vat,day,month,\n year,addresses)
+        activate Controller
+            Controller -> Builder: create
+
+            note right of Controller: Set the rest of the information
+
+     Controller -> Builder:registerCustomer()
+            activate Builder
+                Builder -> Domain: create (firstName,lastName,\n email,gender \n ,phone,vat,day,month,\n year,addresses)
+                Domain->Builder: customer
+                Builder -> Controller:customer
+            deactivate Builder
+
+        Controller -> Persistence: repositories()
+        activate Persistence
+            note right of Persistence: can create the repository in memory or JPA
+            Persistence -> Factory: create
+            Persistence -> Controller: factory
+        deactivate Persistence
+
+        Controller -> Factory: customers()
+        activate Factory
+            Factory -> Repository: create
+            Factory -> Controller: customerRepository
+        deactivate Factory
+
+        Controller->Repository:save(customer)
+        Controller->UI: customer
+    deactivate Controller
+
+        UI-->Actor: Operation was a success
+
+deactivate UI
+
 @enduml

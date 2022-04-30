@@ -180,6 +180,13 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         return unitaryPosTaxPrice;
     }
 
+    public ProductCategory getCategory() {
+        return category;
+    }
+
+    public Long getInternalCode() {
+        return internalCode;
+    }
 
     @Override
     public boolean equals(final Object o) {

@@ -23,6 +23,7 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
     private Name name;
 
     @Embedded
+    @Column(unique = true)
     private EmailAddress email;
 
     @Enumerated(EnumType.STRING)

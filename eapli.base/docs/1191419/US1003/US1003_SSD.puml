@@ -6,9 +6,7 @@ autonumber
 actor SalesClerk
 
 SalesClerk -> System: Wants to register a new costumer
-System --> SalesClerk: Asks for confirmation
 
-SalesClerk -> System: Confirm
 System --> SalesClerk: Asks for the needed data (name,gender,email,phone number,VAT,address)
 
 SalesClerk -> System : Introduces the requested data
@@ -18,5 +16,13 @@ System --> SalesClerk : Shows the data and asks for confirmation
 
 SalesClerk -> System : Confirms
 System --> SalesClerk : Operation successfully done
+System --> SalesClerk : Asks if it is wanted to give the customer system credentials
 
+SalesClerk -> System : Responds
+System --> SalesClerk : If "YES" asks for the need data / If "NO" closes the menu
+
+SalesClerk -> System : Introduces the wanted data
+
+System -> System : generates password
+System --> SalesClerk : Operation successfully done
 @enduml

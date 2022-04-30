@@ -60,7 +60,7 @@ public class RegisterCustomerController {
 
     public void saveCustomerAsUserWithCredentials(String username,String email, String pass,String firstName,String lastName){
         Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.SALES_CLERK);
+        roles.add(BaseRoles.CUSTOMER);
         userManagementService.registerNewUser(username, pass, firstName, lastName,email , roles);
     }
 

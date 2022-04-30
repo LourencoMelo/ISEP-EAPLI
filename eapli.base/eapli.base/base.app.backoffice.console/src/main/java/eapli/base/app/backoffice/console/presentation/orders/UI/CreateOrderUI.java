@@ -55,7 +55,7 @@ public class CreateOrderUI extends AbstractUI {
 
                     System.out.println("Here is the catalog : \n");
 
-                    final Iterable<Product> catalog = this.catalogController.allProducts();
+                    final Iterable<Product> catalog = this.catalogController.activeProducts();
 
                     final SelectWidget<Product> selector = new SelectWidget<>("Products:", catalog, new ProductPrinter());
 

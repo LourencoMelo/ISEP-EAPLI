@@ -12,7 +12,7 @@ public class ListProductUI extends AbstractListUI<Product> {
 
     @Override
     protected Iterable<Product> elements() {
-        return this.theController.allProducts();
+        return this.theController.activeProducts();
     }
 
     @Override

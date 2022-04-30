@@ -8,7 +8,9 @@ public class ListProductController {
 
     private final ListProductService svc = new ListProductService();
 
-    public Iterable<Product> allProducts() {
-        return svc.allProducts();
+    public Iterable<Product> activeProducts() {
+        return svc.activeProducts();
     }
+
+
 }
