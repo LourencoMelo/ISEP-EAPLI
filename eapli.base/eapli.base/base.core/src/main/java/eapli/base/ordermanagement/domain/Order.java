@@ -1,6 +1,7 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.customermanagement.domain.Address;
+import eapli.base.customermanagement.domain.Customer;
 import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
@@ -11,10 +12,14 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "ProductsOrder")
+@Table(name = "Products_Order")
 public class Order implements AggregateRoot<Long> {
 
     private static final long serialVersionUID = 1L;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     /**
      * Numeric identifier
@@ -31,7 +36,7 @@ public class Order implements AggregateRoot<Long> {
      * Ordered products with their respective quantities
      */
     @ElementCollection
-    @Column(name = "Products")
+    @Column(name = "Quantity")
     private Map<Product, Integer> orderedProducts;
 
     /**
@@ -72,7 +77,7 @@ public class Order implements AggregateRoot<Long> {
      * Email from clerk who created orders
      */
     @Embedded
-    @Column(name = "Clerks_Email")
+    @AttributeOverride(name = "email", column = @Column(name = "Clerks_Email"))
     private EmailAddress clerkEmail;
 
     /**
@@ -119,6 +124,14 @@ public class Order implements AggregateRoot<Long> {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Embedded
+    @AttributeOverride(name = "name", column = @Column(name = "Payment_Method"))
+    private PaymentMethod paymentMethod;
+
+    @Embedded
+    @AttributeOverride(name = "name", column = @Column(name = "Shipment_Method"))
+    private ShipmentMethod shipmentMethod;
+
     public Address getDeliveringAddress() {
         return deliveringAddress;
     }
@@ -150,7 +163,7 @@ public class Order implements AggregateRoot<Long> {
      * @param priceBeforeTaxes price without taxes applied
      * @param priceAfterTaxes  price with taxes applied
      */
-    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Cash priceBeforeTaxes, Cash priceAfterTaxes) {
+    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Cash priceBeforeTaxes, Cash priceAfterTaxes, Customer customer) {
         this.orderedProducts = products;
         this.billingAddress = billing;
         this.deliveringAddress = delivering;
@@ -161,6 +174,8 @@ public class Order implements AggregateRoot<Long> {
         this.method = "";
         this.interactionDate = null;
         this.comment = "";
+        this.paymentMethod = paymentMethod;
+        this.shipmentMethod = shipmentMethod;
         this.status = OrderStatus.PAYMENT_PENDING;
     }
 
@@ -179,7 +194,7 @@ public class Order implements AggregateRoot<Long> {
      * @param interactionDate  date of the interaction
      * @param comment          additional comment
      */
-    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Cash priceBeforeTaxes, Cash priceAfterTaxes, EmailAddress clerkEmail, String method, Calendar interactionDate, String comment) {
+    public Order(Map<Product, Integer> products, Address billing, Address delivering, PaymentMethod paymentMethod, ShipmentMethod shipmentMethod, Cash priceBeforeTaxes, Cash priceAfterTaxes, EmailAddress clerkEmail, String method, Calendar interactionDate, String comment, Customer customer) {
         this.orderedProducts = products;
         this.billingAddress = billing;
         this.deliveringAddress = delivering;
@@ -190,9 +205,11 @@ public class Order implements AggregateRoot<Long> {
         this.method = method;
         this.interactionDate = interactionDate;
         this.comment = comment;
+        this.paymentMethod = paymentMethod;
+        this.shipmentMethod = shipmentMethod;
         this.status = OrderStatus.PAYMENT_PENDING;
+        this.customer = customer;
     }
-
     /////////////////////////////////////////////////////////////Status Management//////////////////////////////////////////////////////////////
 
 
@@ -220,8 +237,7 @@ public class Order implements AggregateRoot<Long> {
         return status() == OrderStatus.CANCELED;
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * @param other orders
      * @return true if same

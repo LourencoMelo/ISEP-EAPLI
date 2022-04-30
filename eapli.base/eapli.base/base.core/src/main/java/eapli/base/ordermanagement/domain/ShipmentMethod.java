@@ -1,12 +1,17 @@
 package eapli.base.ordermanagement.domain;
 
-import eapli.framework.general.domain.model.Money;
+import eapli.base.productmanagement.domain.Cash;
+import eapli.framework.domain.model.ValueObject;
 import lombok.*;
+
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class ShipmentMethod {
+@Embeddable
+public class ShipmentMethod implements ValueObject {
 
     /**
      * Name of the shipment method
@@ -18,6 +23,10 @@ public class ShipmentMethod {
      * Price of the shipment method
      */
     @NonNull
-    private Money price;
+    @Embedded
+    private Cash price;
 
+    protected ShipmentMethod() {
+
+    }
 }

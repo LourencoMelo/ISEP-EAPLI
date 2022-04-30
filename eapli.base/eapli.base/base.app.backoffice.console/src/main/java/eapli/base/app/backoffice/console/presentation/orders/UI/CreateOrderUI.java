@@ -1,14 +1,18 @@
 package eapli.base.app.backoffice.console.presentation.orders.UI;
 
 import eapli.base.app.backoffice.console.presentation.Products.Printer.ProductPrinter;
+import eapli.base.app.backoffice.console.presentation.orders.Printer.CustomerPrinter;
 import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
+import eapli.base.customermanagement.application.ListCustomersController;
 import eapli.base.customermanagement.domain.Address;
+import eapli.base.customermanagement.domain.Customer;
 import eapli.base.ordermanagement.application.CreateOrderForClientController;
+import eapli.base.ordermanagement.domain.Order;
 import eapli.base.ordermanagement.domain.PaymentMethod;
 import eapli.base.ordermanagement.domain.ShipmentMethod;
 import eapli.base.productmanagement.application.ListProductController;
+import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
-import eapli.framework.general.domain.model.Money;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
@@ -23,6 +27,8 @@ public class CreateOrderUI extends AbstractUI {
     private final CreateOrderForClientController controller = new CreateOrderForClientController();
     private final ListProductController catalogController = new ListProductController();
 
+    private final ListCustomersController customersController = new ListCustomersController();
+
     @Override
     protected boolean doShow() {
 
@@ -30,13 +36,19 @@ public class CreateOrderUI extends AbstractUI {
 
             String clientRegistAnswer = Console.readLine("Is the client already registered in the system? (Yes or No)\n");
 
-            if (clientRegistAnswer.equalsIgnoreCase("yes")) {  //If the client is already registered on the system
-
-            } else if (clientRegistAnswer.equalsIgnoreCase("no")) { //If the client isn't registered in the system
+            if (clientRegistAnswer.equalsIgnoreCase("no")) { //If the client isn't registered in the system
                 new RegisterCustomerAction().execute();
-            } else {
+            } else if (!clientRegistAnswer.equalsIgnoreCase("yes")){
                 throw new IOException("Invalid answer");
             }
+
+            final Iterable<Customer> customers = this.customersController.allCustomers();
+
+            final SelectWidget<Customer> customerSelector = new SelectWidget<>("Customers:", customers, new CustomerPrinter());
+
+            customerSelector.show();
+
+            Customer customer = customerSelector.selectedElement();
 
             int input = 0;
 
@@ -103,11 +115,9 @@ public class CreateOrderUI extends AbstractUI {
 
             PaymentMethod paymentMethod = new PaymentMethod("Paypal");
 
-            ShipmentMethod shipmentMethod = new ShipmentMethod("Ford Transit", Money.euros(40.0));
+            ShipmentMethod shipmentMethod = new ShipmentMethod("Ford Transit", Cash.euros(40.0));
 
-//            final String clerkEmail =     //Console.readLine("Insert your email: \n");
-
-            final String method = Console.readLine("How did you communicated with the client?\n");
+            final String method = Console.readLine("How did you communicated with the client?");
 
             System.out.println("Insert the date when the communication happened: \n");
 
@@ -127,7 +137,12 @@ public class CreateOrderUI extends AbstractUI {
                 comment = Console.readLine("Insert the additional comment : \n");
             }
 
-            controller.registerOrder(products, billing, delivering, paymentMethod, shipmentMethod, method, dateEncounter, comment);
+            if (customer != null){
+                Order order = controller.registerOrder(products, billing, delivering, paymentMethod, shipmentMethod, method, dateEncounter, comment, customer);
+                customer.addOrder(order);
+            }else {
+                throw new Exception("Customer needed!");
+            }
 
         } catch (Exception exception) {
             System.out.println(exception.getMessage());

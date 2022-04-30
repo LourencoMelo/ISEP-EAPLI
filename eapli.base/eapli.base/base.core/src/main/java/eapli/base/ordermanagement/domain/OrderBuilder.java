@@ -1,6 +1,7 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.customermanagement.domain.Address;
+import eapli.base.customermanagement.domain.Customer;
 import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.DomainFactory;
@@ -34,6 +35,8 @@ public class OrderBuilder implements DomainFactory<Order> {
     private Cash priceBeforeTaxes;
 
     private Cash priceAfterTaxes;
+
+    private Customer customer;
 
 
     public OrderBuilder withProducts(final Map<Product, Integer> products) {
@@ -95,11 +98,16 @@ public class OrderBuilder implements DomainFactory<Order> {
         return this;
     }
 
+    public OrderBuilder associatedTo(final Customer customer){
+        this.customer = customer;
+        return this;
+    }
+
     public Order buildOrThrow() {
         if (theOrder != null) {
             return theOrder;
         } else if (clerksEmail != null) {
-            theOrder = new Order(products, billingAddress, deliveringAddress, paymentMethod, shipmentMethod, priceBeforeTaxes, priceAfterTaxes, clerksEmail, method, interactionDate, comment);
+            theOrder = new Order(products, billingAddress, deliveringAddress, paymentMethod, shipmentMethod, priceBeforeTaxes, priceAfterTaxes, clerksEmail, method, interactionDate, comment, customer);
             return theOrder;
         } else {
             throw new IllegalStateException();

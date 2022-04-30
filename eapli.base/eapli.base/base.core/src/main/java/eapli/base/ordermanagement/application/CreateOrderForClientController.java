@@ -1,6 +1,7 @@
 package eapli.base.ordermanagement.application;
 
 import eapli.base.customermanagement.domain.Address;
+import eapli.base.customermanagement.domain.Customer;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.Order;
 import eapli.base.ordermanagement.domain.OrderBuilder;
@@ -32,7 +33,7 @@ public class CreateOrderForClientController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     public Order registerOrder(final Map<Product, Integer> products, final Address billing, final Address delivering, final PaymentMethod paymentMethod,
-                               final ShipmentMethod shipmentMethod, final String method, final Calendar interactionDate, final String comment){
+                               final ShipmentMethod shipmentMethod, final String method, final Calendar interactionDate, final String comment, final Customer customer){
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_CLERK);
 
@@ -48,6 +49,7 @@ public class CreateOrderForClientController {
                 .commented(comment)
                 .withPriceWithoutTaxes(priceWithoutTaxes(products))
                 .withPriceWithTaxes(priceWithTaxes(products))
+                .associatedTo(customer)
                 .build();
 
         return repository.save(newOrder);

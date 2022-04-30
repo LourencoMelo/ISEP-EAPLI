@@ -17,6 +17,8 @@
     <class>eapli.base.productmanagement.domain.ProductCategory</class>
     <class>eapli.base.productmanagement.domain.Product</class>
     <class>eapli.base.customermanagement.domain.Customer</class>
+    <class>eapli.base.ordermanagement.domain.PaymentMethod</class>
+    <class>eapli.base.ordermanagement.domain.ShipmentMethod</class>
 
     <properties>
       <!--
