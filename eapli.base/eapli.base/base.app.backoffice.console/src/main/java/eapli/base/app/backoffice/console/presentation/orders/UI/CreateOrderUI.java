@@ -1,6 +1,7 @@
 package eapli.base.app.backoffice.console.presentation.orders.UI;
 
 import eapli.base.app.backoffice.console.presentation.Products.Printer.ProductPrinter;
+import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
 import eapli.base.customermanagement.domain.Address;
 import eapli.base.ordermanagement.application.CreateOrderForClientController;
 import eapli.base.ordermanagement.domain.PaymentMethod;
@@ -32,7 +33,7 @@ public class CreateOrderUI extends AbstractUI {
             if (clientRegistAnswer.equalsIgnoreCase("yes")) {  //If the client is already registered on the system
 
             } else if (clientRegistAnswer.equalsIgnoreCase("no")) { //If the client isn't registered in the system
-
+                new RegisterCustomerAction().execute();
             } else {
                 throw new IOException("Invalid answer");
             }
@@ -46,6 +47,9 @@ public class CreateOrderUI extends AbstractUI {
                 String idOrCatalogAnswer = Console.readLine("Do you want to search the product for id or look up at the full catalog? (id or catalog) \n");
 
                 if (idOrCatalogAnswer.equalsIgnoreCase("id")) { //If the sales clerk pretend to search the product by id
+                    Long id = Console.readLong("Insert the product id : \n");
+
+                    //findById
 
                 } else if (idOrCatalogAnswer.equalsIgnoreCase("catalog")) { //If the sales clerk wants to search the product on the catalog
 
@@ -56,8 +60,6 @@ public class CreateOrderUI extends AbstractUI {
                     final SelectWidget<Product> selector = new SelectWidget<>("Products:", catalog, new ProductPrinter());
 
                     selector.show();
-
-                    System.out.println("Select a product : \n");
 
                     final Product product = selector.selectedElement();
 

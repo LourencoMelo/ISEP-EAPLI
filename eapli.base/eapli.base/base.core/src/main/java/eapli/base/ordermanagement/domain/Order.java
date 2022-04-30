@@ -72,6 +72,7 @@ public class Order implements AggregateRoot<Long> {
      * Email from clerk who created orders
      */
     @Embedded
+    @Column(name = "Clerks_Email")
     private EmailAddress clerkEmail;
 
     /**
@@ -82,6 +83,7 @@ public class Order implements AggregateRoot<Long> {
     /**
      * Date when the interaction happened
      */
+    @Temporal(TemporalType.DATE)
     private Calendar interactionDate;
 
     /**
