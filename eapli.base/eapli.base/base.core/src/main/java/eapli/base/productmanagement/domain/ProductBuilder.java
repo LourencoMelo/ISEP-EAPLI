@@ -1,10 +1,14 @@
 package eapli.base.productmanagement.domain;
 
+import eapli.base.customermanagement.domain.Address;
+import eapli.base.customermanagement.domain.CustomerBuilder;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.general.domain.model.Money;
 import eapli.framework.validations.Preconditions;
+
+import java.util.Set;
 
 public class ProductBuilder implements DomainFactory<Product> {
 
@@ -19,6 +23,9 @@ public class ProductBuilder implements DomainFactory<Product> {
     private Reference reference;
     private Cash pricePreTax;
     private Cash pricePosTax;
+    private BarCode barCode;
+    private double productionCode;
+    private Set<Photo> photosCollection;
 
     public ProductBuilder ofType(ProductCategory productCategory) {
         this.productCategory = productCategory;
@@ -89,13 +96,43 @@ public class ProductBuilder implements DomainFactory<Product> {
         return this;
     }
 
+    public ProductBuilder makingBarcode(String format, long code) {
+        this.barCode = new BarCode(format, code);
+        return this;
+    }
+
+    public ProductBuilder makingProductionCode(int productionCode) {
+        this.productionCode = productionCode;
+        return this;
+    }
+
+
+
+    public Photo donePhoto(byte[] photo){
+        return new Photo(photo);
+    }
+
+    public ProductBuilder withPhotos(final Set<Photo> photos) {
+        // we will simply ignore if we receive a null set
+        if (photos != null) {
+            photos.forEach(this::withPhotos);
+        }
+        return this;
+    }
+
+    public ProductBuilder withPhotos(final Photo photo) {
+        buildOrThrow();
+        theProduct.addPhotos(photo);
+        return this;
+    }
+
     private Product buildOrThrow() {
         try {
             if (theProduct != null) {
                 return theProduct;
             }
-            Preconditions.noneNull(name, shortDescription, extendedDescription, technicalDescription, brand, reference, pricePreTax, pricePosTax);
-            theProduct = new Product(productCategory, name, shortDescription, extendedDescription, technicalDescription, brand, reference, pricePreTax, pricePosTax);
+            Preconditions.noneNull(name, shortDescription, extendedDescription, technicalDescription, brand, reference, pricePreTax, pricePosTax, barCode, productionCode);
+            theProduct = new Product(productCategory, name, shortDescription, extendedDescription, technicalDescription, brand, reference, pricePreTax, pricePosTax, barCode, productionCode);
             return theProduct;
         }catch (Exception e) {
             throw new IllegalStateException();

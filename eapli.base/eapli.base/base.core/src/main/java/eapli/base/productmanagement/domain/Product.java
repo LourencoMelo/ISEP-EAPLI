@@ -6,15 +6,22 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
-import eapli.framework.general.domain.model.Money;
 import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.representations.Representationable;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
+import javax.imageio.ImageIO;
 import javax.persistence.*;
+import javax.swing.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.nio.file.Files;
+import java.util.HashSet;
+import java.util.Set;
 
 @XmlRootElement
 @Entity
@@ -107,6 +114,21 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     })
     private Cash unitaryPreTaxPrice;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "format", column = @Column(name = "formatBarCode")),
+            @AttributeOverride(name = "code", column = @Column(name = "barCode"))
+
+    })
+    private BarCode barCode;
+
+    @Column(name="ProductionCode")
+    private double productionCode;
+
+    @ElementCollection
+    //@Basic(fetch=FetchType.LAZY)
+    private Set<Photo> photosCollection;
+
     /**
      * Unique category from the product. One category has many products.
      */
@@ -128,7 +150,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      * @param unitaryPreTaxPrice   unitary price pre tax
      * @param unitaryPosTaxPrice   unitary price pos tax
      */
-    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice) {
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, double productionCode, Set<Photo> photos) {
 
         Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
 
@@ -142,6 +164,28 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         this.active = true;
         this.unitaryPreTaxPrice = unitaryPreTaxPrice;
         this.unitaryPosTaxPrice = unitaryPosTaxPrice;
+        this.barCode = barCode;
+        this.productionCode = productionCode;
+        this.photosCollection = photos;
+    }
+
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, double productionCode) {
+
+        Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
+
+        this.category = category;
+        this.name = name;
+        this.shortDescription = shortDescription;
+        this.extendedDescription = extendedDescription;
+        this.technicalDescription = technicalDescription;
+        this.brand = brand;
+        this.reference = reference;
+        this.active = true;
+        this.unitaryPreTaxPrice = unitaryPreTaxPrice;
+        this.unitaryPosTaxPrice = unitaryPosTaxPrice;
+        this.barCode = barCode;
+        this.productionCode = productionCode;
+        this.photosCollection = new HashSet<>();
     }
 
     protected Product() {
@@ -213,7 +257,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
             return true;
         }
 
-        return identity().equals(that.identity()) && unitaryPreTaxPrice.equals(that.unitaryPreTaxPrice) && unitaryPosTaxPrice.equals(that.unitaryPosTaxPrice) && active == that.active;
+        return identity().equals(that.identity()) && unitaryPreTaxPrice.equals(that.unitaryPreTaxPrice) && unitaryPosTaxPrice.equals(that.unitaryPosTaxPrice) && active == that.active && barCode == that.barCode;
     }
 
     /**
@@ -261,6 +305,10 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         unitaryPosTaxPrice = pewPosPrice;
     }
 
+    public boolean addPhotos(final Photo photo){
+        return photosCollection.add(photo);
+    }
+
     @Override
     public ProductDTO toDTO() {
         return new ProductDTO(category.identity().toString(), name.toString(), shortDescription.toString(), extendedDescription.toString(), technicalDescription.toString(), brand.toString(), reference.toString(), active, unitaryPreTaxPrice.amountAsDouble(), unitaryPosTaxPrice.amountAsDouble());
@@ -278,6 +326,9 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
                 .withProperty("Active", active)
                 .withProperty("Price before taxes", String.valueOf(unitaryPreTaxPrice))
                 .withProperty("Price after taxes", String.valueOf(unitaryPosTaxPrice))
+                .withProperty("Barcode", String.valueOf(barCode))
+                .withProperty("Production code", String.valueOf(productionCode))
+                .withProperty("Photos ", String.valueOf(photosCollection))
                 .startObject("ProductCategory")
                 .withProperty("Code", category.getCode().toString())
                 .withProperty("Description", category.description()).endObject();
@@ -287,18 +338,51 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
 
     @Override
     public String toString() {
-        return "Product{" +
-                "internalCode=" + internalCode +
-                ", name=" + name +
-                ", shortDescription=" + shortDescription +
-                ", extendedDescription=" + extendedDescription +
-                ", technicalDescription=" + technicalDescription +
-                ", brand=" + brand +
-                ", reference=" + reference +
-                ", active=" + active +
-                ", unitaryPreTaxPrice=" + unitaryPreTaxPrice +
-                ", unitaryPosTaxPrice=" + unitaryPosTaxPrice +
-                ", category=" + category +
-                '}';
+        try {
+            return "Product{" +
+                    "internalCode=" + internalCode +
+                    ", name=" + name +
+                    ", shortDescription=" + shortDescription +
+                    ", extendedDescription=" + extendedDescription +
+                    ", technicalDescription=" + technicalDescription +
+                    ", brand=" + brand +
+                    ", reference=" + reference +
+                    ", active=" + active +
+                    ", unitaryPreTaxPrice=" + unitaryPreTaxPrice +
+                    ", unitaryPosTaxPrice=" + unitaryPosTaxPrice +
+                    ", barcode=" + barCode +
+                    ", productionCode=" + productionCode +
+                    ", category=" + category +
+                    ", photos opening..." + printSetPhotos() +
+                    '}';
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String printSetPhotos() throws IOException {
+        for(Photo p : photosCollection) {
+            BufferedImage image = ImageIO.read( new ByteArrayInputStream( p.getPhoto() ) );
+            ImageIO.write(image, "BMP", new File("filename.bmp"));
+
+            ImageIcon imageIcon = new ImageIcon(image);
+            JFrame jFrame = new JFrame();
+
+            jFrame.setLayout(new FlowLayout());
+            jFrame.setTitle(this.extendedDescription.toString());
+
+            jFrame.setSize(500, 500);
+            JLabel jLabel = new JLabel();
+
+            jLabel.setIcon(imageIcon);
+            jFrame.add(jLabel);
+            jFrame.setVisible(true);
+
+            jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        }
+
+        return "Every image showed";
     }
 }

@@ -3,9 +3,7 @@ package eapli.base.infrastructure.bootstrapers.demo;
 import eapli.base.infrastructure.bootstrapers.TestDataConstants;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.productmanagement.application.AddProductController;
-import eapli.base.productmanagement.domain.AlphanumericCode;
-import eapli.base.productmanagement.domain.Product;
-import eapli.base.productmanagement.domain.ProductCategory;
+import eapli.base.productmanagement.domain.*;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -14,7 +12,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.transaction.TransactionSystemException;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class ProductBootstrapper  implements Action {
     private static final Logger LOGGER = LogManager.getLogger(ProductCategoryBootstrapper.class);
@@ -39,37 +41,52 @@ public class ProductBootstrapper  implements Action {
         final var beauty2 = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_BEAUTY);
         final var kitchen3 = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_KITCHEN);
 
+        Set<Photo> set1 = new HashSet<>();
+
+        try {
+            set1.add(controller.donePhoto(MyFrame.method(new File("C:/Users/soare_wi5nw81/Desktop" +
+                    "/d/Desktop/Faculdade/2 ano/2 semestre/EAPLI/lei21_22_s4_2dg_04/eapli.base/photos/20S231-F.jpeg"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         register(clothe1, "Casaco","Casaco de pele", "Casaco castanho de pele"
                 , "Casaco castanho de pele tamanho S", "Zara", "111111",20
-                ,24.2);
+                ,24.2, "EAN-13", 5401111111111L, 111111111, null);
         register(clothe1, "Calças","Calças de pele", "Calças azuis de pele"
                 , "Calças azuis de pele tamanho M", "Tommy Hilfiger", "111112"
-                ,40,48.4);
+                ,40,48.4, "EAN-13", 5401111111112L
+                , 111111112, set1);
         register(beauty2, "Batom","Batom de cera", "Batom vermelho de cera"
                 , "Batom vermelho de cera a prova de agua", "Kiko", "111113"
-                ,10,12.1);
+                ,10,12.1, "EAN-13", 5401111111113L
+                , 111111113, null);
         register(beauty2, "Base","Base de agua", "Base transparente de agua"
                 , "Batom transparente de agua para esconder rugas", "Perfumes&Companhia"
-                , "111114",18,21.78);
+                , "111114",18,21.78, "EAN-13", 5401111111114L
+                , 111111114, null);
         register(kitchen3, "Prato","Prato de ceramica", "Prato de ceramica quadrado"
                 , "Prato de ceramica quadrado com bordas redondas", "Vista Alegre"
-                , "111115",10,12.1);
+                , "111115",10,12.1, "EAN-13", 5401111111115L
+                , 111111115, null);
         register(kitchen3, "Copo","Copo de pe", "Copo de pe de barro"
                 , "Copo de pe de barro colorido", "Continente"
-                , "111116",3,3.63);
+                , "111116",3,3.63, "EAN-13", 5401111111116L
+                , 111111116, null);
 
         return true;
     }
 
     private Optional<Product> register(ProductCategory category, String name, String shortDescription
             , String extendedDescription, String technicalDescription, String brand
-            , String reference, double unitaryPreTaxPrice, double unitaryPosTaxPrice) {
+            , String reference, double unitaryPreTaxPrice, double unitaryPosTaxPrice, String formatBarCode, long barcode
+            , int productionCode, Set<Photo> photos) {
 
         try {
             LOGGER.debug("{} ( {} )", name, category);
             return Optional.of(
             controller.addProduct(category,name,shortDescription,extendedDescription,technicalDescription,brand
-                    ,reference,unitaryPreTaxPrice,unitaryPosTaxPrice));
+                    ,reference,unitaryPreTaxPrice,unitaryPosTaxPrice,formatBarCode,barcode,productionCode, photos));
         } catch (final IntegrityViolationException | ConcurrencyException
                 | TransactionSystemException e) {
             // ignoring exception. assuming it is just a primary key violation

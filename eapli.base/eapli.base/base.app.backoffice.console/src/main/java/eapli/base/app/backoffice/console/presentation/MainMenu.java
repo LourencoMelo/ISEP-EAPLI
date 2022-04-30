@@ -23,10 +23,9 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.Products.Action.AddProductAction;
 import eapli.base.app.backoffice.console.presentation.Products.Action.AddProductCategoryAction;
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductAction;
-import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductCategoryAction;
-import eapli.base.app.backoffice.console.presentation.authz.AddProductUI;
 import eapli.base.app.backoffice.console.presentation.orders.Action.CreateOrderForClientAction;
 import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
 import eapli.base.app.backoffice.console.presentation.warehouseemployee.ConfigureAGVAction;
@@ -190,7 +189,7 @@ public class MainMenu extends AbstractUI {
     private Menu buildSalesClerkMenu() {
         final Menu menu = new Menu("Sales Clerk >");
 
-        menu.addItem(ADD_PRODUCT, "Add Product", new AddProductUI()::show);
+        menu.addItem(ADD_PRODUCT, "Add Product", new AddProductAction());
         menu.addItem(ADD_PRODUCT_CATEGORY, "Add Product Category", new AddProductCategoryAction());
         menu.addItem(REGISTER_CUSTOMER,"Register customer", new RegisterCustomerAction());
         menu.addItem(LIST_ALL_PRODUCTS, "List all Products", new ListProductAction());
