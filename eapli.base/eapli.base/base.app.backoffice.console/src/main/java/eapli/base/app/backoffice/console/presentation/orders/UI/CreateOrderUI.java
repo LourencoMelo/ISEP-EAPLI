@@ -65,8 +65,13 @@ public class CreateOrderUI extends AbstractUI {
 
                     final int quantity = Console.readInteger("Insert the quantity pretended: \n");
 
-                    products.put(product, quantity);
-
+                    if (products.containsKey(product)) {
+                        int aux = products.get(product);
+                        aux += quantity;
+                        products.put(product, aux);
+                    } else {
+                        products.put(product, quantity);
+                    }
                     input = Console.readInteger("Do you want to add more products to the order? Yes -> 0\nNo -> 1 \n");
 
                 } else {
