@@ -42,25 +42,31 @@ public class ProductBootstrapper  implements Action {
         final var kitchen3 = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_KITCHEN);
 
         Set<Photo> set1 = new HashSet<>();
+        Set<Photo> set2 = new HashSet<>();
+        Set<Photo> set3 = new HashSet<>();
+        Set<Photo> set4 = new HashSet<>();
 
         try {
-            set1.add(controller.donePhoto(MyFrame.method(new File("C:/Users/soare_wi5nw81/Desktop" +
-                    "/d/Desktop/Faculdade/2 ano/2 semestre/EAPLI/lei21_22_s4_2dg_04/eapli.base/photos/20S231-F.jpeg"))));
+            set1.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/casacopele.jpg"))));
+            set2.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/calcasazuis.jpeg"))));
+            set3.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/batom.jpg"))));
+            set4.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/copedepedebarro.jpg"))));
+            set4.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/copodepedebarro2.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         register(clothe1, "Casaco","Casaco de pele", "Casaco castanho de pele"
                 , "Casaco castanho de pele tamanho S", "Zara", "111111",20
-                ,24.2, "EAN-13", 5401111111111L, 111111111, null);
+                ,24.2, "EAN-13", 5401111111111L, 111111111, set1);
         register(clothe1, "Calças","Calças de pele", "Calças azuis de pele"
                 , "Calças azuis de pele tamanho M", "Tommy Hilfiger", "111112"
                 ,40,48.4, "EAN-13", 5401111111112L
-                , 111111112, set1);
+                , 111111112, set2);
         register(beauty2, "Batom","Batom de cera", "Batom vermelho de cera"
                 , "Batom vermelho de cera a prova de agua", "Kiko", "111113"
                 ,10,12.1, "EAN-13", 5401111111113L
-                , 111111113, null);
+                , 111111113, set3);
         register(beauty2, "Base","Base de agua", "Base transparente de agua"
                 , "Batom transparente de agua para esconder rugas", "Perfumes&Companhia"
                 , "111114",18,21.78, "EAN-13", 5401111111114L
@@ -72,7 +78,7 @@ public class ProductBootstrapper  implements Action {
         register(kitchen3, "Copo","Copo de pe", "Copo de pe de barro"
                 , "Copo de pe de barro colorido", "Continente"
                 , "111116",3,3.63, "EAN-13", 5401111111116L
-                , 111111116, null);
+                , 111111116, set4);
 
         return true;
     }

@@ -361,7 +361,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         }
     }
 
-    private String printSetPhotos() throws IOException {
+    public String printSetPhotos() throws IOException {
         for(Photo p : photosCollection) {
             BufferedImage image = ImageIO.read( new ByteArrayInputStream( p.getPhoto() ) );
             ImageIO.write(image, "BMP", new File("filename.bmp"));
@@ -378,8 +378,6 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
             jLabel.setIcon(imageIcon);
             jFrame.add(jLabel);
             jFrame.setVisible(true);
-
-            jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         }
 
