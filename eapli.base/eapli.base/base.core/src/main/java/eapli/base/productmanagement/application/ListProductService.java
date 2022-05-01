@@ -5,6 +5,8 @@ import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
+import eapli.framework.general.domain.model.Description;
+import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
@@ -28,6 +30,14 @@ public class ListProductService {
 
     public Iterable<Product> findByCategory(ProductCategory category){
         return this.productRepository.findByCategory(category);
+    }
+
+    public Iterable<Product> findByBrand(Designation brand){
+        return this.productRepository.findByBrand(brand);
+    }
+
+    public Iterable<Product> findByDescription(Description description){
+        return this.productRepository.findByDescription(description);
     }
 
     public Optional<Product> findById(final Long id){

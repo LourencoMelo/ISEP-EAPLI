@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+autonumber
+
+actor SalesClerk as Actor
+participant ListProductsUI as UI <<presentation>>
+participant ListProductsController as Controller <<application>>
+participant PersistenceContext as Persistence <<persistence>>
+participant AppSettings as AppSettings
+participant RepositoryFactory as Factory <<factory>>
+database ProductRepository as Repository <<repository>>
+
+Actor -> UI : show()
+UI -> UI : doShow()
+
+activate UI
+UI -> Controller : activeProducts()
+
+activate Controller
+Controller -> Persistence : repositories()
+
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+
+activate AppSettings
+
+AppSettings --> Factory : create
+activate Factory
+Factory --> AppSettings
+deactivate Factory
+
+AppSettings --> Controller
+
+deactivate AppSettings
+activate Factory
+Controller -> Factory : activeProducts()
+
+
+activate Factory
+Factory --> Repository : create()
+deactivate Factory
+Controller -> Repository : list = activeProducts()
+activate Repository
+Repository --> Controller
+deactivate Repository
+
+Controller --> UI : list
+deactivate Controller
+UI --> Actor
+deactivate UI
+
+
+
+@enduml

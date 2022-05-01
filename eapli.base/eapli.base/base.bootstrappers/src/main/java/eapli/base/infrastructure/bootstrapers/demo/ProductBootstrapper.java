@@ -46,11 +46,11 @@ public class ProductBootstrapper implements Action {
         Set<Photo> set4 = new HashSet<>();
 
         try {
-            set1.add(controller.donePhoto(MyFrame.method(new File("C:/Users/Joao/Documents/ISEP/2ºAno/2º Semestre/LAPR4/lei21_22_s4_2dg_04/eapli.base/photos/casacopele.jpg"))));
-            set2.add(controller.donePhoto(MyFrame.method(new File("C:/Users/Joao/Documents/ISEP/2ºAno/2º Semestre/LAPR4/lei21_22_s4_2dg_04/eapli.base/photos/calcasazuis.jpeg"))));
-            set3.add(controller.donePhoto(MyFrame.method(new File("C:/Users/Joao/Documents/ISEP/2ºAno/2º Semestre/LAPR4/lei21_22_s4_2dg_04/eapli.base/photos/batom.jpg"))));
-            set4.add(controller.donePhoto(MyFrame.method(new File("C:/Users/Joao/Documents/ISEP/2ºAno/2º Semestre/LAPR4/lei21_22_s4_2dg_04/eapli.base/photos/copedepedebarro.jpg"))));
-            set4.add(controller.donePhoto(MyFrame.method(new File("C:/Users/Joao/Documents/ISEP/2ºAno/2º Semestre/LAPR4/lei21_22_s4_2dg_04/eapli.base/photos/copodepedebarro2.png"))));
+            set1.add(controller.donePhoto(MyFrame.method(new File("C:/Users/maiad/IdeaProjects/lei21_22_s4_2dg_04/eapli.base/photos/casacopele.jpg"))));
+            set2.add(controller.donePhoto(MyFrame.method(new File("C:/Users/maiad/IdeaProjects/lei21_22_s4_2dg_04/eapli.base/photos/calcasazuis.jpeg"))));
+            set3.add(controller.donePhoto(MyFrame.method(new File("C:/Users/maiad/IdeaProjects/lei21_22_s4_2dg_04/eapli.base/photos/batom.jpg"))));
+            set4.add(controller.donePhoto(MyFrame.method(new File("C:/Users/maiad/IdeaProjects/lei21_22_s4_2dg_04/eapli.base/photos/copedepedebarro.jpg"))));
+            set4.add(controller.donePhoto(MyFrame.method(new File("C:/Users/maiad/IdeaProjects/lei21_22_s4_2dg_04/eapli.base/photos/copodepedebarro2.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }

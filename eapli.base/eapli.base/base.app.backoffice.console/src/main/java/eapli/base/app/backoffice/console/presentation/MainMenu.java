@@ -26,6 +26,7 @@ package eapli.base.app.backoffice.console.presentation;
 import eapli.base.app.backoffice.console.presentation.Products.Action.AddProductAction;
 import eapli.base.app.backoffice.console.presentation.Products.Action.AddProductCategoryAction;
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductAction;
+import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductsWithFiltersAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.CreateOrderForClientAction;
 import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
 import eapli.base.app.backoffice.console.presentation.warehouseemployee.ConfigureAGVAction;
@@ -84,6 +85,8 @@ public class MainMenu extends AbstractUI {
     private static final int REGISTER_CUSTOMER = 3;
     private static final int LIST_ALL_PRODUCTS = 4;
     private static final int CREATE_ORDER = 5;
+    private static final int LIST_FILTERED_PRODUCTS = 6;
+
 
     //WAREHOUSE_EMPLOYEE
     private static final int CONFIGURE_AGV = 1;
@@ -194,6 +197,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(REGISTER_CUSTOMER,"Register customer", new RegisterCustomerAction());
         menu.addItem(LIST_ALL_PRODUCTS, "List all Products", new ListProductAction());
         menu.addItem(CREATE_ORDER, "Create a order for a client", new CreateOrderForClientAction());
+        menu.addItem(LIST_FILTERED_PRODUCTS, "List products with filters", new ListProductsWithFiltersAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

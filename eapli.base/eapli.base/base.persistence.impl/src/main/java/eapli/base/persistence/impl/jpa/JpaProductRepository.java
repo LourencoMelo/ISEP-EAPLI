@@ -3,6 +3,7 @@ package eapli.base.persistence.impl.jpa;
 import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.base.productmanagement.repositories.ProductRepository;
+import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
 
 import javax.persistence.TypedQuery;
@@ -26,7 +27,21 @@ public class JpaProductRepository extends BasepaRepositoryBase<Product, Designat
     public Iterable<Product> findByCategory(final ProductCategory category) {
         final Map<String, Object> params = new HashMap<>();
         params.put("category", category);
-        return match("e.product.category = :category", params);
+        return match("e.category = :category", params);
+    }
+
+    @Override
+    public Iterable<Product> findByBrand(final Designation brand) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("brand", brand);
+        return match("e.brand = :brand", params);
+    }
+
+    @Override
+    public Iterable<Product> findByDescription(final Description shortDescription) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("shortDescription", shortDescription);
+        return match("e.shortDescription = :shortDescription", params);
     }
 
     @Override
