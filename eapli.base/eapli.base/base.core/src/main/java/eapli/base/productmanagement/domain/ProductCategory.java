@@ -70,6 +70,9 @@ public class ProductCategory implements AggregateRoot<String> {
      * @param superCategory super category
      */
     public ProductCategory(AlphanumericCode code, Description description, ProductCategory superCategory) {
+        if(code == null || code.toString().equals("") || description == null) {
+            throw new IllegalArgumentException();
+        }
         this.code = code;
         this.description = description;
         this.superCategory = superCategory;
@@ -82,6 +85,9 @@ public class ProductCategory implements AggregateRoot<String> {
      * @param description description
      */
     public ProductCategory(AlphanumericCode code, Description description) {
+        if(code == null || code.toString().equals("") || description == null) {
+            throw new IllegalArgumentException();
+        }
         this.code = code;
         this.description = description;
         superCategory = null;

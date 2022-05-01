@@ -7,8 +7,12 @@ public class BarCode {
 
 
     public BarCode(String format, long code) {
-        this.format = format;
-        this.code = code;
+        if(format == null || code == 0) {
+            throw new IllegalArgumentException();
+        } else {
+            this.format = format;
+            this.code = code;
+        }
     }
 
     public BarCode() {

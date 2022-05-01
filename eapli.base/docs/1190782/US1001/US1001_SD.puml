@@ -1,11 +1,75 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
 
-autonumber
+actor SalesClerk as Actor
+participant AddProductUI as UI <<presentation>>
+participant AddProductController as Controller <<application>>
+participant PersistenceContext as Persistence <<persistence>>
+participant RepositoryFactory as Factory <<factory>>
+database "productCategory:ProductCategoryRepository" as ProductCategoryRepository <<repository>>
+participant Photo as Photo <<domain>>
+participant Reference as Reference <<domain>>
+participant Cash as Cash <<domain>>
+participant BarCode as BarCode <<domain>>
+participant "product:Product" as Product <<domain>>
+database ProductRepository as ProductRepository <<repository>>
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+Actor -> UI: Add Product
+activate UI
+UI -> Controller: create
+activate Controller
+UI -> Controller : getProductCategories
+Controller -> Persistence : repositories()
+activate Persistence
+Persistence -> Factory : create
+deactivate Persistence
+activate Factory
+Factory -> ProductCategoryRepository : create
+deactivate Factory
+activate ProductCategoryRepository
+Controller -> ProductCategoryRepository : findAll
+deactivate ProductCategoryRepository
+Controller --> UI : ProductCategories
+UI -> UI : doShow()
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+UI --> Actor: Ask user information
+Actor -> UI: name, shortDescription, extendedDescription,\n techincalDescription, brand, reference, \n preTaxPrice, posTaxPrice,\n formatBarcdoe, barcode, productionCode
+   loop option != 0
+           UI --> Actor: Asks if he wants to add photos
+           Actor -> UI: Inserts photos
+   end
+
+UI -> Controller : addProducts(theProductCategory,name,shortDescription,\nextendedDescription , techincalDescription,brand,reference,\npreTaxPrice,posTaxPrice,formatBarcdoe,barcode,\nproductionCode, photos)
+Controller -> Photo : create(photos)
+activate Photo
+deactivate Photo
+Controller -> Reference : create(Reference)
+activate Reference
+deactivate Reference
+Controller -> Cash : create(preTaxPrice)
+activate Cash
+Controller -> Cash : create(posTaxPrice)
+deactivate Cash
+Controller -> BarCode : create(formatBarcdoe,barcode)
+activate BarCode
+deactivate BarCode
+Controller -> Product : newProduct = create(theProductCategory,name,shortDescription,\nextendedDescription , techincalDescription,brand,reference,\npreTaxPrice,posTaxPrice,formatBarcdoe,barcode,\nproductionCode, photos)
+activate Product
+deactivate Product
+Controller -> Persistence : repositories()
+activate Persistence
+Persistence -> Factory : create
+deactivate Persistence
+Factory -> ProductRepository : create
+activate ProductRepository
+Controller -> ProductRepository : save(newProduct)
+deactivate ProductRepository
+deactivate Controller
+deactivate UI
+
 @enduml

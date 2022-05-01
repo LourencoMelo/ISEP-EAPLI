@@ -123,7 +123,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     private BarCode barCode;
 
     @Column(name="ProductionCode")
-    private double productionCode;
+    private int productionCode;
 
     @ElementCollection
     //@Basic(fetch=FetchType.LAZY)
@@ -150,7 +150,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      * @param unitaryPreTaxPrice   unitary price pre tax
      * @param unitaryPosTaxPrice   unitary price pos tax
      */
-    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, double productionCode, Set<Photo> photos) throws Exception {
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, int productionCode, Set<Photo> photos) throws Exception {
 
         Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
 
@@ -164,12 +164,19 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         this.active = true;
         this.unitaryPreTaxPrice = unitaryPreTaxPrice;
         this.unitaryPosTaxPrice = unitaryPosTaxPrice;
+        if(barCode == null) {
+            throw new IllegalArgumentException();
+        }
         this.barCode = barCode;
-        this.productionCode = productionCode;
+        if(productionCode==0){
+            throw new IllegalArgumentException();
+        } else {
+            this.productionCode = productionCode;
+        }
         this.photosCollection = photos;
     }
 
-    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, double productionCode) throws Exception {
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, int productionCode) throws Exception {
 
         Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
 
@@ -184,7 +191,11 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         this.unitaryPreTaxPrice = unitaryPreTaxPrice;
         this.unitaryPosTaxPrice = unitaryPosTaxPrice;
         this.barCode = barCode;
-        this.productionCode = productionCode;
+        if(productionCode==0){
+            throw new IllegalArgumentException();
+        } else {
+            this.productionCode = productionCode;
+        }
         this.photosCollection = new HashSet<>();
     }
 

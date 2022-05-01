@@ -24,7 +24,7 @@ public class ProductBuilder implements DomainFactory<Product> {
     private Cash pricePreTax;
     private Cash pricePosTax;
     private BarCode barCode;
-    private double productionCode;
+    private int productionCode;
     private Set<Photo> photosCollection;
 
     public ProductBuilder ofType(ProductCategory productCategory) {
