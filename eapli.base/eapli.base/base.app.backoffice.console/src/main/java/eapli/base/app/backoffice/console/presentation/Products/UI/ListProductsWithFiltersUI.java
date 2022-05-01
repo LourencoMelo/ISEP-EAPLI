@@ -35,7 +35,7 @@ public class ListProductsWithFiltersUI {
                 String brand = Console.readLine("Brand : ");
                 System.out.printf("%-30s%-25s%-25s%-20s%-20s", "Name", "Category", "Price With Taxes", "Brand", "Internal Code");
                 System.out.println("\n");
-                for (Product s : listProductController.findByBrand(Designation.valueOf(brand))) {
+                for (Product s : listProductController.findByBrand(Designation.valueOf(brand.toUpperCase()))) {
                     System.out.printf("%-30s%-25s%-25s%-20s%-20s", s.getName(),s.getCategory(),s.getPosPrice(),s.getBrand(),s.getInternalCode());
                     System.out.println("\n \n");
                 }
