@@ -150,11 +150,11 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      * @param unitaryPreTaxPrice   unitary price pre tax
      * @param unitaryPosTaxPrice   unitary price pos tax
      */
-    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, double productionCode, Set<Photo> photos) {
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, double productionCode, Set<Photo> photos) throws Exception {
 
         Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
 
-        this.category = category;
+        setCategory(category);
         this.name = name;
         this.shortDescription = shortDescription;
         this.extendedDescription = extendedDescription;
@@ -169,11 +169,11 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
         this.photosCollection = photos;
     }
 
-    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, double productionCode) {
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, double productionCode) throws Exception {
 
         Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
 
-        this.category = category;
+        setCategory(category);
         this.name = name;
         this.shortDescription = shortDescription;
         this.extendedDescription = extendedDescription;
@@ -190,6 +190,14 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
 
     protected Product() {
         //Empty
+    }
+
+    public void setCategory(ProductCategory category) throws Exception {
+        if(category != null) {
+            this.category = category;
+        } else {
+            throw new NullPointerException();
+        }
     }
 
     public Designation getName() {

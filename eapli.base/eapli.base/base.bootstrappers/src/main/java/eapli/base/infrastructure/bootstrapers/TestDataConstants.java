@@ -29,6 +29,7 @@ public final class TestDataConstants {
     public static final String PRODUCT_CATEGORY_CLOTHE = "Clothe1";
     public static final String PRODUCT_CATEGORY_BEAUTY = "Beauty2";
     public static final String PRODUCT_CATEGORY_KITCHEN = "Kitchen3";
+    public static final String PRODUCT_CATEGORY_HOUSE1 = "House1";
 
     public static final String USER_TEST1 = "user1";
 

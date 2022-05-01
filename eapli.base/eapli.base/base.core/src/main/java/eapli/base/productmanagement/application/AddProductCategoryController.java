@@ -25,4 +25,32 @@ public class AddProductCategoryController {
         return repository.save(newProductCategory);
     }
 
+    public ProductCategory addProductCategory(final String code, final String description, ProductCategory superCategory) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
+                BaseRoles.SALES_CLERK);
+
+        final ProductCategory newProductCategory = new ProductCategory(AlphanumericCode.valueOf(code), Description.valueOf(description), superCategory);
+        return repository.save(newProductCategory);
+    }
+
+    public ProductCategory addProductCategory(final String code, final String description, String superCategory) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
+                BaseRoles.SALES_CLERK);
+
+        ProductCategory productC = null;
+
+        for(ProductCategory productCategory : repository.activeProductCategories()) {
+            if(productCategory.getCode().toString().equals(superCategory)) {
+                productC = productCategory;
+            }
+        }
+
+        if(productC == null) {
+            throw new IllegalArgumentException("That product category doesn't exist");
+        } else {
+            final ProductCategory newProductCategory = new ProductCategory(AlphanumericCode.valueOf(code), Description.valueOf(description), productC);
+            return repository.save(newProductCategory);
+        }
+    }
+
 }

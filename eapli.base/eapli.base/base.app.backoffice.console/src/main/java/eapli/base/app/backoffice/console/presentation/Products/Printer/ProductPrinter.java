@@ -9,7 +9,7 @@ public class ProductPrinter implements Visitor<Product> {
 
     @Override
     public void visit(final Product visitee) {
-        System.out.printf("%-30s%-25s%-10s%-20s%-20s", visitee.getName(),visitee.getCategory(),visitee.getPosPrice(),visitee.getBrand(),visitee.getInternalCode());
+        System.out.printf("%-30s%-25s%-25s%-10s%-20s%-20s", visitee.getName(),visitee.getCategory(),visitee.getCategory().getSuperCategory(),visitee.getPosPrice(),visitee.getBrand(),visitee.getInternalCode());
         try {
             visitee.printSetPhotos();
         } catch (IOException e) {

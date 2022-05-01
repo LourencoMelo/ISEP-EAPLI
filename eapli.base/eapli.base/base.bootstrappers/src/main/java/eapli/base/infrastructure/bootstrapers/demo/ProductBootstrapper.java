@@ -36,7 +36,6 @@ public class ProductBootstrapper implements Action {
 
     @Override
     public boolean execute() {
-        System.out.println("========PRODUCT BOOSTRAP============");
         final var clothe1 = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_CLOTHE);
         final var beauty2 = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_BEAUTY);
         final var kitchen3 = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_KITCHEN);
@@ -46,15 +45,20 @@ public class ProductBootstrapper implements Action {
         Set<Photo> set3 = new HashSet<>();
         Set<Photo> set4 = new HashSet<>();
 
-//        try {
-////            set1.add(controller.donePhoto(MyFrame.method(new File("eapli.base/photos/batom.jpg"))));
-////            set2.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/calcasazuis.jpeg"))));
-////            set3.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/batom.jpg"))));
-////            set4.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/copedepedebarro.jpg"))));
-////            set4.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/copodepedebarro2.png"))));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            set1.add(controller.donePhoto(MyFrame.method(new File("C:/Users/soare_wi5nw81/Desktop/d/Desktop" +
+                    "/Faculdade/2 ano/2 semestre/EAPLI/lei21_22_s4_2dg_04/eapli.base/photos/batom.jpg"))));
+            set2.add(controller.donePhoto(MyFrame.method(new File("C:/Users/soare_wi5nw81/Desktop/d/Desktop" +
+                    "/Faculdade/2 ano/2 semestre/EAPLI/lei21_22_s4_2dg_04/eapli.base/photos/calcasazuis.jpeg"))));
+            set3.add(controller.donePhoto(MyFrame.method(new File("C:/Users/soare_wi5nw81/Desktop/d/Desktop" +
+                    "/Faculdade/2 ano/2 semestre/EAPLI/lei21_22_s4_2dg_04/eapli.base/photos/batom.jpg"))));
+            set4.add(controller.donePhoto(MyFrame.method(new File("C:/Users/soare_wi5nw81/Desktop/d/Desktop" +
+                    "/Faculdade/2 ano/2 semestre/EAPLI/lei21_22_s4_2dg_04/eapli.base/photos/copedepedebarro.jpg"))));
+            set4.add(controller.donePhoto(MyFrame.method(new File("C:/Users/soare_wi5nw81/Desktop/d/Desktop" +
+                    "/Faculdade/2 ano/2 semestre/EAPLI/lei21_22_s4_2dg_04/eapli.base/photos/copodepedebarro2.png"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         register(clothe1, "Casaco", "Casaco de pele", "Casaco castanho de pele"
                 , "Casaco castanho de pele tamanho S", "Zara", "111111", 20
@@ -80,6 +84,8 @@ public class ProductBootstrapper implements Action {
                 , "111116", 3, 3.63, "EAN-13", 5401111111116L
                 , 111111116, set4);
 
+        System.out.println("Poduct Bootstrap done.");
+
         return true;
     }
 
@@ -94,7 +100,7 @@ public class ProductBootstrapper implements Action {
                     controller.addProduct(category, name, shortDescription, extendedDescription, technicalDescription, brand
                             , reference, unitaryPreTaxPrice, unitaryPosTaxPrice, formatBarCode, barcode, productionCode, photos));
         } catch (final IntegrityViolationException | ConcurrencyException
-                       | TransactionSystemException e) {
+                | TransactionSystemException e) {
             // ignoring exception. assuming it is just a primary key violation
             // due to the tentative of inserting a duplicated object
             LOGGER.warn("Assuming {} already exists (see trace log for details on {} {})",
