@@ -1,0 +1,13 @@
+@startuml
+
+autonumber
+
+WarehouseEmployee -> ImportJSONFileUI : selects option
+ImportJSONFileUI -> WarehouseEmployee : Asks for the path to the file
+WarehouseEmployee -> ImportJSONFileUI : Inserts path
+ImportJSONFileUI -> ImportJSONFile : importJsonFile(path)
+ImportJSONFile -> ImportJSONFileUI : creates and returns the warehouse object
+ImportJSONFileUI -> WarehouseEmployee : shows the object and say its sucessful
+
+
+@enduml
