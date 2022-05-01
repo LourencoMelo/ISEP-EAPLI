@@ -20,7 +20,6 @@ class Password <<Value object>>
 enum UserRoles <<Value object>> {}
 
 User --> "1" Name
-User --> "1" Gender
 User --> "1" Email
 User --> "1" Password
 User ..> UserRoles : managedByAdmin
@@ -37,7 +36,8 @@ class Date <<Value object>>
 Customer --> "1" VAT
 Customer --> "1..*" Address
 Customer --> "1" PhoneNumber
-Customer --> "1" Date : birthdate
+Customer --> "1" BirthDate : birthdate
+Customer --> "1" Gender
 
 class Price <<Value object>>{}
 class Status <<Entity>> <<root>>{}
@@ -80,6 +80,7 @@ class MaxWeight<<value object>>{}
 class Position<<value object>>{}
 class Task<<entity root>>{}
 class StatusTask<<value object>>{}
+class BirthDate<<value object>>{}
 
 User ..> "1" WareHousePlant : setupByWarehouseEmployee
 WareHousePlant "1" ..> "*" AGVDocks : contains

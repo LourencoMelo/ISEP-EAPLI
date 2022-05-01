@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor SalesClerk
+
+SalesClerk -> System: Wants to list all products
+
+System --> SalesClerk: Asks for confirmation
+
+SalesClerk -> System : Confirms
+
+System --> SalesClerk : Displays the catalog
+
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor SalesClerk
+
+SalesClerk -> System: Wants to list all products with filters
+
+System --> SalesClerk: Asks for the type of filter
+
+SalesClerk -> System : Choose the filter
+
+System --> SalesClerk : Asks for the necessary data
+
+SalesClerk -> System : Inserts the data
+
+System --> SalesClerk : Displays the filtered catalog
+
+@enduml
