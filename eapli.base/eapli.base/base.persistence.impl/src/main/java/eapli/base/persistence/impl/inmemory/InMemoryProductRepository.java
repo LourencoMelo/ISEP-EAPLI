@@ -6,6 +6,8 @@ import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
+import java.util.Optional;
+
 public class InMemoryProductRepository extends InMemoryDomainRepository<Product, Designation> implements ProductRepository {
 
 
@@ -21,5 +23,10 @@ public class InMemoryProductRepository extends InMemoryDomainRepository<Product,
     @Override
     public Iterable<Product> findByCategory(ProductCategory category){
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<Product> findById(Long id) {
+        return Optional.empty();
     }
 }

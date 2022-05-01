@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class CreateOrderUI extends AbstractUI {
 
@@ -38,7 +39,7 @@ public class CreateOrderUI extends AbstractUI {
 
             if (clientRegistAnswer.equalsIgnoreCase("no")) { //If the client isn't registered in the system
                 new RegisterCustomerAction().execute();
-            } else if (!clientRegistAnswer.equalsIgnoreCase("yes")){
+            } else if (!clientRegistAnswer.equalsIgnoreCase("yes")) {
                 throw new IOException("Invalid answer");
             }
 
@@ -57,11 +58,19 @@ public class CreateOrderUI extends AbstractUI {
             do {
 
                 String idOrCatalogAnswer = Console.readLine("Do you want to search the product for id or look up at the full catalog? (id or catalog) \n");
-
                 if (idOrCatalogAnswer.equalsIgnoreCase("id")) { //If the sales clerk pretend to search the product by id
                     Long id = Console.readLong("Insert the product id : \n");
 
-                    //findById
+                    Optional<Product> product = catalogController.findById(id);
+
+                    final int quantity = Console.readInteger("Insert the quantity pretended: \n");
+
+                    if (product.isPresent() && products.containsKey(product.get())) {
+                        int aux = products.get(product.get());
+                        aux += quantity;
+                        products.put(product.get(), aux);
+                    } else product.ifPresent(value -> products.put(value, quantity));
+                    input = Console.readInteger("Do you want to add more products to the order? Yes -> 0\nNo -> 1 \n");
 
                 } else if (idOrCatalogAnswer.equalsIgnoreCase("catalog")) { //If the sales clerk wants to search the product on the catalog
 
@@ -137,10 +146,10 @@ public class CreateOrderUI extends AbstractUI {
                 comment = Console.readLine("Insert the additional comment : \n");
             }
 
-            if (customer != null){
+            if (customer != null) {
                 Order order = controller.registerOrder(products, billing, delivering, paymentMethod, shipmentMethod, method, dateEncounter, comment, customer);
                 customer.addOrder(order);
-            }else {
+            } else {
                 throw new Exception("Customer needed!");
             }
 

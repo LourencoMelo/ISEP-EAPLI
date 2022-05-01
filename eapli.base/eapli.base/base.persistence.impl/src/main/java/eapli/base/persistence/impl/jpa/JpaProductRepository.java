@@ -5,8 +5,10 @@ import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.general.domain.model.Designation;
 
+import javax.persistence.TypedQuery;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class JpaProductRepository extends BasepaRepositoryBase<Product, Designation, Designation> implements ProductRepository {
 
@@ -25,6 +27,14 @@ public class JpaProductRepository extends BasepaRepositoryBase<Product, Designat
         final Map<String, Object> params = new HashMap<>();
         params.put("category", category);
         return match("e.product.category = :category", params);
+    }
+
+    @Override
+    public Optional<Product> findById(final Long id) {
+        final TypedQuery<Product> query = entityManager().createQuery(
+                "SELECT p FROM Product p WHERE p.id = :parameter", Product.class);
+        query.setParameter("parameter",  id);
+        return Optional.ofNullable(query.getSingleResult());
     }
 
 }

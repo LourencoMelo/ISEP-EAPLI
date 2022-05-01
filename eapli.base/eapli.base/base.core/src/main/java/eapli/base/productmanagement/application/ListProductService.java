@@ -7,7 +7,8 @@ import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+
+import java.util.Optional;
 
 public class ListProductService {
 
@@ -27,6 +28,11 @@ public class ListProductService {
 
     public Iterable<Product> findByCategory(ProductCategory category){
         return this.productRepository.findByCategory(category);
+    }
+
+    public Optional<Product> findById(final Long id){
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_CLERK, BaseRoles.POWER_USER, BaseRoles.ADMIN);
+        return productRepository.findById(id);
     }
 
 }

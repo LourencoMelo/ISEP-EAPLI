@@ -7,10 +7,14 @@ import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import org.springframework.security.core.parameters.P;
 
+import java.util.Optional;
+
 public interface ProductRepository extends DomainRepository<Designation, Product> {
 
     Iterable<Product> findByActive(boolean active);
 
     Iterable<Product> findByCategory(ProductCategory productCategory);
+
+    Optional<Product> findById(Long id);
 
 }
