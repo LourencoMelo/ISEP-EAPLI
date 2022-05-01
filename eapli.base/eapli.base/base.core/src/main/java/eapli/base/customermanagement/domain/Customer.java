@@ -69,6 +69,9 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
      * @param vat         customer value-added tax
      */
     public Customer(Name name, EmailAddress email, Gender gender, PhoneNumber phoneNumber, VAT vat, BirthDate birthDate) {
+        if(name==null || email==null || gender==null || phoneNumber == null || vat == null || birthDate == null) {
+            throw new IllegalArgumentException();
+        }
         this.name = name;
         this.email = email;
         this.gender = gender;

@@ -5,6 +5,7 @@ import eapli.framework.general.domain.model.Designation;
 import eapli.framework.general.domain.model.Money;
 import org.junit.Test;
 
+
 import java.util.HashSet;
 import java.util.Set;
 
