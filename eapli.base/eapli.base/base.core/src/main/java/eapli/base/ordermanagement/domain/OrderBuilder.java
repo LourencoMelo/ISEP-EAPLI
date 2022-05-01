@@ -6,7 +6,6 @@ import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.general.domain.model.Money;
 
 import java.util.Calendar;
 import java.util.Map;

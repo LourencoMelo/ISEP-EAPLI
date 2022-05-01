@@ -66,24 +66,24 @@ public class CreateOrderForClientController {
     }
 
     private Cash priceWithoutTaxes(final Map<Product, Integer> items){
-        Cash totalAmount = Cash.euros(0.0);
+        double totalAmount = 0.0;
         for (Map.Entry<Product, Integer> entry : items.entrySet()) {
             double price = entry.getKey().getPrePrice().amountAsDouble() * entry.getValue();
-            totalAmount.add(Cash.euros(price));
+           totalAmount += price;
         }
 
-        return totalAmount;
+        return Cash.euros(totalAmount);
 
     }
 
     private Cash priceWithTaxes(final Map<Product, Integer> items){
-        Cash totalAmountWithTaxes = Cash.euros(0.0);
+        double totalAmountWithTaxes = 0.0;
         for (Map.Entry<Product, Integer> entry : items.entrySet()) {
             double price = entry.getKey().getPosPrice().amountAsDouble() * entry.getValue();
-            totalAmountWithTaxes.add(Cash.euros(price));
+            totalAmountWithTaxes += price;
         }
 
-        return totalAmountWithTaxes;
+        return Cash.euros(totalAmountWithTaxes);
     }
 
 }

@@ -95,7 +95,7 @@ public class Cash implements Comparable<Cash>, Serializable, ValueObject, Format
 
     public Cash add(final Cash arg) {
         Preconditions.ensure(this.currency.equals(arg.currency), "Cannot add different currencies");
-        return new Cash(this.amount + arg.amount, this.currency);
+        return new Cash(Double.sum(this.amount, arg.amount), this.currency);
     }
 
     public int compareTo(final Cash arg) {

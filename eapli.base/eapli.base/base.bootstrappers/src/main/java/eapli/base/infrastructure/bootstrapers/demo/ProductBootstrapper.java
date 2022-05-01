@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class ProductBootstrapper  implements Action {
+public class ProductBootstrapper implements Action {
     private static final Logger LOGGER = LogManager.getLogger(ProductCategoryBootstrapper.class);
 
     private final ProductCategoryRepository productCategoryRepository = PersistenceContext.repositories().productCategories();
@@ -26,7 +26,7 @@ public class ProductBootstrapper  implements Action {
     final AddProductController controller = new AddProductController();
 
     private ProductCategory getProductCategory(final String code) {
-        for(ProductCategory p : productCategoryRepository.activeProductCategories()) {
+        for (ProductCategory p : productCategoryRepository.activeProductCategories()) {
             if (p.getCode().equals(AlphanumericCode.valueOf(code))) {
                 return p;
             }
@@ -46,38 +46,38 @@ public class ProductBootstrapper  implements Action {
         Set<Photo> set3 = new HashSet<>();
         Set<Photo> set4 = new HashSet<>();
 
-        try {
-            set1.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/casacopele.jpg"))));
-            set2.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/calcasazuis.jpeg"))));
-            set3.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/batom.jpg"))));
-            set4.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/copedepedebarro.jpg"))));
-            set4.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/copodepedebarro2.png"))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+////            set1.add(controller.donePhoto(MyFrame.method(new File("eapli.base/photos/batom.jpg"))));
+////            set2.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/calcasazuis.jpeg"))));
+////            set3.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/batom.jpg"))));
+////            set4.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/copedepedebarro.jpg"))));
+////            set4.add(controller.donePhoto(MyFrame.method(new File("lei21_22_s4_2dg_04/eapli.base/photos/copodepedebarro2.png"))));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        register(clothe1, "Casaco","Casaco de pele", "Casaco castanho de pele"
-                , "Casaco castanho de pele tamanho S", "Zara", "111111",20
-                ,24.2, "EAN-13", 5401111111111L, 111111111, set1);
-        register(clothe1, "Calças","Calças de pele", "Calças azuis de pele"
+        register(clothe1, "Casaco", "Casaco de pele", "Casaco castanho de pele"
+                , "Casaco castanho de pele tamanho S", "Zara", "111111", 20
+                , 24.2, "EAN-13", 5401111111111L, 111111111, set1);
+        register(clothe1, "Calças", "Calças de pele", "Calças azuis de pele"
                 , "Calças azuis de pele tamanho M", "Tommy Hilfiger", "111112"
-                ,40,48.4, "EAN-13", 5401111111112L
+                , 40, 48.4, "EAN-13", 5401111111112L
                 , 111111112, set2);
-        register(beauty2, "Batom","Batom de cera", "Batom vermelho de cera"
+        register(beauty2, "Batom", "Batom de cera", "Batom vermelho de cera"
                 , "Batom vermelho de cera a prova de agua", "Kiko", "111113"
-                ,10,12.1, "EAN-13", 5401111111113L
+                , 10, 12.1, "EAN-13", 5401111111113L
                 , 111111113, set3);
-        register(beauty2, "Base","Base de agua", "Base transparente de agua"
+        register(beauty2, "Base", "Base de agua", "Base transparente de agua"
                 , "Batom transparente de agua para esconder rugas", "Perfumes&Companhia"
-                , "111114",18,21.78, "EAN-13", 5401111111114L
+                , "111114", 18, 21.78, "EAN-13", 5401111111114L
                 , 111111114, null);
-        register(kitchen3, "Prato","Prato de ceramica", "Prato de ceramica quadrado"
+        register(kitchen3, "Prato", "Prato de ceramica", "Prato de ceramica quadrado"
                 , "Prato de ceramica quadrado com bordas redondas", "Vista Alegre"
-                , "111115",10,12.1, "EAN-13", 5401111111115L
+                , "111115", 10, 12.1, "EAN-13", 5401111111115L
                 , 111111115, null);
-        register(kitchen3, "Copo","Copo de pe", "Copo de pe de barro"
+        register(kitchen3, "Copo", "Copo de pe", "Copo de pe de barro"
                 , "Copo de pe de barro colorido", "Continente"
-                , "111116",3,3.63, "EAN-13", 5401111111116L
+                , "111116", 3, 3.63, "EAN-13", 5401111111116L
                 , 111111116, set4);
 
         return true;
@@ -91,10 +91,10 @@ public class ProductBootstrapper  implements Action {
         try {
             LOGGER.debug("{} ( {} )", name, category);
             return Optional.of(
-            controller.addProduct(category,name,shortDescription,extendedDescription,technicalDescription,brand
-                    ,reference,unitaryPreTaxPrice,unitaryPosTaxPrice,formatBarCode,barcode,productionCode, photos));
+                    controller.addProduct(category, name, shortDescription, extendedDescription, technicalDescription, brand
+                            , reference, unitaryPreTaxPrice, unitaryPosTaxPrice, formatBarCode, barcode, productionCode, photos));
         } catch (final IntegrityViolationException | ConcurrencyException
-                | TransactionSystemException e) {
+                       | TransactionSystemException e) {
             // ignoring exception. assuming it is just a primary key violation
             // due to the tentative of inserting a duplicated object
             LOGGER.warn("Assuming {} already exists (see trace log for details on {} {})",

@@ -4,8 +4,7 @@ import eapli.base.productmanagement.domain.Cash;
 import eapli.framework.domain.model.ValueObject;
 import lombok.*;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -24,6 +23,10 @@ public class ShipmentMethod implements ValueObject {
      */
     @NonNull
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "Shipment_price")),
+            @AttributeOverride(name = "currency", column = @Column(name = "Shipment_currency")),
+    })
     private Cash price;
 
     protected ShipmentMethod() {
