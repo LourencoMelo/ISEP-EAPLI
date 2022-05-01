@@ -30,6 +30,7 @@ import eapli.base.app.backoffice.console.presentation.Products.Action.ListProduc
 import eapli.base.app.backoffice.console.presentation.orders.Action.CreateOrderForClientAction;
 import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
 import eapli.base.app.backoffice.console.presentation.warehouseemployee.ConfigureAGVAction;
+import eapli.base.app.backoffice.console.presentation.warehouseemployee.ImportJSONFileAction;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -89,7 +90,8 @@ public class MainMenu extends AbstractUI {
 
 
     //WAREHOUSE_EMPLOYEE
-    private static final int CONFIGURE_AGV = 1;
+    private static final int IMPORT_JSONFILE = 1;
+    private static final int CONFIGURE_AGV = 2;
 
 
 
@@ -206,6 +208,7 @@ public class MainMenu extends AbstractUI {
     private Menu buildWarehouseEmployee(){
         final Menu menu = new Menu("Warehouse Employee >");
 
+        menu.addItem(IMPORT_JSONFILE, "Import JSON file", new ImportJSONFileAction());
         menu.addItem(CONFIGURE_AGV, "Configure AGV", new ConfigureAGVAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

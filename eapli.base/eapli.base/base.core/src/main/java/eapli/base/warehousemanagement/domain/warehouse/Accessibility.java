@@ -1,8 +1,6 @@
 package eapli.base.warehousemanagement.domain.warehouse;
 
-import eapli.framework.domain.model.ValueObject;
-
-public class Accessibility implements ValueObject {
+public class Accessibility{
 
     /**
      * Accessibility
@@ -35,5 +33,12 @@ public class Accessibility implements ValueObject {
             System.out.println("The accessibility wasn't accepted! \n" +
                     "Isn't the accepted ones: l+, l-, w+, w-");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Accessibility{" +
+                "accessibility='" + accessibility + '\'' +
+                '}';
     }
 }

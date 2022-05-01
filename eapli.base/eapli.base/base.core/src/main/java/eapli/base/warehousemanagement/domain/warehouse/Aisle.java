@@ -1,15 +1,13 @@
 package eapli.base.warehousemanagement.domain.warehouse;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
+
 public class Aisle {
 
     /**
      * Id of the Aisle
      */
-    @Id
     private long id;
 
     /**
@@ -35,12 +33,7 @@ public class Aisle {
     /**
      * Rows of the Aisle
      */
-    @OneToMany(mappedBy = "aisle", cascade = CascadeType.ALL)
     private List<Row> listRow;
-
-    @ManyToOne
-    @JoinColumn(name = "WareHouse")
-    private WareHousePlant wareHousePlant;
 
     /**
      * Constructor of the Aisle
@@ -56,6 +49,7 @@ public class Aisle {
         this.end = end;
         this.depth = depth;
         this.accessibility = accessibility;
+        this.listRow = null;
     }
 
     public void setListRow(List<Row> listRow) {
@@ -67,5 +61,17 @@ public class Aisle {
      */
     public Aisle() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Aisle{" +
+                "id=" + id +
+                ", begin=" + begin +
+                ", end=" + end +
+                ", depth=" + depth +
+                ", accessibility=" + accessibility +
+                ", listRow=" + listRow +
+                '}';
     }
 }

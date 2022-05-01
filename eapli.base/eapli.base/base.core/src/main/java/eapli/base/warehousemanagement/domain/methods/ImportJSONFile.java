@@ -30,16 +30,16 @@ public class ImportJSONFile {
         try {
             JSONParser jsonparser = new JSONParser();
 
-            FileReader reader = new FileReader("eapli.base/Files/warehouse1.json");
+            FileReader reader = new FileReader(file);
 
             Object obj = jsonparser.parse(reader);
 
             JSONObject jsonObject = (JSONObject) obj;
 
             String description = (String) jsonObject.get("Warehouse");
-            Integer length = (Integer) jsonObject.get("length");
-            Integer width = (Integer) jsonObject.get("width");
-            Integer square = (Integer) jsonObject.get("square");
+            int length = ((Long)jsonObject.get("Length")).intValue();
+            int width = ((Long)jsonObject.get("Width")).intValue();
+            int square = ((Long)jsonObject.get("Square")).intValue();
             String unit = (String) jsonObject.get("Unit");
 
             /**
@@ -49,32 +49,33 @@ public class ImportJSONFile {
             List<Aisle> aisleList = new ArrayList<>();
             for(int i=0; i <arrayAisles.size(); i++){
                 JSONObject aisle = (JSONObject) arrayAisles.get(i);
-                long idAisle = Long.parseLong((String) aisle.get("Id"));
+                long idAisle = ((Long)aisle.get("Id"));
                 /**
                  * Importing begin
                  */
                 JSONObject beginAisle = (JSONObject) aisle.get("begin");
-                Integer beginLsquareAisle = (Integer) beginAisle.get("lsquare");
-                Integer beginWsquareAisle = (Integer) beginAisle.get("wsquare");
+                int beginLsquareAisle = ((Long)beginAisle.get("lsquare")).intValue();
+                int beginWsquareAisle = ((Long)beginAisle.get("wsquare")).intValue();
                 Begin beginAisleObj = new Begin(beginLsquareAisle, beginWsquareAisle);
 
                 /**
                  * Importing end
                  */
                 JSONObject endAisle = (JSONObject) aisle.get("end");
-                Integer endLsquareAisle = (Integer) endAisle.get("lsquare");
-                Integer endWsquareAisle = (Integer) endAisle.get("wsquare");
+                int endLsquareAisle =  ((Long)endAisle.get("lsquare")).intValue();
+                int endWsquareAisle = ((Long)endAisle.get("wsquare")).intValue();
                 End endAisleObj = new End(endLsquareAisle, endWsquareAisle);
                 /**
                  * Importing depth Aisle
                  */
                 JSONObject depthAisle = (JSONObject) aisle.get("depth");
-                Integer depthLsquareAisle = (Integer) depthAisle.get("lsquare");
-                Integer depthWsquareAisle = (Integer) depthAisle.get("wsquare");
+                int depthLsquareAisle = ((Long)depthAisle.get("lsquare")).intValue();
+                int depthWsquareAisle = ((Long) depthAisle.get("wsquare")).intValue();
                 Depth depthAisleObj = new Depth(depthLsquareAisle, depthWsquareAisle);
 
                 String accessibilityAisle = (String) aisle.get("accessibility");
                 Accessibility accessibilityAisleObj = new Accessibility(accessibilityAisle);
+
                 /**
                  * Importing Array of Rows
                  */
@@ -82,23 +83,23 @@ public class ImportJSONFile {
                 List<Row> rowList = new ArrayList<>();
                 for(int j=0; j < arrayRows.size(); j++){
                     JSONObject row = (JSONObject) arrayRows.get(j);
-                    long idRow = Long.parseLong((String) row.get("Id"));
+                    long idRow = ((Long) row.get("Id"));
                     /**
                      * Importing begin
                      */
                     JSONObject beginRow = (JSONObject) row.get("begin");
-                    Integer beginLsquareRow = (Integer) beginRow.get("lsquare");
-                    Integer beginWsquareRow = (Integer) beginRow.get("wsquare");
+                    int beginLsquareRow = ((Long) beginRow.get("lsquare")).intValue();
+                    int beginWsquareRow = ((Long) beginRow.get("wsquare")).intValue();
                     Begin beginRowObj = new Begin(beginLsquareRow, beginWsquareRow);
                     /**
                      * Importing end
                      */
                     JSONObject endRow = (JSONObject) row.get("end");
-                    Integer endLsquareRow = (Integer) endRow.get("lsquare");
-                    Integer endWsquareRow = (Integer) endRow.get("wsquare");
+                    int endLsquareRow = ((Long) endRow.get("lsquare")).intValue();
+                    int endWsquareRow = ((Long) endRow.get("wsquare")).intValue();
                     End endRowObj = new End(endLsquareRow, endWsquareRow);
 
-                    int shelves = (Integer) row.get("shelves");
+                    int shelves = ((Long) row.get("shelves")).intValue();
 
                     Row rowObj = new Row(idRow,beginRowObj, endRowObj, shelves);
                     rowList.add(rowObj);
@@ -115,28 +116,28 @@ public class ImportJSONFile {
             List<AGVDock> agvDockList = new ArrayList<>();
             for(int i=0 ; i< arrayAGVDocks.size(); i++){
                 JSONObject agvDock = (JSONObject) arrayAGVDocks.get(i);
-                long idAgvDock = Long.parseLong((String) agvDock.get("Id"));
+                String idAgvDock = ((String) agvDock.get("Id"));
                 /**
                  * Importing begin
                  */
                 JSONObject beginAGVDock = (JSONObject) agvDock.get("begin");
-                Integer beginLsquareDock = (Integer) beginAGVDock.get("lsquare");
-                Integer beginWsquareDock = (Integer) beginAGVDock.get("wsquare");
+                int beginLsquareDock = ((Long) beginAGVDock.get("lsquare")).intValue();
+                int beginWsquareDock = ((Long) beginAGVDock.get("wsquare")).intValue();
                 Begin beginAGVDockObj = new Begin(beginLsquareDock, beginWsquareDock);
 
                 /**
                  * Importing end
                  */
                 JSONObject endAGVDock = (JSONObject) agvDock.get("end");
-                Integer endLsquareDock = (Integer) endAGVDock.get("lsquare");
-                Integer endWsquareDock = (Integer) endAGVDock.get("wsquare");
+                int endLsquareDock = ((Long) endAGVDock.get("lsquare")).intValue();
+                int endWsquareDock = ((Long) endAGVDock.get("wsquare")).intValue();
                 End endAGVDockObj = new End(endLsquareDock,endWsquareDock);
                 /**
                  * Importing depth
                  */
                 JSONObject depthAGVDock = (JSONObject) agvDock.get("depth");
-                Integer depthLsquareDock = (Integer) depthAGVDock.get("lsquare");
-                Integer depthWsquareDock = (Integer) depthAGVDock.get("wsquare");
+                int depthLsquareDock = ((Long) depthAGVDock.get("lsquare")).intValue();
+                int depthWsquareDock = ((Long) depthAGVDock.get("wsquare")).intValue();
                 Depth depthAGVDockObj = new Depth(depthLsquareDock, depthWsquareDock);
 
                 String accessibilityAGVDock = (String) agvDock.get("accessibility");
@@ -160,6 +161,7 @@ public class ImportJSONFile {
         }catch (IOException ioException){
             System.out.println("Error in the IOException \n Error in the parser to Object");
         }catch (Exception exception){
+            exception.printStackTrace();
             System.out.println("Unexpected error detected!");
         }
 

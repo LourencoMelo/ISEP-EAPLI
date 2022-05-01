@@ -1,22 +1,11 @@
 package eapli.base.warehousemanagement.domain.warehouse;
 
-import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.base.warehousemanagement.domain.agv.AGVDock;
-import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.general.domain.model.Description;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-public class WareHousePlant implements AggregateRoot<Integer> {
 
-    /**
-     * Id of WareHousePlant
-     */
-    @Id
-    @GeneratedValue()
-    private long id;
+public class WareHousePlant{
 
     /**
      * Description of the WareHousePlant
@@ -46,13 +35,11 @@ public class WareHousePlant implements AggregateRoot<Integer> {
     /**
      * Aisles of the Warehouse
      */
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
     private List<Aisle> listAisle;
 
     /**
      * AGVDock of the Warehouse
      */
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
     private List<AGVDock> listAGVDock;
 
     /**
@@ -113,22 +100,15 @@ public class WareHousePlant implements AggregateRoot<Integer> {
     }
 
     @Override
-    public boolean sameAs(Object other) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(Integer other) {
-        return AggregateRoot.super.compareTo(other);
-    }
-
-    @Override
-    public Integer identity() {
-        return null;
-    }
-
-    @Override
-    public boolean hasIdentity(Integer id) {
-        return AggregateRoot.super.hasIdentity(id);
+    public String toString() {
+        return "WareHousePlant{" +
+                "description='" + description + '\'' +
+                ", length=" + length +
+                ", width=" + width +
+                ", square=" + square +
+                ", unit='" + unit + '\'' +
+                ", listAisle=" + listAisle +
+                ", listAGVDock=" + listAGVDock +
+                '}';
     }
 }

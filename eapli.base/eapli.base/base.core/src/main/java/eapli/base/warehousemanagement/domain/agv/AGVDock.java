@@ -10,7 +10,7 @@ public class AGVDock {
     /**
      * Id of the AGVDock
      */
-    private long id;
+    private String id;
 
     /**
      * Where the AGV begins
@@ -40,7 +40,7 @@ public class AGVDock {
      * @param depth
      * @param accessibility
      */
-    public AGVDock(long id, Begin begin, End end, Depth depth, Accessibility accessibility) {
+    public AGVDock(String id, Begin begin, End end, Depth depth, Accessibility accessibility) {
         this.id = id;
         this.begin = begin;
         this.end = end;
@@ -53,5 +53,16 @@ public class AGVDock {
      */
     public AGVDock() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "AGVDock{" +
+                "id='" + id + '\'' +
+                ", begin=" + begin +
+                ", end=" + end +
+                ", depth=" + depth +
+                ", accessibility=" + accessibility +
+                '}';
     }
 }
