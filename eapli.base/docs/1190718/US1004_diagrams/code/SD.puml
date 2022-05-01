@@ -1,0 +1,51 @@
+@startuml
+
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+autonumber
+skinparam defaultTextAlignment center
+
+
+participant ":CreateOrderUI" as ui
+participant ":CreateOrderForClientController" as ctrl
+participant ":ListCustomersController" as ctrl2
+participant ":ListProductController" as ctrl3
+participant ":PersistenceContext" as pc
+participant ":RepositoryFactory" as rf
+participant ":OrderRepository" as repo
+participant ":CustomerRepository" as repo2
+participant ":ProductRepository" as repo3
+participant ":Order" as Order
+
+ui -> ctrl : create
+ui -> ctrl2 : getCustomers
+ctrl2 -> pc : repositories()
+pc -> rf : create
+rf -> repo2 : create
+ctrl2 -> repo2 : allCustomers()
+ctrl2 --> ui : customers
+
+ui -> ctrl3 : getProducts
+ctrl3 -> pc : repositories()
+pc -> rf : create
+rf -> repo3 : create
+ctrl3 -> repo3 : activeProducts()
+ctrl3 --> ui : products
+
+
+ui -> ui : doShow()
+
+ui -> ctrl : registerOrder(products, billing_address, delivering_address, paymentMethod, shipmentMethod, method, dateOfEncounter, comment, customer)
+ctrl -> Order : newOrder = create(products, billing_address, delivering_address, paymentMethod, shipmentMethod, method, dateOfEncounter, comment, customer)
+ctrl -> pc : repositories()
+pc -> rf : create
+rf -> repo : create
+ctrl -> repo : save(newOrder)
+
+
+@enduml
+

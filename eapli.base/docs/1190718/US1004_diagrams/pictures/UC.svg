@@ -17,7 +17,7 @@ actor Customer
 
 rectangle OrdersSystem{
 (Log in) as (log)
-(Create new products order) as (create)
+(Create new products orders) as (create)
 (View products) as (catalog)
 }
 
