@@ -5,12 +5,6 @@ autonumber
 actor WarehouseEmployee
 
 WarehouseEmployee -> System : Wants to configure an AGV
-System -> System : Checks if the warehouse has an AGV Dock without an AGV
-
-group if the agv docks all already occupied
-System -> WarehouseEmployee : Shows all the AGVs and asks to select one
-end
-
 System -> WarehouseEmployee : Asks for an identifier
 WarehouseEmployee -> System : Inserts an identifier
 System -> WarehouseEmployee : Asks for a short description
@@ -25,10 +19,6 @@ System -> WarehouseEmployee : Asks for the status of the AGV
 WarehouseEmployee -> System : Inserts the status of the AGV
 System -> WarehouseEmployee : Asks for the autonomy in minutes
 WarehouseEmployee -> System : Inserts the autonomy is minutes
-System -> WarehouseEmployee : Shows all the AGVDocks and asks to insert one
-WarehouseEmployee -> System : Inserts the identifier of the AGVDocks
 System -> WarehouseEmployee : Successful action
-
-
 
 @enduml

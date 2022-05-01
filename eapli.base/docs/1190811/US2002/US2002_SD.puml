@@ -1,0 +1,40 @@
+@startuml
+
+autonumber
+
+WarehouseEmployee --> ConfigureAGVUI : chooses to configure the ConfigureAGVUI
+
+ConfigureAGVController --> PersistenceContext : repositories()
+PersistenceContext --> RepositoryFactory : create
+RepositoryFactory --> AGVRepository :create
+
+ConfigureAGVUI -> WarehouseEmployee : Asks for an identifier
+WarehouseEmployee -> ConfigureAGVUI : Inserts an identifier
+ConfigureAGVUI -> WarehouseEmployee : Asks for a short description
+WarehouseEmployee -> ConfigureAGVUI : Inserts the short description
+ConfigureAGVUI -> WarehouseEmployee : Asks for the model
+WarehouseEmployee -> ConfigureAGVUI : Inserts the model of the AGV
+ConfigureAGVUI -> WarehouseEmployee : Asks for the maxWeight
+WarehouseEmployee -> ConfigureAGVUI : Inserts the maxWeight of the AGV
+ConfigureAGVUI -> WarehouseEmployee : Asks for the maxVolume
+WarehouseEmployee -> ConfigureAGVUI : Inserts the maxVolume of the AGV
+ConfigureAGVUI -> WarehouseEmployee : Asks for the status of the AGV
+WarehouseEmployee -> ConfigureAGVUI : Inserts the status of the AGV
+ConfigureAGVUI -> WarehouseEmployee : Asks for the autonomy in minutes
+WarehouseEmployee -> ConfigureAGVUI : Inserts the autonomy is minutes
+ConfigureAGVUI -> ConfigureAGVController : configureAGV()
+
+ConfigureAGVController --> PersistenceContext : repositories()
+PersistenceContext --> RepositoryFactory : create
+RepositoryFactory --> AGVRepository :create
+
+ConfigureAGVController -> AGVBuilder : build()
+AGVBuilder -> AGV : AGV()
+AGV -> AGVBuilder : agvFinal
+AGVBuilder -> ConfigureAGVController : returns agvFinal
+
+ConfigureAGVController --> AGVRepository : save()
+
+System -> WarehouseEmployee : Successful action
+
+@enduml

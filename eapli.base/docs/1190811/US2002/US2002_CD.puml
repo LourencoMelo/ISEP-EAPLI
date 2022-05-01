@@ -1,61 +1,82 @@
 @startuml
 
 Entity AGV<<entity>>{
-    -AGVId agvId **PRIMARY KEY**
+
 }
 
-Entity AGVDock<<entity>>{
-    -long id **PRIMARY KEY**;
+class ConfigureAGVUI{
+    ConfigureAGVController configureAGVController;
 }
 
-class AGVId <<value object>>{
-    -String agvId;
+class ConfigureAGVController{
+    -AGVRepository agvRepository;
+    -AuthorizationService authz;
+    -AGVBuilder agvBuilder;
+    -configureAGV();
 }
 
-class Description <<value object>>{
-    -String description;
+class AGVBuilder{
+    -build()
+    -buildOrThrow(){
 }
 
-class Model <<value object>>{
-    -String model;
+class BaseBackoffice{
+    -MainMenu menu
 }
 
-class MaxWeight <<value object>>{
-    -double maxWeight;
+interface AGVRepository{
+
 }
 
-class MaxVolume <<value object>>{
-    -double maxVolume;
+interface DomainFactory{
+
 }
 
-class Status <<value object>>{
-    -String status;
+class JpaAGVRepository{
+
 }
 
-class Position <<value object>>{
-    -int x;
-    -int y;
+class JpaAutoTxRepository{
+
 }
 
-class AutonomyMin <<value object>>{
-    -int autonomyMin;
+class InMemoryAGVRepository{
+
 }
 
-AGV "1" -down-> "1" AGVId
-AGV "1" -down-> "1" Description
-AGV "1" -down-> "1" Model
-AGV "1" -down-> "1" MaxWeight
-AGV "1" -down-> "1" MaxVolume
-AGV "1" -down-> "1" Status
-AGV "1" -down-> "1" Position
-AGV "1" -down-> "1" AutonomyMin
+class InMemoryDomainRepository{
 
-AGVDock "1" -left-> "1" Accessibility
-AGVDock "1" -left-> "1" Begin
-AGVDock "1" -left-> "1" End
+}
+
+class JpaRepositoryFactory{
+    -AGVRepository agv();
+}
+
+interface RepositoryFactory{
+
+}
+
+AGVBuilder -down-> AGV
+
+BaseBackoffice -> ConfigureAGVUI
+
+ConfigureAGVUI -> ConfigureAGVController
+
+ConfigureAGVController ->  AGVBuilder
+
+ConfigureAGVController -down-> RepositoryFactory
+RepositoryFactory -right-> AGVRepository
 
 
-AGV "1" -left-> "1" AGVDock
+AGVRepository -right-> DomainFactory : "extends"
 
+JpaAGVRepository -right-> JpaRepositoryFactory
+JpaRepositoryFactory -> AGVRepository
+
+JpaAGVRepository  -> JpaAutoTxRepository : "extends"
+JpaAGVRepository -down-> AGVRepository : "implements"
+
+InMemoryAGVRepository -down-> InMemoryDomainRepository : "extends"
+InMemoryAGVRepository -down-> AGVRepository : "implements"
 
 @enduml
