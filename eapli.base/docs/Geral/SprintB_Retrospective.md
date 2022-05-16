@@ -3,21 +3,21 @@
 # 1. Each person shares how they’re feeling following the sprint:
 
 
-| Student Nr.	                   | Thoughts			 |
-|------------------------------|------------------|
-| **[1190718](/docs/1190718)** |      |
-| **[1190782](/docs/1190782)** | 	 	   |
-| **[1190811](/docs/1190811)** | It was a late start, and because of that we couldn't make things as we wanted to. Fortunately we could finished all the US and almost every requirment. But some minor error and little improvments could be done if we had more time|
-| **[1191419](/docs/1191419)** | Even with the late start, the sprint went well. The core things were done properly and with care. The group environment and compatibility is great and improving. |
+| Student Nr.	                   | Thoughts			                                                                                                                                                                                                                           |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **[1190718](/docs/1190718)** |                                                                                                                                                                                                                                       |
+| **[1190782](/docs/1190782)** | Even though we started a little bit late, all the US were successfully implemented. Some little errors could been solved if we had more time. The group environment is great and helps to improve the functionalities.	 	             |
+| **[1190811](/docs/1190811)** | It was a late start, and because of that we couldn't make things as we wanted to. Fortunately we could finished all the US and almost every requirment. But some minor error and little improvments could be done if we had more time |
+| **[1191419](/docs/1191419)** | Even with the late start, the sprint went well. The core things were done properly and with care. The group environment and compatibility is great and improving.                                                                     |
 
 # 2. How we feel it went in one word:
 
 | Student Nr.	                   | Thoughts			 |
-|------------------------------|------------------|
-| **[1190718](/docs/1190718)** |      |
-| **[1190782](/docs/1190782)** | 	 	   |
-| **[1190811](/docs/1190811)** | Great  |
-| **[1191419](/docs/1191419)** | Well |
+|------------------------------|-------------|
+| **[1190718](/docs/1190718)** |             |
+| **[1190782](/docs/1190782)** | Great	 	    |
+| **[1190811](/docs/1190811)** | Great       |
+| **[1191419](/docs/1191419)** | Well        |
 
 # 3. What went well:
 
