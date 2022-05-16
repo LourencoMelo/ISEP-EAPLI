@@ -7,7 +7,7 @@
 |------------------------------|------------------|
 | **[1190718](/docs/1190718)** |      |
 | **[1190782](/docs/1190782)** | 	 	   |
-| **[1190811](/docs/1190811)** |  	  |
+| **[1190811](/docs/1190811)** | It was a late start, and because of that we couldn't make things as we wanted to. Fortunately we could finished all the US and almost every requirment. But some minor error and little improvments could be done if we had more time|
 | **[1191419](/docs/1191419)** | Even with the late start, the sprint went well. The core things were done properly and with care. The group environment and compatibility is great and improving. |
 
 # 2. How we feel it went in one word:
@@ -16,7 +16,7 @@
 |------------------------------|------------------|
 | **[1190718](/docs/1190718)** |      |
 | **[1190782](/docs/1190782)** | 	 	   |
-| **[1190811](/docs/1190811)** |  	  |
+| **[1190811](/docs/1190811)** | Great  |
 | **[1191419](/docs/1191419)** | Well |
 
 # 3. What went well:
