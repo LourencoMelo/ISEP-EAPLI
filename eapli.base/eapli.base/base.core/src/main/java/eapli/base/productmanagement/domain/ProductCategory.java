@@ -6,6 +6,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.strings.util.StringPredicates;
+import org.hibernate.annotations.Type;
 
 
 import javax.persistence.*;
@@ -45,6 +46,7 @@ public class ProductCategory implements AggregateRoot<String> {
 
     @XmlElement
     @JsonProperty
+    @Type(type= "org.hibernate.type.NumericBooleanType")
     private boolean active;
 
     public void setDescription(Description description) {

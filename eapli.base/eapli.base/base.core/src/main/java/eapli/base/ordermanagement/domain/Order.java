@@ -25,8 +25,8 @@ public class Order implements AggregateRoot<Long> {
      * Numeric identifier
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Identity")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "Identity", nullable = false)
     private Long pk;
 
     @Version

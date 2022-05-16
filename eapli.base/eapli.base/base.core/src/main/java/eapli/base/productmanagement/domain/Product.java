@@ -10,6 +10,7 @@ import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.representations.Representationable;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
+import org.hibernate.annotations.Type;
 
 import javax.imageio.ImageIO;
 import javax.persistence.*;
@@ -90,6 +91,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      */
     @XmlElement
     @JsonProperty
+    @Type(type= "org.hibernate.type.NumericBooleanType")
     private boolean active;
 
     /**

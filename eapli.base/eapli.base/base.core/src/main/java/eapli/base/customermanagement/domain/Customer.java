@@ -46,6 +46,12 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
 
     @Temporal(TemporalType.DATE)
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "day", column = @Column(name = "days")),
+            @AttributeOverride(name = "month", column = @Column(name = "months")),
+            @AttributeOverride(name = "year", column = @Column(name = "years"))
+
+    })
     private BirthDate birthDate;
 
     public EmailAddress getEmail() {
