@@ -5,5 +5,5 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 public interface OrderRepository extends DomainRepository<Long, Order> {
 
-
+    Iterable<Order> ordersToBePrepared();
 }

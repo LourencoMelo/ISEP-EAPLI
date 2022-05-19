@@ -9,4 +9,9 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<Order, Lon
     static {
         InMemoryInitializer.init();
     }
+
+    @Override
+    public Iterable<Order> ordersToBePrepared() {
+        throw new UnsupportedOperationException();
+    }
 }
