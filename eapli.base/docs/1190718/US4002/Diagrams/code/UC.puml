@@ -1,0 +1,18 @@
+@startuml
+
+rectangle ApplicationServers{
+:  <<Application>>\nAGV Manager: as AGV
+}
+
+rectangle CompanyOffices{
+:  <<Application>>\nBackOffice: as BO
+}
+
+rectangle Warehouse{
+: <<Application>>\nAGV Digital Twin: as Twin
+}
+
+AGV -> BO : manages requests for
+AGV -up-> Twin : analysis status
+
+@enduml
