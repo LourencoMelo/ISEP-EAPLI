@@ -1,76 +1,63 @@
-João Beires Nº[1190718](./)
+João Beires Nº[1190718](./1190718)
 ===============================
 
 
 ### Índice das Funcionalidade Desenvolvidas ###
 
 
-| Sprint | Funcionalidade     |
-|--------|--------------------|
-| **B**  | [USDemo1](USDemo1) |
-| **B**  | [USDemo2](USDemo2) |
-| **C**  | [USDemo3](USDemo3) |
-| **C**  | [USDemo3](USDemo4) |
-| **D**  | [USDemo3](USDemo5) |
-| **D**  | [USDemo3](USDemo6) |
-| **D**  | [USDemo3](USDemo7) |
+| Sprint | Funcionalidade             |
+|--------|----------------------------|
+| **B**  | [US1004](./1190718/US1004) |
+| **C**  | [US4002](USDemo3)          |
+| **C**  | [US5001](USDemo4)          |
 
 
 ==============================================
 
-José Soares Nº[1190782](./docs/1190782)
+José Soares Nº[1190782](./1190782)
 ===============================
 
 
 ### Índice das Funcionalidade Desenvolvidas ###
 
 
-| Sprint | Funcionalidade                  |
-|--------|---------------------------------|
-| **B**  | [US1001](./docs/1190782/US1001) |
-| **B**  | [US1900](./docs/1190782/US1900) |
-| **C**  | [USDemo3](USDemo3)              |
-| **C**  | [USDemo3](USDemo4)              |
-| **D**  | [USDemo3](USDemo5)              |
-| **D**  | [USDemo3](USDemo6)              |
-| **D**  | [USDemo3](USDemo7)              |
+| Sprint | Funcionalidade             |
+|--------|----------------------------|
+| **B**  | [US1001](./1190782/US1001) |
+| **B**  | [US1900](./1190782)        |
+| **C**  | [US2004](USDemo3)          |
+| **C**  | [US5002](USDemo4)          |
+
 
 
 ==============================================
 
-Lourenço Melo Nº[1190811](./)
+Lourenço Melo Nº[1190811](./1190811)
 ===============================
 
 
 ### Índice das Funcionalidade Desenvolvidas ###
 
 
-| Sprint | Funcionalidade     |
-|--------|--------------------|
-| **B**  | [USDemo1](USDemo1) |
-| **B**  | [USDemo2](USDemo2) |
-| **C**  | [USDemo3](USDemo3) |
-| **C**  | [USDemo3](USDemo4) |
-| **D**  | [USDemo3](USDemo5) |
-| **D**  | [USDemo3](USDemo6) |
-| **D**  | [USDemo3](USDemo7) |
+| Sprint | Funcionalidade             |
+|--------|----------------------------|
+| **B**  | [US2001](./1190811/US2001) |
+| **B**  | [US2002](./1190811/US2002) |
+| **C**  | [US2003](USDemo3)          |
+| **C**  | [US2005](USDemo4)          |
 
 
 ==============================================
 
-José Maia Nº[1191419](./)
+José Maia Nº[1191419](./1191419)
 ===============================
 
 
 ### Índice das Funcionalidade Desenvolvidas ###
 
 
-| Sprint | Funcionalidade     |
-|--------|--------------------|
-| **B**  | [USDemo1](USDemo1) |
-| **B**  | [USDemo2](USDemo2) |
-| **C**  | [USDemo3](USDemo3) |
-| **C**  | [USDemo3](USDemo4) |
-| **D**  | [USDemo3](USDemo5) |
-| **D**  | [USDemo3](USDemo6) |
-| **D**  | [USDemo3](USDemo7) |
+| Sprint | Funcionalidade             |
+|--------|----------------------------|
+| **B**  | [US1002](./1191419/US1002) |
+| **B**  | [US1003](./1191419/US1003) |
+| **C**  | [US4001](USDemo3)          |
