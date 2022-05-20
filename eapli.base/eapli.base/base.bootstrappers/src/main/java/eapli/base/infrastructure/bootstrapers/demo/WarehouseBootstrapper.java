@@ -1,6 +1,6 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
-import eapli.base.warehousemanagement.domain.methods.ImportJSONFile;
+import eapli.base.warehousemanagement.application.ImportJSONFileController;
 import eapli.base.warehousemanagement.domain.warehouse.WareHousePlant;
 import eapli.framework.actions.Action;
 
@@ -10,10 +10,14 @@ public class WarehouseBootstrapper implements Action{
 
     @Override
     public boolean execute() {
-        ImportJSONFile importJSONFile = new ImportJSONFile();
         File file = new File("Files/warehouse1.json");
-        WareHousePlant wareHousePlant = importJSONFile.ImportJSONFile(file);
-        System.out.println("Imported Default JSON File!");
+        ImportJSONFileController importJSONFileCtrl = new ImportJSONFileController();
+        WareHousePlant wareHousePlant = importJSONFileCtrl.importJsonFileController(file);
+        if (wareHousePlant != null){
+            System.out.println("Imported Default JSON File!");
+        }else{
+            System.out.println("Not Imported. Object is null");
+        }
         return true;
     }
 }
