@@ -52,9 +52,9 @@ public class WareHousePlant{
      */
     public WareHousePlant(String description, int length, int width, int square, String unit, List<Aisle> listAisle, List<AGVDock> listAGVDock) {
         this.setDescription(description);
-        this.length = length;
-        this.width = width;
-        this.square = square;
+        this.setLength(length);
+        this.setWidth(width);
+        this.setSquare(square);
         this.unit = unit;
         this.listAisle = listAisle;
         this.listAGVDock = listAGVDock;
@@ -64,7 +64,7 @@ public class WareHousePlant{
      * Setting description
      * @param description
      */
-    public void setDescription(String description) {
+    private void setDescription(String description) {
         try{
             if(!description.isEmpty() && description.length() < 50){
                 this.description = description;
@@ -76,20 +76,40 @@ public class WareHousePlant{
         }
     }
 
-    /**
-     * Setter for List of Aisles
-     * @param listAisle
-     */
-    public void setListAisle(List<Aisle> listAisle) {
-        this.listAisle = listAisle;
+    private void setLength(int length){
+        try{
+            if(length > 0){
+                this.length = length;
+            }else{
+                throw new IllegalArgumentException();
+            }
+        }catch (IllegalArgumentException illegalArgumentException){
+            System.out.println("Needs to be greater than 0");
+        }
     }
 
-    /**
-     * Setter for List of AGVDock
-     * @param listAGVDock
-     */
-    public void setListAGVDock(List<AGVDock> listAGVDock) {
-        this.listAGVDock = listAGVDock;
+    private void setWidth(int width){
+        try{
+            if(width > 0){
+                this.width = width;
+            }else{
+                throw new IllegalArgumentException();
+            }
+        }catch (IllegalArgumentException illegalArgumentException){
+            System.out.println("Needs to be greater than 0");
+        }
+    }
+
+    private void setSquare(int square){
+        try{
+            if(square > 0){
+                this.square = square;
+            }else{
+                throw new IllegalArgumentException();
+            }
+        }catch (IllegalArgumentException illegalArgumentException){
+            System.out.println("Needs to be greater than 0");
+        }
     }
 
     /**
@@ -111,4 +131,6 @@ public class WareHousePlant{
                 ", listAGVDock=" + listAGVDock +
                 '}';
     }
+
+
 }

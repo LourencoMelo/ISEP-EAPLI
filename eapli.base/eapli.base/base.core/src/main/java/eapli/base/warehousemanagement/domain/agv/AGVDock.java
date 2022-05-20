@@ -65,4 +65,8 @@ public class AGVDock {
                 ", accessibility=" + accessibility +
                 '}';
     }
+
+    public Begin retrievePosition(){
+        return begin;
+    }
 }

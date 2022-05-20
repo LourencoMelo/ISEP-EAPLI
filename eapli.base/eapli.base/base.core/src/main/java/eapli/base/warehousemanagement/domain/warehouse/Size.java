@@ -16,4 +16,12 @@ public class Size{
                 ", wsquare=" + wsquare +
                 '}';
     }
+
+    public int getLsquare() {
+        return lsquare;
+    }
+
+    public int getWsquare() {
+        return wsquare;
+    }
 }

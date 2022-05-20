@@ -11,8 +11,8 @@ public class WarehouseBootstrapper implements Action{
     @Override
     public boolean execute() {
         File file = new File("Files/warehouse1.json");
-        ImportJSONFileController importJSONFileCtrl = new ImportJSONFileController();
-        WareHousePlant wareHousePlant = importJSONFileCtrl.importJsonFileController(file);
+        ImportJSONFileController importJSONFileController = new ImportJSONFileController();
+        WareHousePlant wareHousePlant = importJSONFileController.importJsonFileController(file);
         if (wareHousePlant != null){
             System.out.println("Imported Default JSON File!");
         }else{

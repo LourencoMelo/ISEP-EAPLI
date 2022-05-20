@@ -1,9 +1,13 @@
 package eapli.base.app.backoffice.console.presentation.warehouseemployee;
 
 import eapli.base.warehousemanagement.application.ConfigureAGVController;
+import eapli.base.warehousemanagement.application.ImportJSONFileController;
+import eapli.base.warehousemanagement.domain.warehouse.WareHousePlant;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+
+import java.io.File;
 
 public class ConfigureAGVUI extends AbstractUI {
 
@@ -13,14 +17,17 @@ public class ConfigureAGVUI extends AbstractUI {
     public double maxWeight;
     public double maxVolume;
     public String status;
+    public String agvDockId;
     public int x;
     public int y;
     public int autonomyMin;
 
     private final ConfigureAGVController configureAGVController;
+    private final ImportJSONFileController importJSONFileController;
 
     public ConfigureAGVUI() {
         this.configureAGVController = new ConfigureAGVController();
+        this.importJSONFileController = new ImportJSONFileController();
     }
 
     @Override
@@ -31,6 +38,17 @@ public class ConfigureAGVUI extends AbstractUI {
         this.maxWeight = Console.readDouble("Insert his max weight:");
         this.maxVolume = Console.readDouble("Insert his max volume:");
         this.status = Console.readLine("Insert his status:");
+
+        /**
+         * Creating a controller to AGVDOCK definition
+         */
+        File file = new File("Files/warehouse1.json");
+        WareHousePlant wareHouse = importJSONFileController.importJsonFileController(file);
+        System.out.println("========== AGV DOCKS ==========");
+
+
+
+
         this.x = Console.readInteger("Insert his x position:");
         this.y = Console.readInteger("Insert his y position:");
         this.autonomyMin = Console.readInteger("Insert the autonomy in minutes:");
