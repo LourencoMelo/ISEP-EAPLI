@@ -52,6 +52,7 @@ public class ConfigureAGVUI extends AbstractUI {
         for(AGVDock agvDock : listAGVDock){
             System.out.println(agvDock);
         }
+        System.out.println("===============================");
         this.agvDockId = Console.readLine("Insert the AGVDock Id:");
         AGVDock agvDock = wareHouse.retrieveAGVDockById(agvDockId);
         Begin begin = agvDock.retrievePosition();
