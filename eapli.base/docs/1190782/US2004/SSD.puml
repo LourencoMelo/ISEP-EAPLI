@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor WarehouseEmployee
+
+WarehouseEmployee -> System : Update order/orders as having \nbeen dispatched for customer delivery.
+System --> WarehouseEmployee : Shows all the orders.
+
+WarehouseEmployee -> System : Selects which order wants to update.
+System --> WarehouseEmployee : Change the order status.
+
+@enduml
