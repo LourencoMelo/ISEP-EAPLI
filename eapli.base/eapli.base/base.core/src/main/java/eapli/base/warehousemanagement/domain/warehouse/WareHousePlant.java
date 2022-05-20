@@ -132,5 +132,23 @@ public class WareHousePlant{
                 '}';
     }
 
+    public List<AGVDock> retrieveAvailableAGVDocks(){
+        return listAGVDock;
+    }
+
+    public AGVDock retrieveAGVDockById(String agvDockId){
+        try {
+            for(AGVDock agvDock : listAGVDock){
+                if(agvDockId.equalsIgnoreCase(agvDock.retrieveId())){
+                    return agvDock;
+                }
+            }
+            throw new IllegalArgumentException();
+        }catch (IllegalArgumentException illegalArgumentException){
+            System.out.println("The AGVDockId inserted was not found!");
+            return null;
+        }
+    }
+
 
 }

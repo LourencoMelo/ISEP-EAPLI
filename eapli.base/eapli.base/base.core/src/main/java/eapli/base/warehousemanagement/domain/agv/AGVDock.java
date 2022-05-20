@@ -69,4 +69,8 @@ public class AGVDock {
     public Begin retrievePosition(){
         return begin;
     }
+
+    public String retrieveId(){
+        return id;
+    }
 }
