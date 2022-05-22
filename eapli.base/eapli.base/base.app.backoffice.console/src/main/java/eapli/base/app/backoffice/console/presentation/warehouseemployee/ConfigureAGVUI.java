@@ -61,7 +61,7 @@ public class ConfigureAGVUI extends AbstractUI {
         this.autonomyMin = Console.readInteger("Insert the autonomy in minutes:");
 
         try{
-            this.configureAGVController.configureAGV(id,description,model,maxWeight,maxVolume,status,x,y,autonomyMin);
+            this.configureAGVController.configureAGV(id,description,model,maxWeight,maxVolume,status,x,y,autonomyMin, agvDockId);
         }catch (@SuppressWarnings("unused") final IntegrityViolationException e){
             System.out.println("You tried to specify an AGV that already exists in the database");
         }

@@ -24,7 +24,7 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private AutonomyMin autonomyMin;
 
-    private AGVDock agvDock;
+    private String agvDockId;
 
     private Task task;
 
@@ -39,8 +39,8 @@ public class AGVBuilder implements DomainFactory<AGV> {
         if(agv != null){
             return agv;
         }else if (agvId != null && description != null && model != null && maxWeight != null && maxVolume != null &&
-        status != null && position != null && autonomyMin != null ){
-            return agv = new AGV(agvId,description,model,maxWeight,maxVolume,status,position,autonomyMin);
+        status != null && position != null && autonomyMin != null && agvDockId != null){
+            return agv = new AGV(agvId,description,model,maxWeight,maxVolume,status,position,autonomyMin, agvDockId);
         }else{
             throw new IllegalStateException();
         }
@@ -160,8 +160,12 @@ public class AGVBuilder implements DomainFactory<AGV> {
     }
 
     /**
-     * AGVDock Builder
+     * AGVDockId Builder
      */
+    public AGVBuilder agvDockIdBuild(String agvDockId){
+        this.agvDockId = agvDockId;
+        return this;
+    }
 
 
     /**

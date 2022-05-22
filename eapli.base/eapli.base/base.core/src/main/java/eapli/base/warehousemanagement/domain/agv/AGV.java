@@ -57,10 +57,8 @@ public class AGV implements AggregateRoot<AGVId> {
     @Embedded
     private AutonomyMin autonomyMin;
 
-//    /**
-//     * His AGV Dock where it charges
-//     */
-//    private AGVDock agvDock;
+
+    private String agvDockId;
 
 //    /**
 //     * His task
@@ -80,7 +78,8 @@ public class AGV implements AggregateRoot<AGVId> {
      * @param position
      * @param autonomyHours
      */
-    public AGV(AGVId id, Description description, Model model, MaxWeight maxWeight, MaxVolume maxVolume, Status status, Position position, AutonomyMin autonomyHours) {
+    public AGV(AGVId id, Description description, Model model, MaxWeight maxWeight, MaxVolume maxVolume, Status status,
+               Position position, AutonomyMin autonomyHours, String agvDockId) {
         this.id = id;
         this.description = description;
         this.model = model;
@@ -89,6 +88,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.status = status;
         this.position = position;
         this.autonomyMin = autonomyHours;
+        this.agvDockId = agvDockId;
     }
 
     /**
