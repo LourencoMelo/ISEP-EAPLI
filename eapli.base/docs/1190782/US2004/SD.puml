@@ -1,11 +1,53 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
 autonumber
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+actor WarehouseEmployee as Actor
+participant ChangeOrderToDispatchedUI as UI <<presentation>>
+participant ChangeOrderToDispatchedController as Controller <<application>>
+participant PersistenceContext as Persistence <<persistence>>
+participant RepositoryFactory as Factory <<factory>>
+participant "order:Order" as Order <<domain>>
+database OrderRepository as OrderRepository <<repository>>
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+Actor -> UI : Change order to dispatched
+activate UI
+UI -> Controller : create
+activate Controller
+Controller -> Persistence : repositories()
+activate Persitence
+Persistence -> Factory : create
+deactivate Persistence
+activate Factory
+Factory -> OrderRepository : create
+deactivate Factory
+activate OrderRepository
+Controller -> OrderRepository : findPreparedOrders
+deactivate OrderRepository
+Controller --> UI : PreparedOrders
+
+UI -> UI : doShow()
+
+UI --> Actor : Ask user which order wants to change
+
+Actor -> UI : order
+
+UI -> Controller : changeOrderToDispatched(order)
+Controller -> Order : changeOrderToDispatched()
+Controller -> Persistence : repositories()
+activate Persistence
+Persistence -> Factory : save
+deactivate Persistence
+Factory -> OrderRepository : save
+activate OrderRepository
+Controller -> OrderRepository : save(order)
+deactivate OrderRepository
+deactivate Controller
+deactivate UI
+
 @enduml
