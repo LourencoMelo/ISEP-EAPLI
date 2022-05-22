@@ -13,23 +13,4 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 @UseCaseController
 public class AddProductViaDTOController {
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final ListProductCategoryDTOService  svc = new ListProductCategoryDTOService();
-
-    private final ProductRepository productRepository = PersistenceContext.repositories().products();
-    private final ProductCategoryRepository productCategoryRepository = PersistenceContext.repositories().productCategories();
-
-    public ProductDTO registerDish(final ProductDTO dto) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
-                BaseRoles.SALES_CLERK);
-
-        final var newDish = new ProductDTOParser(productCategoryRepository).valueOf(dto);
-
-        return productRepository.save(newDish).toDTO();
-    }
-
-    public Iterable<ProductCategoryDTO> dishTypes() {
-        return svc.activeProductTypes();
-    }
-
 }

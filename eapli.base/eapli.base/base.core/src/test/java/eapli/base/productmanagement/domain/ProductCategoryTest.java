@@ -45,8 +45,8 @@ public class ProductCategoryTest {
     }
 
     @Test
-    public void ensureDishTypeCreatedWitnAnIdentityHasThatIdentity2() {
-        System.out.println("ensureDishTypeCreatedWitnAnIdentityHasThatIdentity - hasIdentity");
+    public void ensureProductTypeCreatedWitnAnIdentityHasThatIdentity2() {
+        System.out.println("ensureProductTypeCreatedWitnAnIdentityHasThatIdentity2 - hasIdentity");
 
         final String code = "CLOTHE1";
         final String description = "Clothe product";

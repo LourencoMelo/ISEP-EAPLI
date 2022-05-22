@@ -15,29 +15,4 @@ import java.util.stream.StreamSupport;
 @ApplicationService
 public class ListProductCategoryDTOService {
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final ProductCategoryRepository productCategoryRepository = PersistenceContext.repositories()
-            .productCategories();
-
-    public Iterable<ProductCategoryDTO> allDishTypes() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
-                BaseRoles.SALES_CLERK);
-
-        final Iterable<ProductCategory> types = this.productCategoryRepository.findAll();
-        return transformToDTO(types);
-    }
-
-    private Iterable<ProductCategoryDTO> transformToDTO(final Iterable<ProductCategory> types) {
-        return StreamSupport.stream(types.spliterator(), true)
-                .map(ProductCategory::toDTO)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    public Iterable<ProductCategoryDTO> activeProductTypes() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
-                BaseRoles.SALES_CLERK);
-
-        return transformToDTO(this.productCategoryRepository.activeProductCategories());
-    }
-
 }
