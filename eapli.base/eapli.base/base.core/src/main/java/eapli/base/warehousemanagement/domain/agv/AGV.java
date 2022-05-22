@@ -57,7 +57,7 @@ public class AGV implements AggregateRoot<AGVId> {
     @Embedded
     private AutonomyMin autonomyMin;
 
-
+    @Column(unique = true)
     private String agvDockId;
 
 //    /**
