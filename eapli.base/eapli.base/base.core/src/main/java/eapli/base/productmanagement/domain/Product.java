@@ -9,7 +9,9 @@ import eapli.framework.general.domain.model.Designation;
 import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.representations.Representationable;
 import eapli.framework.representations.dto.DTOable;
+import eapli.framework.util.Strategy;
 import eapli.framework.validations.Preconditions;
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.Type;
 
 import javax.imageio.ImageIO;
@@ -375,11 +377,23 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
                     ", productionCode=" + productionCode +
                     ", category=" + category +
                     ", photos opening..." + printSetPhotos() +
-                    '}';
+                    "}\n";
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String toStringToOrder() {
+        return "Product:" +
+                "\nInternal code: " + internalCode +
+                "\nName: " + name +
+                "\nBrand: " + brand +
+                "\nReference: " + reference +
+                "\nPrice pos tax: " + unitaryPosTaxPrice +
+                "\nBar code: " + barCode +
+                "\nCategory" + category +
+                "}\n";
     }
 
     public String printSetPhotos() throws IOException {

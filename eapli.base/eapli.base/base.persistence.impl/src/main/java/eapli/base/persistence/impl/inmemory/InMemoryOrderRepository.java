@@ -11,7 +11,17 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<Order, Lon
     }
 
     @Override
+    public Iterable<Order> ordersToBePaid() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Iterable<Order> ordersToBePrepared() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterable<Order> ordersPrepared() {
         throw new UnsupportedOperationException();
     }
 }

@@ -24,4 +24,8 @@ public class PhoneNumber implements ValueObject {
         this.phoneNumber = phoneNumber;
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(phoneNumber);
+    }
 }

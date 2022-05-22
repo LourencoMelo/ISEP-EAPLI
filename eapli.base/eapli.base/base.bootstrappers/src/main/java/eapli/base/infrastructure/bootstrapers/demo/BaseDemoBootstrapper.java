@@ -51,7 +51,7 @@ public class BaseDemoBootstrapper implements Action {
         // declare bootstrap actions
         final Action[] actions = { new BackofficeUsersBootstrapper(),
                 new ClientUserBootstrapper(), new ProductCategoryBootstrapper(), new ProductBootstrapper(),
-        new WarehouseBootstrapper()};
+        new WarehouseBootstrapper(), new OrderBootstrapper()};
 
         authenticateForBootstrapping();
 

@@ -176,4 +176,11 @@ public class Customer implements AggregateRoot<Long>, DTOable<CustomerDto> {
     public String toString() {
         return super.toString();
     }
+
+    public String toStringToOrder() {
+        return "\nName : " + name +
+                "\nEmail: " + email +
+                "\nPhone number: " + phoneNumber +
+                '\n';
+    }
 }

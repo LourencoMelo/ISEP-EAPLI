@@ -32,4 +32,9 @@ public class ShipmentMethod implements ValueObject {
     protected ShipmentMethod() {
 
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -43,7 +43,7 @@ public class RegisterCustomerController {
                                      final long phone, final String vat, final int day,
                                      final int month, final int year,final Set<Address> addressSet) {
 
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_CLERK);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_CLERK, BaseRoles.POWER_USER);
 
         final var newCustomer = new CustomerBuilder()
                 .named(firstName,lastName)

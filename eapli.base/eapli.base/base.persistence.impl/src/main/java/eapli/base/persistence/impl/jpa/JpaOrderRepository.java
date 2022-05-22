@@ -23,11 +23,25 @@ public class JpaOrderRepository extends JpaAutoTxRepository<Order, Long, Long> i
         super(tx, "id");
     }
 
+    @Override
+    public Iterable<Order> ordersToBePaid() {
+        final Map<String, Object> params = new HashMap<>();
+        OrderStatus status = OrderStatus.PAYMENT_PENDING;
+        params.put("status", status);
+        return match("e.status = :status", params);
+    }
 
     @Override
     public Iterable<Order> ordersToBePrepared() {
         final Map<String, Object> params = new HashMap<>();
         OrderStatus status = OrderStatus.PAID;
+        params.put("status", status);
+        return match("e.status = :status", params);
+    }
+
+    public Iterable<Order> ordersPrepared() {
+        final Map<String, Object> params = new HashMap<>();
+        OrderStatus status = OrderStatus.PREPARED;
         params.put("status", status);
         return match("e.status = :status", params);
     }

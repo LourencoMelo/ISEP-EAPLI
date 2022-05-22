@@ -27,6 +27,7 @@ import eapli.base.app.backoffice.console.presentation.Products.Action.AddProduct
 import eapli.base.app.backoffice.console.presentation.Products.Action.AddProductCategoryAction;
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductAction;
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductsWithFiltersAction;
+import eapli.base.app.backoffice.console.presentation.orders.Action.ChangeOrderToDispatchedAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.CreateOrderForClientAction;
 import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
 import eapli.base.app.backoffice.console.presentation.warehouseemployee.ConfigureAGVAction;
@@ -92,6 +93,7 @@ public class MainMenu extends AbstractUI {
     //WAREHOUSE_EMPLOYEE
     private static final int IMPORT_JSONFILE = 1;
     private static final int CONFIGURE_AGV = 2;
+    private static final int CHANGE_TO_DISPATCH_ORDER = 3;
 
 
 
@@ -210,6 +212,7 @@ public class MainMenu extends AbstractUI {
 
         menu.addItem(IMPORT_JSONFILE, "Import JSON file", new ImportJSONFileAction());
         menu.addItem(CONFIGURE_AGV, "Configure AGV", new ConfigureAGVAction());
+        menu.addItem(CHANGE_TO_DISPATCH_ORDER, "Change to dispatch order", new ChangeOrderToDispatchedAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

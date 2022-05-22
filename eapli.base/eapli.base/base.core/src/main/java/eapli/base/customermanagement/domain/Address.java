@@ -39,4 +39,9 @@ public class Address implements ValueObject {
     public Address() {
         //Empty
     }
+
+    @Override
+    public String toString() {
+        return streetName + " " + doorNumber + ", " + postalCode + ", " + city + ", " + country;
+    }
 }

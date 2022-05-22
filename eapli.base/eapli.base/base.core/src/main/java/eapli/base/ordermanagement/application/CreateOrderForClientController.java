@@ -35,7 +35,7 @@ public class CreateOrderForClientController {
     public Order registerOrder(final Map<Product, Integer> products, final Address billing, final Address delivering, final PaymentMethod paymentMethod,
                                final ShipmentMethod shipmentMethod, final String method, final Calendar interactionDate, final String comment, final Customer customer){
 
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_CLERK);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_CLERK, BaseRoles.POWER_USER);
 
         final var newOrder = new OrderBuilder()
                 .withProducts(products)

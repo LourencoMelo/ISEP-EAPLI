@@ -221,8 +221,16 @@ public class Order implements AggregateRoot<Long> {
         return status() == OrderStatus.PAID;
     }
 
-    public boolean isDispatched(){
-        return status() == OrderStatus.DISPATCHED;
+    public void isDispatched(){
+        status = OrderStatus.DISPATCHED;
+    }
+
+    public boolean isPreparePending() {
+        return status() == OrderStatus.PREPARE_PENDING;
+    }
+
+    public void isPrepared() {
+        status = OrderStatus.PREPARED;
     }
 
     public boolean isDelivered(){
@@ -251,6 +259,20 @@ public class Order implements AggregateRoot<Long> {
         return new EqualsBuilder().append(pk, that.pk).append(billingAddress, that.billingAddress)
                 .append(deliveringAddress, that.deliveringAddress).append(orderedProducts, that.orderedProducts).append(status, that.status)
                 .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return "\n\n=== Order ===\n" +
+                "\nCustomer: " + customer.toStringToOrder() +
+                "\nPk: " + pk +
+                "\nBilling address: " + billingAddress +
+                "\nDelivering address: " + deliveringAddress +
+                "\nPrice pos taxes: " + priceAfterTaxes +
+                "\nStatus: " + status +
+                "\nShipment method: " + shipmentMethod +
+                "\n\nOrdered Products=" + orderedProducts +
+                "}\n\n";
     }
 
     /**

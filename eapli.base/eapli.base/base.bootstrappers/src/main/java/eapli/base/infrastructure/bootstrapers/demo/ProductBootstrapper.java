@@ -1,10 +1,19 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
+import eapli.base.customermanagement.application.RegisterCustomerController;
+import eapli.base.customermanagement.domain.Address;
+import eapli.base.customermanagement.domain.Customer;
 import eapli.base.infrastructure.bootstrapers.TestDataConstants;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ordermanagement.application.CreateOrderForClientController;
+import eapli.base.ordermanagement.domain.Order;
+import eapli.base.ordermanagement.domain.PaymentMethod;
+import eapli.base.ordermanagement.domain.ShipmentMethod;
 import eapli.base.productmanagement.application.AddProductController;
+import eapli.base.productmanagement.application.ListProductController;
 import eapli.base.productmanagement.domain.*;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
+import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -14,16 +23,19 @@ import org.springframework.transaction.TransactionSystemException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class ProductBootstrapper implements Action {
     private static final Logger LOGGER = LogManager.getLogger(ProductCategoryBootstrapper.class);
 
     private final ProductCategoryRepository productCategoryRepository = PersistenceContext.repositories().productCategories();
+    private final ProductRepository productRepository = PersistenceContext.repositories().products();
 
-    final AddProductController controller = new AddProductController();
+    private final ListProductController catalogController = new ListProductController();
+
+    final AddProductController productController = new AddProductController();
+    final CreateOrderForClientController orderController = new CreateOrderForClientController();
+    final RegisterCustomerController registerCustomerController = new RegisterCustomerController();
 
     private ProductCategory getProductCategory(final String code) {
         for (ProductCategory p : productCategoryRepository.activeProductCategories()) {
@@ -36,6 +48,14 @@ public class ProductBootstrapper implements Action {
 
     @Override
     public boolean execute() {
+        createProducts();
+
+        System.out.println("Product Bootstrap done.");
+
+        return true;
+    }
+
+    private void createProducts() {
         final var clothe1 = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_CLOTHE);
         final var beauty2 = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_BEAUTY);
         final var kitchen3 = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_KITCHEN);
@@ -46,45 +66,41 @@ public class ProductBootstrapper implements Action {
         Set<Photo> set4 = new HashSet<>();
 
         try {
-            set1.add(controller.donePhoto(MyFrame.method(new File("photos/casacopele.jpg"))));
-            set2.add(controller.donePhoto(MyFrame.method(new File("photos/calcasazuis.jpeg"))));
-            set3.add(controller.donePhoto(MyFrame.method(new File("photos/batom.jpg"))));
-            set4.add(controller.donePhoto(MyFrame.method(new File("photos/copedepedebarro.jpg"))));
-            set4.add(controller.donePhoto(MyFrame.method(new File("photos/copodepedebarro2.png"))));
+            set1.add(productController.donePhoto(MyFrame.method(new File("photos/casacopele.jpg"))));
+            set2.add(productController.donePhoto(MyFrame.method(new File("photos/calcasazuis.jpeg"))));
+            set3.add(productController.donePhoto(MyFrame.method(new File("photos/batom.jpg"))));
+            set4.add(productController.donePhoto(MyFrame.method(new File("photos/copedepedebarro.jpg"))));
+            set4.add(productController.donePhoto(MyFrame.method(new File("photos/copodepedebarro2.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        register(clothe1, "Casaco", "Casaco de pele", "Casaco castanho de pele"
+        registerProduct(clothe1, "Casaco", "Casaco de pele", "Casaco castanho de pele"
                 , "Casaco castanho de pele tamanho S", "Zara", "111111", 20
                 , 24.2, "EAN-13", 5401111111111L, 111111111, set1);
-        register(clothe1, "Calças", "Calças de pele", "Calças azuis de pele"
+        registerProduct(clothe1, "Calças", "Calças de pele", "Calças azuis de pele"
                 , "Calças azuis de pele tamanho M", "Tommy Hilfiger", "111112"
                 , 40, 48.4, "EAN-13", 5401111111112L
                 , 111111112, set2);
-        register(beauty2, "Batom", "Batom de cera", "Batom vermelho de cera"
+        registerProduct(beauty2, "Batom", "Batom de cera", "Batom vermelho de cera"
                 , "Batom vermelho de cera a prova de agua", "Kiko", "111113"
                 , 10, 12.1, "EAN-13", 5401111111113L
                 , 111111113, set3);
-        register(beauty2, "Base", "Base de agua", "Base transparente de agua"
+        registerProduct(beauty2, "Base", "Base de agua", "Base transparente de agua"
                 , "Batom transparente de agua para esconder rugas", "Perfumes&Companhia"
                 , "111114", 18, 21.78, "EAN-13", 5401111111114L
                 , 111111114, null);
-        register(kitchen3, "Prato", "Prato de ceramica", "Prato de ceramica quadrado"
+        registerProduct(kitchen3, "Prato", "Prato de ceramica", "Prato de ceramica quadrado"
                 , "Prato de ceramica quadrado com bordas redondas", "Vista Alegre"
                 , "111115", 10, 12.1, "EAN-13", 5401111111115L
                 , 111111115, null);
-        register(kitchen3, "Copo", "Copo de pe", "Copo de pe de barro"
+        registerProduct(kitchen3, "Copo", "Copo de pe", "Copo de pe de barro"
                 , "Copo de pe de barro colorido", "Continente"
                 , "111116", 3, 3.63, "EAN-13", 5401111111116L
                 , 111111116, set4);
-
-        System.out.println("Poduct Bootstrap done.");
-
-        return true;
     }
 
-    private Optional<Product> register(ProductCategory category, String name, String shortDescription
+    private Optional<Product> registerProduct(ProductCategory category, String name, String shortDescription
             , String extendedDescription, String technicalDescription, String brand
             , String reference, double unitaryPreTaxPrice, double unitaryPosTaxPrice, String formatBarCode, long barcode
             , int productionCode, Set<Photo> photos) {
@@ -92,7 +108,7 @@ public class ProductBootstrapper implements Action {
         try {
             LOGGER.debug("{} ( {} )", name, category);
             return Optional.of(
-                    controller.addProduct(category, name, shortDescription, extendedDescription, technicalDescription, brand
+                    productController.addProduct(category, name, shortDescription, extendedDescription, technicalDescription, brand
                             , reference, unitaryPreTaxPrice, unitaryPosTaxPrice, formatBarCode, barcode, productionCode, photos));
         } catch (final IntegrityViolationException | ConcurrencyException
                 | TransactionSystemException e) {
@@ -106,4 +122,5 @@ public class ProductBootstrapper implements Action {
         }
 
     }
-}
+
+    }

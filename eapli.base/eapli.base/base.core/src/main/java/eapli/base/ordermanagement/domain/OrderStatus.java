@@ -16,6 +16,16 @@ public enum OrderStatus {
     PAID,
 
     /**
+     * Waiting to be prepared
+     */
+    PREPARE_PENDING,
+
+    /**
+     * Prepared by the AGV
+     */
+    PREPARED,
+
+    /**
      * Dispatched for customer delivery
      */
     DISPATCHED,
