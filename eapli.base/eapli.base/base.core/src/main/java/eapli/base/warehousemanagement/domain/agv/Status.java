@@ -1,34 +1,27 @@
 package eapli.base.warehousemanagement.domain.agv;
 
-import eapli.framework.domain.model.ValueObject;
-
-import javax.persistence.Embeddable;
-
-@Embeddable
-public class Status implements ValueObject {
+public enum Status{
 
     /**
-     * Status description
-     */
-    private String statusDescription;
+     * AGV is Charging on the AGVDock
+      */
+    CHARGING,
 
     /**
-     * Status constructor
-     * @param statusDescription
+     * AGV is Ready
      */
-    public Status(String statusDescription) {
-        this.setStatusDescription(statusDescription);
-    }
-
-    public Status() {
-
-    }
+    READY,
 
     /**
-     * Setter for the status description
-     * @param statusDescription
+     * AGV is Busy
      */
-    public void setStatusDescription(String statusDescription) {
-        this.statusDescription = statusDescription;
-    }
+    BUSY,
+
+    /**
+     * LOW BATTERY NEEDS CHARCHING
+     */
+    LOWBATTERY,
+
+
+
 }

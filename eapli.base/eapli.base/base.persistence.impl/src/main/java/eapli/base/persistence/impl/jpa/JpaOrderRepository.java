@@ -12,6 +12,7 @@ import org.springframework.security.access.method.P;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class JpaOrderRepository extends JpaAutoTxRepository<Order, Long, Long> implements OrderRepository {
 
@@ -44,5 +45,10 @@ public class JpaOrderRepository extends JpaAutoTxRepository<Order, Long, Long> i
         OrderStatus status = OrderStatus.PREPARED;
         params.put("status", status);
         return match("e.status = :status", params);
+    }
+
+    @Override
+    public Optional<Order> findOrderById(Long orderId) {
+        return findById(orderId);
     }
 }

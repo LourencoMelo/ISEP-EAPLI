@@ -19,7 +19,6 @@ public class ConfigureAGVUI extends AbstractUI {
     public String model;
     public double maxWeight;
     public double maxVolume;
-    public String status;
     public String agvDockId;
     public int x;
     public int y;
@@ -40,7 +39,6 @@ public class ConfigureAGVUI extends AbstractUI {
         this.model = Console.readLine("Insert the model:");
         this.maxWeight = Console.readDouble("Insert his max weight:");
         this.maxVolume = Console.readDouble("Insert his max volume:");
-        this.status = Console.readLine("Insert his status:");
 
         /**
          * Creating a controller to AGVDOCK definition
@@ -61,7 +59,7 @@ public class ConfigureAGVUI extends AbstractUI {
         this.autonomyMin = Console.readInteger("Insert the autonomy in minutes:");
 
         try{
-            this.configureAGVController.configureAGV(id,description,model,maxWeight,maxVolume,status,x,y,autonomyMin, agvDockId);
+            this.configureAGVController.configureAGV(id,description,model,maxWeight,maxVolume,x,y,autonomyMin, agvDockId);
         }catch (@SuppressWarnings("unused") final IntegrityViolationException e){
             System.out.println("You tried to specify an AGV that already exists in the database");
         }

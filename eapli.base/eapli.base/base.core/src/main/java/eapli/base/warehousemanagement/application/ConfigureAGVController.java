@@ -24,7 +24,7 @@ public class ConfigureAGVController {
     }
 
     public AGV configureAGV(final String agvId, final String description, final String model, final double maxWeight,
-                            final double maxVolume, final String status, int x, int y, int autonomyMin, String agvDockId){
+                            final double maxVolume, int x, int y, int autonomyMin, String agvDockId){
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE);
 
@@ -34,7 +34,7 @@ public class ConfigureAGVController {
                 .modelBuild(model)
                 .maxWeightBuild(maxWeight)
                 .maxVolumeBuild(maxVolume)
-                .statusBuild(status)
+                .statusBuild()
                 .positionBuild(x,y)
                 .autonomyBuild(autonomyMin)
                 .agvDockIdBuild(agvDockId)

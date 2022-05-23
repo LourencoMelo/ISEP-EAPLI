@@ -126,8 +126,8 @@ public class AGVBuilder implements DomainFactory<AGV> {
     /**
      * Status Builder
      */
-    public AGVBuilder statusBuild(String status){
-        return statusBuild(new Status(status));
+    public AGVBuilder statusBuild(){
+        return statusBuild(Status.READY);
     }
 
     public AGVBuilder statusBuild(Status status){

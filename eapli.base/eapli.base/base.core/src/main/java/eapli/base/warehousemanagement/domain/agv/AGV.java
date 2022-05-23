@@ -42,7 +42,7 @@ public class AGV implements AggregateRoot<AGVId> {
     /**
      * Status of the AGV
      */
-    @Embedded
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     /**
