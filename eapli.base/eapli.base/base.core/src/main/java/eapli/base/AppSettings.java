@@ -43,7 +43,21 @@ public class AppSettings {
     private static final String UI_MENU_LAYOUT_KEY = "ui.menu.layout";
     private static final String PERSISTENCE_UNIT_KEY = "persistence.persistenceUnit";
     private static final String SCHEMA_GENERATION_KEY = "javax.persistence.schema-generation.database.action";
-    private static final String HIGH_CALORIES_DISH_LIMIT = "HighCaloriesDishLimit";
+
+    private static final String SERVER_IP_KEY = "serverIP";
+
+    private static final String SERVER_PORT_KEY = "serverPort";
+
+    private static final String KEYS_STORE_PASS_KEY = "keys_store_pass";
+
+    private static final String TRUSTED_STORE_KEY = "trusted_store";
+
+    private static final String SERVER_AGV_MANAGER_IP_KEY = "serverIPAgvManager";
+
+    private static final String SERVER_AGV_MANAGER_PORT_KEY = "serverPortAgvManager";
+
+    private static final String KEYS_STORE_PASS_AGV_MANAGER_KEY = "keys_store_pass_AgvManager";
+
 
     private final Properties applicationProperties = new Properties();
 
@@ -73,7 +87,6 @@ public class AppSettings {
         this.applicationProperties.setProperty(UI_MENU_LAYOUT_KEY, "horizontal");
         this.applicationProperties.setProperty(PERSISTENCE_UNIT_KEY, "eapli"
                 + ".base");
-        this.applicationProperties.setProperty(HIGH_CALORIES_DISH_LIMIT, "300");
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -87,6 +100,34 @@ public class AppSettings {
 
     public String getRepositoryFactory() {
         return this.applicationProperties.getProperty(REPOSITORY_FACTORY_KEY);
+    }
+
+    public String getServerIpKey() {
+        return this.applicationProperties.getProperty(SERVER_IP_KEY);
+    }
+
+//    public int getServerPortKey() {
+//        return Integer.parseInt(this.applicationProperties.getProperty(SERVER_PORT_KEY));
+//    }
+
+    public String getKeysStorePassKey() {
+        return this.applicationProperties.getProperty(KEYS_STORE_PASS_KEY);
+    }
+
+    public String getTrustedStoreKey() {
+        return this.applicationProperties.getProperty(TRUSTED_STORE_KEY);
+    }
+
+    public String getServerAgvManagerIpKey() {
+        return this.applicationProperties.getProperty(SERVER_AGV_MANAGER_IP_KEY);
+    }
+
+    public String getServerAgvManagerPortKey() {
+        return this.applicationProperties.getProperty(SERVER_AGV_MANAGER_PORT_KEY);
+    }
+
+    public String getKeysStorePassAgvManagerKey() {
+        return this.applicationProperties.getProperty(KEYS_STORE_PASS_AGV_MANAGER_KEY);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

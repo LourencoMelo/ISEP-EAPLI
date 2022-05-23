@@ -1,6 +1,8 @@
 package eapli.base.productmanagement.domain;
 
-public class BarCode {
+import java.io.Serializable;
+
+public class BarCode implements Serializable {
 
     private final String format;
     private final long code;

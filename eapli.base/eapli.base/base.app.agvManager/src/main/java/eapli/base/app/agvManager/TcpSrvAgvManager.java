@@ -1,7 +1,8 @@
-package main;
+package eapli.base.app.agvManager;
 
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
+import eapli.base.ordermanagement.domain.Order;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
@@ -10,8 +11,9 @@ import java.net.Socket;
 
 public class TcpSrvAgvManager {
 
-    static final int SERVER_PORT = 9999;
-    static final String TRUSTED_STORE = "server_J.jks";
+    static int SERVER_PORT = 9999;
+
+    static final String TRUSTED_STORE = "serverAgvManager.jks";
     static final String KEYSTORE_PASS = "forgotten";
 
     public static void main(String[] args) throws IOException {
@@ -38,6 +40,7 @@ public class TcpSrvAgvManager {
         }
 
         while (true) {
+            System.out.println("Server is open and running stable!");
             cliSock = sock.accept();
             new Thread(new TcpSrvAgvManagerThread(cliSock)).start(); //Creates new thread to handle the client and still be open for more requests
         }
@@ -75,7 +78,11 @@ class TcpSrvAgvManagerThread implements Runnable {
             DataInputStream sIn = new DataInputStream(s.getInputStream());
             DataOutputStream sOut = new DataOutputStream(s.getOutputStream());
 
-            byte[] clientMessage = sIn.readAllBytes(); //Reads all bytes from client's message
+
+
+            byte[] clientMessage = sIn.readNBytes(4); //Reads all bytes from client's message
+
+
 
             if (clientMessage[1] == 0) {
                 System.out.println("Test code(0) received from client.");
@@ -86,8 +93,10 @@ class TcpSrvAgvManagerThread implements Runnable {
                 sOut.write(answer);
                 sOut.flush(); //Forces the data out of the socket
 
-                byte[] clientsOption = sIn.readAllBytes();
+                byte[] clientsOption = sIn.readNBytes(4);
                 int option = clientsOption[1];
+
+                System.out.println("Client option is : " + option);
 
                 sOut.write(answer);
                 sOut.flush(); //Forces the data out of the socket
@@ -99,27 +108,47 @@ class TcpSrvAgvManagerThread implements Runnable {
                     SystemUser systemUser = (SystemUser) sInputObject.readObject();
                     System.out.println("User logged in: " + systemUser.username());
 
-                    switch (option){
-                        case 3:
-                            //does something
-                            break;
-                        case 4 :
-                            //does something
-                            break;
-                        case 5 :
-                            //does something
-                            break;
-                        default :
-                            System.out.println("...");
+
+//                    System.out.println(sInputObject.readObject());
+
+                    Order order = (Order) sInputObject.readObject();
+                    System.out.println("Order received :" + order.toString());
+
+                    byte[] clientMessage2 = sIn.readNBytes(4); //Reads all bytes from client's message
+                    if (clientMessage2[1] == 1){
+                        System.out.println("Request to end the communication received.");
+
+                        sOut.write(answer);
+                        sOut.flush(); //Forces the data out of the socket
                     }
+//
+//                    switch (option){
+//                        case 3:
+//                            break;
+//                        case 4 :
+//                            //does something
+//                            break;
+//                        case 5 :
+//                            //does something
+//                            break;
+//                        default :
+//                            System.out.println("...");
+//                    }
                 }
 
             }
 
-            System.out.println("Client " + clientIP.getHostAddress() + ",port number: " + s.getPort() + "disconnected");
+            System.out.println("Client " + clientIP.getHostAddress() + ",port number: " + s.getPort() + " disconnected");
             s.close();
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                this.s.close();
+                System.out.println("Socket closed!");
+            }catch (IOException e){
+                System.out.println("Error : Could not close the socket");
+            }
         }
     }
 }
