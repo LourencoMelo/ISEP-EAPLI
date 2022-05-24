@@ -1,5 +1,8 @@
 package eapli.base.app.agvManager;
 
+import eapli.base.SPOMSPProtocol.MessageParser;
+import eapli.base.SPOMSPProtocol.SPOMSPRequest;
+import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import eapli.base.ordermanagement.domain.Order;
@@ -8,14 +11,22 @@ import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TcpSrvAgvManager {
+
+    /**
+     * List of all available agvs
+     */
+    static List<AGV> available_agvs = new ArrayList<>();
 
     static int SERVER_PORT = 9999;
 
     static final String TRUSTED_STORE = "serverAgvManager.jks";
     static final String KEYSTORE_PASS = "forgotten";
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) throws IOException {
 
         SSLServerSocket sock = null;
@@ -82,13 +93,18 @@ class TcpSrvAgvManagerThread implements Runnable {
 
             byte[] clientMessage = sIn.readNBytes(4); //Reads all bytes from client's message
 
-
+            SPOMSPRequest spomspRequest = MessageParser.parse(clientMessage);
 
             if (clientMessage[1] == 0) {
-                System.out.println("Test code(0) received from client.");
+                //System.out.println("Test code(0) received from client.");
 
-                byte[] answer = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};   //Answer with acknowledgment code
-                System.out.println("Sending acknowledgment message to client(2).");
+                byte[] answer =spomspRequest.execute();
+                if (answer == null){
+                    throw new IllegalArgumentException("Protocol Error");
+
+                }
+//                byte[] answer = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};   //Answer with acknowledgment code
+                System.out.println("Sending acknowledgment message to client.");
 
                 sOut.write(answer);
                 sOut.flush(); //Forces the data out of the socket

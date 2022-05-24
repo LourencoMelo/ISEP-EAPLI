@@ -5,13 +5,11 @@ import eapli.base.Application;
 import eapli.base.ordermanagement.domain.Order;
 import eapli.framework.application.ApplicationService;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.io.util.Console;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -67,10 +65,12 @@ public class AssignOrderService {
             byte[] serverMessage = dataInputStream.readNBytes(4);
             if (serverMessage[1] == 2) {
 
-                System.out.println("Received confirmation message from the server (id -> 2)");
+                System.out.println("Received confirmation message from the server");
+
+                int choose = Console.readInteger("Which request do you want to do? Please watch the protocol message available codes.");
 
                 //Sends to the server the option choosen on the 2 offset from the message
-                byte[] clientOptionChoosen = {(byte) 0, (byte) 3, (byte) 0, (byte) 0};
+                byte[] clientOptionChoosen = {(byte) 0, (byte) choose, (byte) 0, (byte) 0};
                 dataOutputStream.write(clientOptionChoosen);
                 dataOutputStream.flush();
 
