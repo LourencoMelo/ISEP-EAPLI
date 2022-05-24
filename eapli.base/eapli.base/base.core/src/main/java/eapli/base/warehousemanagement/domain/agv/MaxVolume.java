@@ -39,4 +39,10 @@ public class MaxVolume implements ValueObject {
             System.out.println("The Max Volume needs to be higher than 0");
         }
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(maxVolume);
+
+    }
 }

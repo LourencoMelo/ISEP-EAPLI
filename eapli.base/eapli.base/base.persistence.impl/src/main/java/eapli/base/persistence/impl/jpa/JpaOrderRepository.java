@@ -40,6 +40,7 @@ public class JpaOrderRepository extends JpaAutoTxRepository<Order, Long, Long> i
         return match("e.status = :status", params);
     }
 
+    @Override
     public Iterable<Order> ordersPrepared() {
         final Map<String, Object> params = new HashMap<>();
         OrderStatus status = OrderStatus.PREPARED;

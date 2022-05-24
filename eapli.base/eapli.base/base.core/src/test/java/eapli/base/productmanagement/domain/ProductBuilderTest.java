@@ -1,4 +1,4 @@
-package eapli.base.productmanagement.domain;
+/*package eapli.base.productmanagement.domain;
 
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
@@ -264,4 +264,4 @@ public class ProductBuilderTest {
                 .build();
     }
 
-}
+}*/

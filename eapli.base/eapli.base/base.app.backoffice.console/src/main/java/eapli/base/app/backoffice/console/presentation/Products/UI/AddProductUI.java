@@ -36,6 +36,10 @@ public class AddProductUI extends AbstractUI {
         final String reference = Console.readLine("Reference (6 digits): ");
         final double preTaxPrice = Console.readDouble("Price before taxes: ");
         final double posTaxPrice = Console.readDouble("Price after taxes: ");
+        final double volume = Console.readDouble("Package volume: ");
+        final double weight = Console.readDouble("Package weight: ");
+        final int row = Console.readInteger("Row: ");
+        final int aisle = Console.readInteger("Aisle: ");
         final String formatBarcdoe = Console.readLine("BarCode format (example: EAN-13):");
         final long barcode = Console.readLong("Barcode (13 digits): ");
         final int productionCode = Console.readInteger("Produciton code (9 digits): ");
@@ -50,7 +54,7 @@ public class AddProductUI extends AbstractUI {
         try {
             this.theController.addProduct(theProductCategory,name,shortDescription,extendedDescription
                     , techincalDescription,brand,reference,preTaxPrice,posTaxPrice,formatBarcdoe,barcode,productionCode
-                    , photos);
+                    , photos,volume,weight,row,aisle);
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter a product which already exists in the database.");
         }

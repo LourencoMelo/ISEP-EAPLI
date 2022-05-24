@@ -1,7 +1,9 @@
 package eapli.base.productmanagement.domain;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+@Embeddable
 public class BarCode implements Serializable {
 
     private final String format;

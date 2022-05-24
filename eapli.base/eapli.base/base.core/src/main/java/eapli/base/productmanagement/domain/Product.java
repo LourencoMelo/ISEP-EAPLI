@@ -2,6 +2,8 @@ package eapli.base.productmanagement.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eapli.base.productmanagement.dto.ProductDTO;
+import eapli.base.warehousemanagement.domain.agv.MaxVolume;
+import eapli.base.warehousemanagement.domain.agv.MaxWeight;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
@@ -76,7 +78,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @Embedded
     @XmlElement
     @JsonProperty
-    @AttributeOverride(name = "brand", column = @Column(name = "brand"))
+    @AttributeOverride(name = "name", column = @Column(name = "brand"))
     private Designation brand;
 
     /**
@@ -85,7 +87,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @Embedded
     @XmlElement
     @JsonProperty
-    @AttributeOverride(name = "reference", column = @Column(name = "reference"))
+    @AttributeOverride(name = "value", column = @Column(name = "reference"))
     private Reference reference;
 
     /**
@@ -124,6 +126,8 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
             @AttributeOverride(name = "code", column = @Column(name = "barCode"))
 
     })
+
+
     private BarCode barCode;
 
     @Column(name="ProductionCode")
@@ -141,6 +145,34 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
     @ManyToOne(optional = false)
     private ProductCategory category;
 
+
+    /**
+     * Volume of the product package
+     */
+    @Embedded
+    @XmlElement
+    @JsonProperty
+    @AttributeOverride(name = "maxVolume",column = @Column(name = "volume"))
+    private MaxVolume volume;
+
+    /**
+     * Weight of the product package
+     */
+    @Embedded
+    @XmlElement
+    @JsonProperty
+    @AttributeOverride(name = "maxWeight",column = @Column(name = "weight"))
+    private MaxWeight weight;
+
+    @XmlElement
+    @Column(name="rowID")
+    private int row;
+
+    @XmlElement
+    @Column(name="aisleID")
+    private int aisle;
+
+
     public void setName(Designation name) {
         this.name = name;
     }
@@ -154,7 +186,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
      * @param unitaryPreTaxPrice   unitary price pre tax
      * @param unitaryPosTaxPrice   unitary price pos tax
      */
-    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, int productionCode, Set<Photo> photos) throws Exception {
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, int productionCode, Set<Photo> photos,MaxVolume volume,MaxWeight weight,int row,int aisle) throws Exception {
 
         Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
 
@@ -178,9 +210,13 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
             this.productionCode = productionCode;
         }
         this.photosCollection = photos;
+        this.weight = weight;
+        this.volume = volume;
+        this.row = row;
+        this.aisle = aisle;
     }
 
-    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, int productionCode) throws Exception {
+    protected Product(ProductCategory category, Designation name, Description shortDescription, Description extendedDescription, Description technicalDescription, Designation brand, Reference reference, Cash unitaryPreTaxPrice, Cash unitaryPosTaxPrice, BarCode barCode, int productionCode,MaxVolume volume,MaxWeight weight,int row,int aisle) throws Exception {
 
         Preconditions.noneNull(category, name, shortDescription, extendedDescription, technicalDescription, brand, reference, unitaryPreTaxPrice, unitaryPosTaxPrice);
 
@@ -201,6 +237,10 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
             this.productionCode = productionCode;
         }
         this.photosCollection = new HashSet<>();
+        this.weight = weight;
+        this.volume = volume;
+        this.row = row;
+        this.aisle = aisle;
     }
 
     protected Product() {
@@ -253,6 +293,22 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
 
     public Long getInternalCode() {
         return internalCode;
+    }
+
+    public MaxVolume getVolume() {
+        return volume;
+    }
+
+    public int getAisle() {
+        return aisle;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public MaxWeight getWeight() {
+        return weight;
     }
 
     @Override
@@ -334,7 +390,7 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
 
     @Override
     public ProductDTO toDTO() {
-        return new ProductDTO(category.identity().toString(), name.toString(), shortDescription.toString(), extendedDescription.toString(), technicalDescription.toString(), brand.toString(), reference.toString(), active, unitaryPreTaxPrice.amountAsDouble(), unitaryPosTaxPrice.amountAsDouble());
+        return new ProductDTO(category.identity().toString(), name.toString(), shortDescription.toString(), extendedDescription.toString(), technicalDescription.toString(), brand.toString(), reference.toString(), active, unitaryPreTaxPrice.amountAsDouble(), unitaryPosTaxPrice.amountAsDouble(), volume.toString(),weight.toString(),row,aisle);
     }
 
     @Override
@@ -349,6 +405,10 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
                 .withProperty("Active", active)
                 .withProperty("Price before taxes", String.valueOf(unitaryPreTaxPrice))
                 .withProperty("Price after taxes", String.valueOf(unitaryPosTaxPrice))
+                .withProperty("Volume",String.valueOf(volume))
+                .withProperty("Weight",String.valueOf(weight))
+                .withProperty("Row",row)
+                .withProperty("Aisle",aisle)
                 .withProperty("Barcode", String.valueOf(barCode))
                 .withProperty("Production code", String.valueOf(productionCode))
                 .withProperty("Photos ", String.valueOf(photosCollection))
@@ -373,6 +433,10 @@ public class Product implements AggregateRoot<Designation>, DTOable<ProductDTO>,
                     ", active=" + active +
                     ", unitaryPreTaxPrice=" + unitaryPreTaxPrice +
                     ", unitaryPosTaxPrice=" + unitaryPosTaxPrice +
+                    ", volume=" + volume +
+                    ", weight=" + weight +
+                    ", row=" + row +
+                    ", aisle=" + aisle +
                     ", barcode=" + barCode +
                     ", productionCode=" + productionCode +
                     ", category=" + category +

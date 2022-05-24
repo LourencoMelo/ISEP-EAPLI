@@ -34,7 +34,7 @@ public class AddProductController {
     public Product addProduct(ProductCategory productCategory, String name, String shortDescription
             , String extendedDescription, String technicalDescription, String brand, String reference
             , double unitaryPreTaxPrice, double unitaryPosTaxPrice, String formatBarCode, long barcode
-            , int productionCode, Set<Photo> photos) {
+            , int productionCode, Set<Photo> photos,double volume, double weight,int row,int aisle) {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK);
         if(photos == null) {
@@ -51,6 +51,10 @@ public class AddProductController {
                     .referenced(reference)
                     .preTaxcosting(Cash.euros(unitaryPreTaxPrice))
                     .posTaxcosting(Cash.euros(unitaryPosTaxPrice))
+                    .volumed(volume)
+                    .weighted(weight)
+                    .rowed(row)
+                    .aisled(aisle)
                     .makingBarcode(formatBarCode, barcode)
                     .makingProductionCode(productionCode)
                     .withPhotos(photos)
@@ -68,6 +72,10 @@ public class AddProductController {
                     .referenced(reference)
                     .preTaxcosting(Cash.euros(unitaryPreTaxPrice))
                     .posTaxcosting(Cash.euros(unitaryPosTaxPrice))
+                    .volumed(volume)
+                    .weighted(weight)
+                    .rowed(row)
+                    .aisled(aisle)
                     .makingBarcode(formatBarCode, barcode)
                     .makingProductionCode(productionCode)
                     .withPhotos(photos)

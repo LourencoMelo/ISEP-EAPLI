@@ -32,4 +32,12 @@ public class ProductDTO {
 
     private double posPrice;
 
+    private String volume;
+
+    private String weight;
+
+    private int row;
+
+    private int aisle;
+
 }

@@ -1,4 +1,4 @@
-package eapli.base.productmanagement.domain;
+/*package eapli.base.productmanagement.domain;
 
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
@@ -27,6 +27,10 @@ public class ProductTest {
     private static final String CASACO_FORMAT_BARCODE = "EAN-13";
     private static final long CASACO_BARCODE = 5401111111112L;
     private static final int CASACO_PRODUCTION_CODE = 111111112;
+    private static final double CASACO_VOLUME = 2;
+    private static final double CASACO_WEIGHHT = 2;
+    private static final int CASACO_ROW = 1;
+    private static final int CASACO_AISLE = 1;
     private static final BarCode CASACO_TOTAL_BARCODE = new BarCode(CASACO_FORMAT_BARCODE,CASACO_BARCODE);
     private static final Set<Photo> CASACO_PHOTOS_COLLECTION = new HashSet<>();
 
@@ -40,6 +44,10 @@ public class ProductTest {
                 .referenced(CASACO_REFERENCE)
                 .preTaxcosting(Cash.euros(CASACO_UNITARY_PRE_TAX_PRICE))
                 .posTaxcosting(Cash.euros(CASACO_UNITARY_POS_TAX_PRICE))
+                .volumed(CASACO_VOLUME)
+                .weighted(CASACO_WEIGHHT)
+                .rowed(CASACO_ROW)
+                .aisled(CASACO_AISLE)
                 .makingBarcode(CASACO_FORMAT_BARCODE, CASACO_BARCODE)
                 .withPhotos(CASACO_PHOTOS_COLLECTION)
                 .makingProductionCode(CASACO_PRODUCTION_CODE)
@@ -51,7 +59,7 @@ public class ProductTest {
         new Product(CLOTHE_PRODUCT_CATEGORY,CASACO_NAME,CASACO_SHORT_DESCRIPTION,CASACO_EXTENDED_DESCRIPTION,
                 CASACO_TECHNICAL_DESCRIPTION,CASACO_BRAND,CASACO_REFERENCE,CASACO_UNITARY_PRE_TAX_PRICE_CASH
                 ,CASACO_UNITARY_POS_TAX_PRICE_CASH,CASACO_TOTAL_BARCODE,CASACO_PRODUCTION_CODE
-                ,CASACO_PHOTOS_COLLECTION);
+                ,CASACO_PHOTOS_COLLECTION,CASACO_VOLUME,CASACO_WEIGHHT,CASACO_ROW,CASACO_AISLE);
         assertTrue(true);
     }
 
@@ -141,4 +149,4 @@ public class ProductTest {
         assertTrue(true);
     }
 
-}
+}*/
