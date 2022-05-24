@@ -1,6 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.ordermanagement.domain.Order;
 import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.base.warehousemanagement.domain.agv.AGVId;
 import eapli.base.warehousemanagement.domain.agv.Status;
@@ -23,7 +24,6 @@ public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> imp
         super(tx, "id");
     }
 
-    @Override
     public List<AGV> findAGVById(String agvId){
         final Map<String, Object> params = new HashMap<>();
         AGVId agvIdObject = new AGVId(agvId);

@@ -26,7 +26,7 @@ public class ConfigureAGVController {
     public AGV configureAGV(final String agvId, final String description, final String model, final double maxWeight,
                             final double maxVolume, int x, int y, int autonomyMin, String agvDockId){
 
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER);
 
         final var newAGV = new AGVBuilder()
                 .agvIdBuild(agvId)

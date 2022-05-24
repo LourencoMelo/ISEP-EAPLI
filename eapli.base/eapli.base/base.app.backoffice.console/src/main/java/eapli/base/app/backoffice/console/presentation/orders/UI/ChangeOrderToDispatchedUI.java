@@ -62,7 +62,7 @@ public class ChangeOrderToDispatchedUI extends AbstractUI {
     }
 
     private boolean wantToChangeMoreOrder() {
-        int select2 = Console.readInteger("Do you want to change all prepared orders to " +
+        int select2 = Console.readInteger("Do you want to change another order to " +
                 "dispatched? 0 -> YES ; 1 -> NO");
         switch (select2) {
             case 0:
