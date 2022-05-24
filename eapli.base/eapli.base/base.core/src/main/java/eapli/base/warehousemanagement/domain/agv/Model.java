@@ -40,4 +40,11 @@ public class Model implements ValueObject {
             System.out.println("Should be less than 50 chars or not empty");
         }
     }
+
+    @Override
+    public String toString() {
+        return "Model{" +
+                "model='" + model + '\'' +
+                '}';
+    }
 }

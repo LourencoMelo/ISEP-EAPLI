@@ -4,7 +4,7 @@ import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.domain.Order;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 public class InMemoryOrderRepository extends InMemoryDomainRepository<Order, Long> implements OrderRepository {
 
@@ -28,7 +28,7 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<Order, Lon
     }
 
     @Override
-    public Optional<Order> findOrderById(Long id) {
+    public List<Order> findOrderById(Long id) {
         throw new UnsupportedOperationException();
     }
 }

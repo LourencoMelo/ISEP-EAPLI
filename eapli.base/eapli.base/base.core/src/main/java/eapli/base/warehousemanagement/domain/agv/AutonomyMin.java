@@ -39,4 +39,11 @@ public class AutonomyMin implements ValueObject {
             System.out.println("The Autonomy needs to be higher than 0");
         }
     }
+
+    @Override
+    public String toString() {
+        return "AutonomyMin{" +
+                "autonomyMin=" + autonomyMin +
+                '}';
+    }
 }

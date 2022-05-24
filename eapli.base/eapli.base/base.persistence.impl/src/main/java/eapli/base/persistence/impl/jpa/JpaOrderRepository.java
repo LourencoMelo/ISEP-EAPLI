@@ -4,13 +4,11 @@ import eapli.base.Application;
 import eapli.base.ordermanagement.domain.Order;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.repositories.OrderRepository;
-import eapli.base.productmanagement.domain.Product;
-import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
-import org.springframework.security.access.method.P;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -49,7 +47,9 @@ public class JpaOrderRepository extends JpaAutoTxRepository<Order, Long, Long> i
     }
 
     @Override
-    public Optional<Order> findOrderById(Long orderId) {
-        return findById(orderId);
+    public List<Order> findOrderById(Long orderId) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("pk", orderId);
+        return match("e.pk = :pk", params);
     }
 }

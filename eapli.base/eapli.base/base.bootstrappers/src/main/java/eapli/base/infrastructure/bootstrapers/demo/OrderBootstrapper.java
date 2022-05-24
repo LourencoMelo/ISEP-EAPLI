@@ -34,6 +34,7 @@ public class OrderBootstrapper implements Action {
     @Override
     public boolean execute() {
         createOrders();
+        createPaidedOrders();
 
         System.out.println("Order Bootstrap done.");
 
@@ -111,4 +112,50 @@ public class OrderBootstrapper implements Action {
             return "Error dispatching order";
         }
     }
+
+    private boolean createPaidedOrders(){
+        Map<Product, Integer> map1 = new HashMap<>();
+        Map<Product, Integer> map2 = new HashMap<>();
+
+        Optional<Product> product = catalogController.findById(9L);
+        final int quantityProduct = 1;
+        if(product.isPresent()){
+            map1.put(product.get(), quantityProduct);
+        }else{
+            product.ifPresent(value -> map1.put(value, quantityProduct));
+        }
+
+        product = catalogController.findById(11L);
+        final int quantityMap2 = 2;
+        if (product.isPresent()) {
+            map2.put(product.get(), quantityMap2);
+        } else product.ifPresent(value -> map2.put(value, quantityMap2));
+
+        Address addressBilling = new Address("Street AAA", 11, "4440-322", "Porto", "Portugal");
+        Address addressDelivering = new Address("Street BBB", 22, "4440-440", "Porto", "Portugal");
+        PaymentMethod paymentMethod = new PaymentMethod("Card");
+        ShipmentMethod shipmentMethod = new ShipmentMethod("Car", new Cash(30, null));
+
+        Customer customer = registerCustomerController.registerCustomer("Joao", "Beires", "joao@gmail.com", "Male", 911108522L, "432112345", 12,3,2002,null);
+
+        Optional<Order> order1 = registerOrder(map1, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
+        Optional<Order> order2 = registerOrder(map2, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
+
+        order1.ifPresent(this::changeToPaid);
+        order2.ifPresent(this::changeToPaid);
+
+        return true;
+    }
+
+    public boolean changeToPaid(Order order){
+        try{
+            order.makePaid();
+            orderRepository.save(order);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+
 }

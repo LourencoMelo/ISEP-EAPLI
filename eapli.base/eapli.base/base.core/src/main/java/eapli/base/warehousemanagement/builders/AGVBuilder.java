@@ -26,8 +26,6 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private String agvDockId;
 
-    private Task task;
-
     @Override
     public AGV build() {
         final AGV agvFinal = buildOrThrow();
@@ -166,13 +164,5 @@ public class AGVBuilder implements DomainFactory<AGV> {
         this.agvDockId = agvDockId;
         return this;
     }
-
-
-    /**
-     * Task Builder
-     */
-
-
-
 
 }

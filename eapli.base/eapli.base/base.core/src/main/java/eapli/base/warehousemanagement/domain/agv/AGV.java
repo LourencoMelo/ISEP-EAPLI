@@ -99,6 +99,21 @@ public class AGV implements AggregateRoot<AGVId> {
     }
 
     @Override
+    public String toString() {
+        return "AGV{" +
+                "id=" + id +
+                ", description=" + description +
+                ", model=" + model +
+                ", maxWeight=" + maxWeight +
+                ", maxVolume=" + maxVolume +
+                ", status=" + status +
+                ", position=" + position +
+                ", autonomyMin=" + autonomyMin +
+                ", agvDockId='" + agvDockId + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean sameAs(Object other) {
         return false;
     }

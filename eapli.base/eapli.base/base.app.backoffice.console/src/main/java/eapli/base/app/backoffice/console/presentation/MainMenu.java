@@ -32,6 +32,7 @@ import eapli.base.app.backoffice.console.presentation.orders.Action.ChangeOrderT
 import eapli.base.app.backoffice.console.presentation.orders.Action.CreateOrderForClientAction;
 import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
 import eapli.base.app.backoffice.console.presentation.warehouseemployee.ConfigureAGVAction;
+import eapli.base.app.backoffice.console.presentation.warehouseemployee.ForceOrderOnAGVAction;
 import eapli.base.app.backoffice.console.presentation.warehouseemployee.ImportJSONFileAction;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -85,7 +86,6 @@ public class MainMenu extends AbstractUI {
     private static final int LIST_ALL_PRODUCTS = 4;
     private static final int CREATE_ORDER = 5;
     private static final int LIST_FILTERED_PRODUCTS = 6;
-
     private static final int ASSIGN_ORDER = 7;
 
 
@@ -93,6 +93,7 @@ public class MainMenu extends AbstractUI {
     private static final int IMPORT_JSONFILE = 1;
     private static final int CONFIGURE_AGV = 2;
     private static final int CHANGE_TO_DISPATCH_ORDER = 3;
+    private static final int FORCE_ORDER_ON_AGV = 4;
 
 
 
@@ -213,6 +214,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(IMPORT_JSONFILE, "Import JSON file", new ImportJSONFileAction());
         menu.addItem(CONFIGURE_AGV, "Configure AGV", new ConfigureAGVAction());
         menu.addItem(CHANGE_TO_DISPATCH_ORDER, "Change to dispatch order", new ChangeOrderToDispatchedAction());
+        menu.addItem(FORCE_ORDER_ON_AGV, "Force an Order to an AGV", new ForceOrderOnAGVAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

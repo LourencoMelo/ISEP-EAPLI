@@ -45,4 +45,5 @@ public class MaxVolume implements ValueObject {
         return String.valueOf(maxVolume);
 
     }
+
 }

@@ -217,8 +217,8 @@ public class Order implements AggregateRoot<Long> {
         return this.status;
     }
 
-    public boolean isPaid(){
-        return status() == OrderStatus.PAID;
+    public void makePaid(){
+        status = OrderStatus.PAID;
     }
 
     public void isDispatched(){
