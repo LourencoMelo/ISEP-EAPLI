@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AGVRepository extends DomainRepository<AGVId, AGV> {
 
-    List<AGV> findAGVById(String agvId);
+    AGV findAGVById(String agvId);
 
     Iterable<AGV> findAvailableAGVS();
 }

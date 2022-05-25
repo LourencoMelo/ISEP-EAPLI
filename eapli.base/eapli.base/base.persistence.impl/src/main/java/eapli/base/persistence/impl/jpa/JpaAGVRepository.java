@@ -24,11 +24,11 @@ public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> imp
         super(tx, "id");
     }
 
-    public List<AGV> findAGVById(String agvId){
+    public AGV findAGVById(String agvId){
         final Map<String, Object> params = new HashMap<>();
         AGVId agvIdObject = new AGVId(agvId);
         params.put("id", agvIdObject);
-        return match("e.id = :id", params);
+        return (AGV) match("e.id = :id", params);
     }
 
     @Override
@@ -38,4 +38,5 @@ public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> imp
         params.put("status", status);
         return match("e.status = :status", params);
     }
+
 }

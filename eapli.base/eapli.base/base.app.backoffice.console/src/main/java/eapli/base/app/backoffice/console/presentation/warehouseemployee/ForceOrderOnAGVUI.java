@@ -39,7 +39,7 @@ public class ForceOrderOnAGVUI extends AbstractUI{
         System.out.println("===============================");
 
         this.agvId = Console.readLine("Insert the AGV Id");
-        List<AGV> agvForced = forceOrderOnAGVController.findAGVById(agvId);
+        AGV agvForced = forceOrderOnAGVController.findAGVById(agvId);
 
 
         return false;

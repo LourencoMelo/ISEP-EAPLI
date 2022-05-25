@@ -132,4 +132,8 @@ public class AGV implements AggregateRoot<AGVId> {
     public boolean hasIdentity(AGVId id) {
         return AggregateRoot.super.hasIdentity(id);
     }
+
+    public void activateAGV() {
+        this.status = Status.READY;
+    }
 }

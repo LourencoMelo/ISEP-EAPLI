@@ -41,7 +41,7 @@ public class ForceOrderOnAGVController {
         return findOrderByIdService.findOrderById(orderId);
     }
 
-    public List<AGV> findAGVById(String agvId){
+    public AGV findAGVById(String agvId){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE);
 
         return findAGVByIdService.findAGVById(agvId);

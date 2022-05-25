@@ -13,7 +13,7 @@ public class FindAGVByIdService {
 
     private final AGVRepository agvRepository = PersistenceContext.repositories().agv();
 
-    public List<AGV> findAGVById(String agvId){
+    public AGV findAGVById(String agvId){
         return this.agvRepository.findAGVById(agvId);
     }
 }

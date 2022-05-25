@@ -15,7 +15,7 @@ public class InMemoryAGVRepository extends InMemoryDomainRepository<AGV, AGVId> 
     }
 
     @Override
-    public List<AGV> findAGVById(String agvId) {
+    public AGV findAGVById(String agvId) {
         throw new UnsupportedOperationException();
     }
 

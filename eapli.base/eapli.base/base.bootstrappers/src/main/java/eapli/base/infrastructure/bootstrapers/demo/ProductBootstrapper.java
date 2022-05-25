@@ -80,7 +80,7 @@ public class ProductBootstrapper implements Action {
         registerProduct(clothe1, "Casaco", "Casaco de pele", "Casaco castanho de pele"
                 , "Casaco castanho de pele tamanho S", "Zara", "111111", 20
                 , 24.2, "EAN-13", 5401111111111L, 111111111, set1,30000,0.8,1,1);
-        registerProduct(clothe1, "Calças", "Calças de pele", "Calças azuis de pele"
+       registerProduct(clothe1, "Calças", "Calças de pele", "Calças azuis de pele"
                 , "Calças azuis de pele tamanho M", "Tommy Hilfiger", "111112"
                 , 40, 48.4, "EAN-13", 5401111111112L
                 , 111111112, set2,30000,0.8,2,1);

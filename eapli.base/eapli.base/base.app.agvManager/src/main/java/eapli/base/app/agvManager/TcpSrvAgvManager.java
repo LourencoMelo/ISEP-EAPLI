@@ -2,7 +2,9 @@ package eapli.base.app.agvManager;
 
 import eapli.base.SPOMSPProtocol.MessageParser;
 import eapli.base.SPOMSPProtocol.SPOMSPRequest;
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.warehousemanagement.domain.agv.AGV;
+import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import eapli.base.ordermanagement.domain.Order;
@@ -15,11 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TcpSrvAgvManager {
-
-    /**
-     * List of all available agvs
-     */
-    static List<AGV> available_agvs = new ArrayList<>();
 
     static int SERVER_PORT = 9999;
 
@@ -56,11 +53,15 @@ public class TcpSrvAgvManager {
             new Thread(new TcpSrvAgvManagerThread(cliSock)).start(); //Creates new thread to handle the client and still be open for more requests
         }
     }
+
+
 }
 
 class TcpSrvAgvManagerThread implements Runnable {
 
     private final Socket s;
+
+    private final AGVRepository agvRepository = PersistenceContext.repositories().agv();
 
     public TcpSrvAgvManagerThread(Socket cli_s) {
         s = cli_s;
@@ -121,35 +122,40 @@ class TcpSrvAgvManagerThread implements Runnable {
                 ObjectOutputStream sOutputObject = new ObjectOutputStream(s.getOutputStream());
 
                 if (option >= 3){
-                    SystemUser systemUser = (SystemUser) sInputObject.readObject();
-                    System.out.println("User logged in: " + systemUser.username());
+
+
+
+                    switch (option){
+                        case 3:
+                            SystemUser systemUser = (SystemUser) sInputObject.readObject();
+                            System.out.println("User logged in: " + systemUser.username());
 
 
 //                    System.out.println(sInputObject.readObject());
 
-                    Order order = (Order) sInputObject.readObject();
-                    System.out.println("Order received :" + order.toString());
+                            Order order = (Order) sInputObject.readObject();
+                            System.out.println("Order received :" + order.toString());
 
-                    byte[] clientMessage2 = sIn.readNBytes(4); //Reads all bytes from client's message
-                    if (clientMessage2[1] == 1){
-                        System.out.println("Request to end the communication received.");
+                            byte[] clientMessage2 = sIn.readNBytes(4); //Reads all bytes from client's message
+                            if (clientMessage2[1] == 1){
+                                System.out.println("Request to end the communication received.");
 
-                        sOut.write(answer);
-                        sOut.flush(); //Forces the data out of the socket
+                                sOut.write(answer);
+                                sOut.flush(); //Forces the data out of the socket
+                            }
+                            break;
+                        case 4 :
+                            /*byte[] code = clientsOption[4]
+                            changeToReady();
+
+                             */
+                            break;
+                        case 5 :
+                            //does something
+                            break;
+                        default :
+                            System.out.println("...");
                     }
-//
-//                    switch (option){
-//                        case 3:
-//                            break;
-//                        case 4 :
-//                            //does something
-//                            break;
-//                        case 5 :
-//                            //does something
-//                            break;
-//                        default :
-//                            System.out.println("...");
-//                    }
                 }
 
             }
@@ -166,5 +172,13 @@ class TcpSrvAgvManagerThread implements Runnable {
                 System.out.println("Error : Could not close the socket");
             }
         }
+    }
+
+    private void changeToReady(String agvId) {
+        agvRepository.findAGVById(agvId).activateAGV();
+    }
+
+    private Iterable<AGV> activatedAGVs() {
+        return agvRepository.findAvailableAGVS();
     }
 }
