@@ -2,6 +2,8 @@ package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.base.warehousemanagement.domain.agv.AGVId;
+import eapli.base.warehousemanagement.domain.agv.MaxVolume;
+import eapli.base.warehousemanagement.domain.agv.MaxWeight;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
@@ -15,12 +17,12 @@ public class InMemoryAGVRepository extends InMemoryDomainRepository<AGV, AGVId> 
     }
 
     @Override
-    public AGV findAGVById(String agvId) {
+    public Optional<AGV> findAGVById(String agvId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Iterable<AGV> findAvailableAGVS() {
+    public List<AGV> findAvailableAGVS(MaxWeight orderWeight, MaxVolume orderVolume) {
         throw new UnsupportedOperationException();
     }
 }

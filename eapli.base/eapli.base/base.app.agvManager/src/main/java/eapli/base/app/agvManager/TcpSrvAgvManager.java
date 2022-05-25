@@ -174,11 +174,16 @@ class TcpSrvAgvManagerThread implements Runnable {
         }
     }
 
+
+    /**
     private void changeToReady(String agvId) {
         agvRepository.findAGVById(agvId).activateAGV();
     }
 
-    private Iterable<AGV> activatedAGVs() {
+    private List<AGV> activatedAGVs() {
         return agvRepository.findAvailableAGVS();
     }
+
+     **/
+
 }

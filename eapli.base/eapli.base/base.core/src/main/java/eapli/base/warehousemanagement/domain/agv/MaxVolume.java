@@ -40,6 +40,10 @@ public class MaxVolume implements ValueObject {
         }
     }
 
+    public double getMaxVolume() {
+        return maxVolume;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(maxVolume);

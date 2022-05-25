@@ -13,7 +13,7 @@ public class FindOrderByIdService {
 
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
 
-    public List<Order> findOrderById(long orderId){
+    public Optional<Order> findOrderById(long orderId){
         return this.orderRepository.findOrderById(orderId);
     }
 }

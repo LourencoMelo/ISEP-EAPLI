@@ -30,17 +30,22 @@ public class ForceOrderOnAGVUI extends AbstractUI{
         System.out.println("===============================");
 
         this.orderPk = Console.readLong("Insert the Order Identifier");
-        List<Order> order = forceOrderOnAGVController.findOrderById(orderPk);
+        Optional<Order> order = forceOrderOnAGVController.findOrderById(orderPk);
         System.out.println("============ AGVs =============");
-        Iterable<AGV> agvs = forceOrderOnAGVController.findAvailableAGVS();
-        for(AGV agv : agvs){
-            System.out.println(agv);
+        List<AGV> agvs = forceOrderOnAGVController.findAvailableAGVS(order.get().calculateTotalOderWeight(), order.get().calculateTotalOrderVolume());
+        if(agvs.size() == 0){
+            System.out.println("At this time there is no AGV Ready!\n" +
+                    "Or the AGV can't carry your order");
+            System.out.println("===============================");
+        }else{
+            for(AGV agv : agvs){
+                System.out.println(agv);
+            }
+            System.out.println("===============================");
+
+            this.agvId = Console.readLine("Insert the AGV Id");
+            Optional<AGV> agvForced = forceOrderOnAGVController.findAGVById(agvId);
         }
-        System.out.println("===============================");
-
-        this.agvId = Console.readLine("Insert the AGV Id");
-        AGV agvForced = forceOrderOnAGVController.findAGVById(agvId);
-
 
         return false;
     }

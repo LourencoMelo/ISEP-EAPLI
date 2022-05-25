@@ -4,6 +4,8 @@ import eapli.base.customermanagement.domain.Address;
 import eapli.base.customermanagement.domain.Customer;
 import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
+import eapli.base.warehousemanagement.domain.agv.MaxVolume;
+import eapli.base.warehousemanagement.domain.agv.MaxWeight;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.EmailAddress;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -210,6 +212,37 @@ public class Order implements AggregateRoot<Long> {
         this.status = OrderStatus.PAYMENT_PENDING;
         this.customer = customer;
     }
+    /////////////////////////////////////////////////////////////Methods////////////////////////////////////////////////////////////////////////
+
+    public MaxWeight calculateTotalOderWeight(){
+        double totalWeight = 0;
+        double productWeight;
+        for(Map.Entry<Product, Integer> entry : orderedProducts.entrySet()){
+            MaxWeight maxWeight = entry.getKey().getWeight();
+            Integer quantity = entry.getValue();
+            productWeight = maxWeight.getMaxWeight() * quantity;
+            totalWeight = totalWeight + productWeight;
+        }
+        MaxWeight totalMaxWeight  = new MaxWeight(totalWeight);
+
+        return totalMaxWeight;
+    }
+
+    public MaxVolume calculateTotalOrderVolume(){
+        double totalVolume = 0;
+        double productVolume;
+        for(Map.Entry<Product, Integer> entry : orderedProducts.entrySet()){
+            MaxVolume maxVolume = entry.getKey().getVolume();
+            Integer quantity = entry.getValue();
+            productVolume = maxVolume.getMaxVolume() * quantity;
+            totalVolume = totalVolume + productVolume;
+        }
+        MaxVolume totalMaxVolume = new MaxVolume(totalVolume);
+
+        return totalMaxVolume;
+    }
+
+
     /////////////////////////////////////////////////////////////Status Management//////////////////////////////////////////////////////////////
 
 

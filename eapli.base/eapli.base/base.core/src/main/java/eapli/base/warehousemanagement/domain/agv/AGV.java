@@ -1,5 +1,6 @@
 package eapli.base.warehousemanagement.domain.agv;
 
+import eapli.base.ordermanagement.domain.Order;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.Description;
 
@@ -60,12 +61,8 @@ public class AGV implements AggregateRoot<AGVId> {
     @Column(unique = true)
     private String agvDockId;
 
-//    /**
-//     * His task
-//     */
-//    @OneToOne
-//    private Task task;
-
+    @OneToOne
+    private Order order;
 
     /**
      * AGV Constructor
@@ -89,6 +86,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.position = position;
         this.autonomyMin = autonomyHours;
         this.agvDockId = agvDockId;
+        this.order = null;
     }
 
     /**
@@ -96,6 +94,10 @@ public class AGV implements AggregateRoot<AGVId> {
      */
     public AGV() {
 
+    }
+
+    public void assignOrder(Order order){
+        this.order = order;
     }
 
     @Override

@@ -7,6 +7,8 @@ import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.warehousemanagement.Services.FindAGVByIdService;
 import eapli.base.warehousemanagement.Services.FindAGVReadyService;
 import eapli.base.warehousemanagement.domain.agv.AGV;
+import eapli.base.warehousemanagement.domain.agv.MaxVolume;
+import eapli.base.warehousemanagement.domain.agv.MaxWeight;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
@@ -35,21 +37,21 @@ public class ForceOrderOnAGVController {
         return listOrderToBePreparedService.ordersToBePrepared();
     }
 
-    public List<Order> findOrderById(long orderId){
+    public Optional<Order> findOrderById(long orderId){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE);
 
         return findOrderByIdService.findOrderById(orderId);
     }
 
-    public AGV findAGVById(String agvId){
+    public Optional<AGV> findAGVById(String agvId){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE);
 
         return findAGVByIdService.findAGVById(agvId);
     }
 
-    public Iterable<AGV> findAvailableAGVS(){
+    public List<AGV> findAvailableAGVS(MaxWeight orderWeight, MaxVolume orderVolume){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE);
 
-        return findAGVReadyService.findAvailableAGVS();
+        return findAGVReadyService.findAvailableAGVS(orderWeight, orderVolume);
     }
 }

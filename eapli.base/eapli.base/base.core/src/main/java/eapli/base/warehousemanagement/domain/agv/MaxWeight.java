@@ -41,6 +41,10 @@ public class MaxWeight implements ValueObject {
         }
     }
 
+    public double getMaxWeight() {
+        return maxWeight;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(maxWeight);

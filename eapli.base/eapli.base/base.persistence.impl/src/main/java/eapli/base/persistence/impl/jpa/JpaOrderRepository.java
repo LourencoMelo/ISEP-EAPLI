@@ -47,9 +47,9 @@ public class JpaOrderRepository extends JpaAutoTxRepository<Order, Long, Long> i
     }
 
     @Override
-    public List<Order> findOrderById(Long orderId) {
+    public Optional<Order> findOrderById(Long orderId) {
         final Map<String, Object> params = new HashMap<>();
         params.put("pk", orderId);
-        return match("e.pk = :pk", params);
+        return matchOne("e.pk = :pk", params);
     }
 }
