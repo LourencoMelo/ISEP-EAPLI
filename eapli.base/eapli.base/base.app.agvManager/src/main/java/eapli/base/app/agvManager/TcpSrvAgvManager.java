@@ -9,6 +9,7 @@ import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import eapli.base.ordermanagement.domain.Order;
+
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TcpSrvAgvManager {
+
 
     static int SERVER_PORT = 9999;
 
@@ -63,8 +65,6 @@ class TcpSrvAgvManagerThread implements Runnable {
 
     private final Socket s;
 
-    //private final AGVRepository agvRepository = PersistenceContext.repositories().agv();
-
     public TcpSrvAgvManagerThread(Socket cli_s) {
         s = cli_s;
     }
@@ -107,7 +107,7 @@ class TcpSrvAgvManagerThread implements Runnable {
                 byte[] answer = spomspRequest.execute();
 
                 //Checks if the answer is valid. If not, the protocol doesn't support
-                if (answer == null){
+                if (answer == null) {
                     throw new IllegalArgumentException("Protocol Error");
                 }
 
@@ -132,12 +132,12 @@ class TcpSrvAgvManagerThread implements Runnable {
 
                 Thread.sleep(3000);
 
-                ObjectInputStream sInputObject = new ObjectInputStream(s.getInputStream());
-                ObjectOutputStream sOutputObject = new ObjectOutputStream(s.getOutputStream());
 
-                if (option >= 3){
-                    switch (option){
+                if (option >= 3) {
+                    switch (option) {
                         case 3:
+                            ObjectInputStream sInputObject = new ObjectInputStream(s.getInputStream());
+                            ObjectOutputStream sOutputObject = new ObjectOutputStream(s.getOutputStream());
                             SystemUser systemUser = (SystemUser) sInputObject.readObject();
                             System.out.println("User logged in: " + systemUser.username());
 
@@ -147,21 +147,22 @@ class TcpSrvAgvManagerThread implements Runnable {
                             byte[] clientMessage2 = sIn.readNBytes(4); //Reads all bytes from client's message
 
                             //Checks if the client requests to end the conection
-                            if (clientMessage2[Constants.CODE_OFFSET] == Constants.DISCONN){
+                            if (clientMessage2[Constants.CODE_OFFSET] == Constants.DISCONN) {
                                 System.out.println("Request to end the communication received.");
 
                                 sOut.write(answer);
                                 sOut.flush(); //Forces the data out of the socket
                             }
                             break;
-                        case 4 :
-                            System.out.println(clientsOption[3]);
-                            //changeToReady(String.valueOf(clientsOption[4]));
+                        case 4:
+                            System.out.println("chegou");
+                            System.out.println("AVG ID : agv-" + clientsOption[3]);
+                            changeToReady(String.valueOf("agv-" + clientsOption[3]));
                             break;
-                        case 5 :
+                        case 5:
                             //does something
                             break;
-                        default :
+                        default:
                             System.out.println("...");
                     }
                 }
@@ -170,27 +171,29 @@ class TcpSrvAgvManagerThread implements Runnable {
 
             System.out.println("Client " + clientIP.getHostAddress() + ",port number: " + s.getPort() + " disconnected");
             s.close();
-        } catch (IOException | ClassNotFoundException | InterruptedException  e) {
+        } catch (IOException | ClassNotFoundException | InterruptedException e) {
+
             System.out.println(e.getMessage());
         } finally {
             try {
                 this.s.close();
                 System.out.println("Socket closed!");
-            }catch (IOException e){
+            } catch (IOException e) {
                 System.out.println("Error : Could not close the socket");
             }
         }
     }
 
 
+    private void changeToReady(String agvId) {
+        PersistenceContext.repositories().agv().findAGVById(agvId).get().activateAGV();
+    }
 
-//    private void changeToReady(String agvId) {
-//        agvRepository.findAGVById(agvId).get().activateAGV();
-//    }
+  /*  private List<AGV> activatedAGVs() {
+        return PersistenceContext.repositories().agv().findAvailableAGVS();
+    }
 
-//    private List<AGV> activatedAGVs() {
-//        return agvRepository.findAvailableAGVS();
-//    }
+   */
 
 
 }

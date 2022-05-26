@@ -17,7 +17,7 @@ import java.util.List;
 public class TcpClientAgvDigitalTwin {
 
     public static void main(String[] args) {
-        List<String> ids = Arrays.asList("agv-1", "agv-2");
+        List<String> ids = Arrays.asList("agv-1");
         for (String id : ids) {
             new Thread(new AgvDigitalTwinThread(id, ids.indexOf(id))).start(); //Creates a thread for each agv available simulating agv digital twin
             System.out.println("Thread creada : " + id);
@@ -100,14 +100,15 @@ class AgvDigitalTwinThread implements Runnable {
             System.out.println("Code : " + anwser[1]);
 
             //Checks if the server answer is confirmation
-            if (anwser[Constants.CODE_OFFSET] != Constants.ACK){
+            if (anwser[1] != 2){
                 throw new IOException("[ERROR] Server communication error!");
             }
 
             Thread.sleep(3000);
 
+            int code = Integer.parseInt(String.valueOf(id.charAt(id.length()-1)));
             //Sends message with code "4" and id that warns the agv manager about his status being ready
-            message = new byte[]{(byte) 0, (byte) 4, (byte) 0, (byte) id.charAt(id.length()-1)};
+            message = new byte[]{(byte) 0, (byte) 4, (byte) 0, (byte) code};
 
             dataOutputStream.write(message);
 
@@ -117,14 +118,19 @@ class AgvDigitalTwinThread implements Runnable {
             anwser = dataInputStream.readNBytes(4);
 
             //Checks if the server answer is confirmation
-            if (anwser[Constants.CODE_OFFSET] != Constants.ACK){
+            if (anwser[1] != 2){
+                System.out.println("ola");
                 throw new IOException("[ERROR] Server communication error!");
             }
 
-            Thread.sleep(2000);
+            System.out.println("passosu");
 
+            while (true) {
+
+            }
         } catch (IOException  | InterruptedException exception) {
-            System.out.println("[ERROR] Error with server communication!");
+            //System.out.println("[ERROR] Error with server communication!");
+            System.out.println(exception.getMessage());
         } finally {
             try {
                 socket.close(); //In case of server application doesn't response confirmation code
