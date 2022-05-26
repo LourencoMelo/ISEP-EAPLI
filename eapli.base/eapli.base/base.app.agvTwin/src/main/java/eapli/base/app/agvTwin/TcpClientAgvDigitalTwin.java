@@ -1,10 +1,8 @@
-package eapli;
+package eapli.base.app.agvTwin;
 
 import eapli.base.AppSettings;
 import eapli.base.Application;
-import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.warehousemanagement.domain.agv.AGV;
-import eapli.base.warehousemanagement.repositories.AGVRepository;
+import eapli.base.SPOMSPProtocol.Constants;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
@@ -21,7 +19,8 @@ public class TcpClientAgvDigitalTwin {
     public static void main(String[] args) {
         List<String> ids = Arrays.asList("agv-1", "agv-2");
         for (String id : ids) {
-            new Thread(new AgvDigitalTwinThread(id, ids.indexOf(id))).start();
+            new Thread(new AgvDigitalTwinThread(id, ids.indexOf(id))).start(); //Creates a thread for each agv available simulating agv digital twin
+            System.out.println("Thread creada : " + id);
         }
 
     }
@@ -48,13 +47,21 @@ class AgvDigitalTwinThread implements Runnable {
 
     @Override
     public void run() {
+
+        System.out.println("[INFO] Agv with id " + id + "started!");
+
         try {
+            System.out.println("Teste #1");
             server_ip = InetAddress.getByName(serverIPProperties);
+            System.out.println("Server ip = " + server_ip);
+            System.out.println("Teste #2");
         } catch (UnknownHostException exception) {
-            throw new IllegalArgumentException("Server error");
+            System.out.println(exception.getMessage());
         }
 
-        String certificate = "client " + (idPos + 3) + " AGV";
+        String certificate = "client" + (idPos + 3) + "AGV";
+
+        System.out.println("Cretificate prefix : " + certificate);
 
         //Certificates provided by servers
         System.setProperty("javax.net.ssl.trustStore", certificate + ".jks");
@@ -68,7 +75,7 @@ class AgvDigitalTwinThread implements Runnable {
         try {
             socket = (SSLSocket) socketFactory.createSocket(server_ip, 9999);
         } catch (IOException exception) {
-            throw new IllegalArgumentException("Server problems!");
+            System.out.println(exception.getMessage());
         }
 
         try {
@@ -77,22 +84,47 @@ class AgvDigitalTwinThread implements Runnable {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
 
-            byte[] clientMessage = {(byte) 0, (byte) 4, (byte) 0, Byte.parseByte(id)};
+            System.out.println("[INFO] Asked the server for communication test!\n\n");
 
-            dataOutputStream.write(clientMessage);
+            //Sends communication test to the server
+            byte[] message = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
+
+            dataOutputStream.write(message);
+
+            dataOutputStream.flush();
+
+            //Reads answer from the server
+            byte[] anwser = dataInputStream.readNBytes(4);
+            System.out.println("Answer : ");
+            System.out.println("version : " + anwser[0]);
+            System.out.println("Code : " + anwser[1]);
+
+            //Checks if the server answer is confirmation
+            if (anwser[Constants.CODE_OFFSET] != Constants.ACK){
+                throw new IOException("[ERROR] Server communication error!");
+            }
+
+            Thread.sleep(3000);
+
+            //Sends message with code "4" and id that warns the agv manager about his status being ready
+            message = new byte[]{(byte) 0, (byte) 4, (byte) 0, (byte) id.charAt(id.length()-1)};
+
+            dataOutputStream.write(message);
 
             dataOutputStream.flush();
 
 
+            anwser = dataInputStream.readNBytes(4);
 
-
-
-        } catch (IOException exception) {
-            try {
-                throw new IOException("Error with server communication!");
-            } catch (IOException e) {
-                e.printStackTrace();
+            //Checks if the server answer is confirmation
+            if (anwser[Constants.CODE_OFFSET] != Constants.ACK){
+                throw new IOException("[ERROR] Server communication error!");
             }
+
+            Thread.sleep(2000);
+
+        } catch (IOException  | InterruptedException exception) {
+            System.out.println("[ERROR] Error with server communication!");
         } finally {
             try {
                 socket.close(); //In case of server application doesn't response confirmation code

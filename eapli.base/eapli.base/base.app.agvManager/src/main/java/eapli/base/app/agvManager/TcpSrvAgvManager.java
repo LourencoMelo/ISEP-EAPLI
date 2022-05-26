@@ -1,5 +1,6 @@
 package eapli.base.app.agvManager;
 
+import eapli.base.SPOMSPProtocol.Constants;
 import eapli.base.SPOMSPProtocol.MessageParser;
 import eapli.base.SPOMSPProtocol.SPOMSPRequest;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TcpSrvAgvManager {
@@ -61,7 +63,7 @@ class TcpSrvAgvManagerThread implements Runnable {
 
     private final Socket s;
 
-    private final AGVRepository agvRepository = PersistenceContext.repositories().agv();
+    //private final AGVRepository agvRepository = PersistenceContext.repositories().agv();
 
     public TcpSrvAgvManagerThread(Socket cli_s) {
         s = cli_s;
@@ -84,31 +86,41 @@ class TcpSrvAgvManagerThread implements Runnable {
         InetAddress clientIP;
 
         clientIP = s.getInetAddress();
-        System.out.println("New client connection from " + clientIP.getHostAddress() + ",port number " + s.getPort() + ".");
+        System.out.println("New connection from " + clientIP.getHostAddress() + ",port number " + s.getPort() + ".");
 
         try {
             DataInputStream sIn = new DataInputStream(s.getInputStream());
             DataOutputStream sOut = new DataOutputStream(s.getOutputStream());
 
+            //Reads all bytes from client's message
+            byte[] clientMessage = sIn.readNBytes(4);
 
-
-            byte[] clientMessage = sIn.readNBytes(4); //Reads all bytes from client's message
-
+            //Parses the message from the client to return the correct answer
             SPOMSPRequest spomspRequest = MessageParser.parse(clientMessage);
 
-            if (clientMessage[1] == 0) {
-                //System.out.println("Test code(0) received from client.");
+            //If the clients message code is 0 represents test request
+            if (clientMessage[Constants.CODE_OFFSET] == Constants.COMMTEST) {
 
-                byte[] answer =spomspRequest.execute();
+                System.out.println("Communication Test Request received by port : " + s.getPort());
+
+                //Saves the answer to be sent
+                byte[] answer = spomspRequest.execute();
+
+                //Checks if the answer is valid. If not, the protocol doesn't support
                 if (answer == null){
                     throw new IllegalArgumentException("Protocol Error");
-
                 }
-//                byte[] answer = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};   //Answer with acknowledgment code
-                System.out.println("Sending acknowledgment message to client.");
+
+                System.out.println("Sent acknowledgment message to client.");
+
+                System.out.println("Answer : ");
+                System.out.println("version : " + answer[0]);
+                System.out.println("Code : " + answer[1]);
 
                 sOut.write(answer);
-                sOut.flush(); //Forces the data out of the socket
+                //Forces the data out of the socket
+                sOut.flush();
+
 
                 byte[] clientsOption = sIn.readNBytes(4);
                 int option = clientsOption[1];
@@ -118,26 +130,24 @@ class TcpSrvAgvManagerThread implements Runnable {
                 sOut.write(answer);
                 sOut.flush(); //Forces the data out of the socket
 
+                Thread.sleep(3000);
+
                 ObjectInputStream sInputObject = new ObjectInputStream(s.getInputStream());
                 ObjectOutputStream sOutputObject = new ObjectOutputStream(s.getOutputStream());
 
                 if (option >= 3){
-
-
-
                     switch (option){
                         case 3:
                             SystemUser systemUser = (SystemUser) sInputObject.readObject();
                             System.out.println("User logged in: " + systemUser.username());
 
-
-//                    System.out.println(sInputObject.readObject());
-
                             Order order = (Order) sInputObject.readObject();
                             System.out.println("Order received :" + order.toString());
 
                             byte[] clientMessage2 = sIn.readNBytes(4); //Reads all bytes from client's message
-                            if (clientMessage2[1] == 1){
+
+                            //Checks if the client requests to end the conection
+                            if (clientMessage2[Constants.CODE_OFFSET] == Constants.DISCONN){
                                 System.out.println("Request to end the communication received.");
 
                                 sOut.write(answer);
@@ -145,10 +155,8 @@ class TcpSrvAgvManagerThread implements Runnable {
                             }
                             break;
                         case 4 :
-                            /*byte[] code = clientsOption[4]
-                            changeToReady();
-
-                             */
+                            System.out.println(clientsOption[3]);
+                            //changeToReady(String.valueOf(clientsOption[4]));
                             break;
                         case 5 :
                             //does something
@@ -162,7 +170,7 @@ class TcpSrvAgvManagerThread implements Runnable {
 
             System.out.println("Client " + clientIP.getHostAddress() + ",port number: " + s.getPort() + " disconnected");
             s.close();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException | InterruptedException  e) {
             System.out.println(e.getMessage());
         } finally {
             try {
@@ -175,15 +183,14 @@ class TcpSrvAgvManagerThread implements Runnable {
     }
 
 
-    /**
-    private void changeToReady(String agvId) {
-        agvRepository.findAGVById(agvId).activateAGV();
-    }
 
-    private List<AGV> activatedAGVs() {
-        return agvRepository.findAvailableAGVS();
-    }
+//    private void changeToReady(String agvId) {
+//        agvRepository.findAGVById(agvId).get().activateAGV();
+//    }
 
-     **/
+//    private List<AGV> activatedAGVs() {
+//        return agvRepository.findAvailableAGVS();
+//    }
+
 
 }

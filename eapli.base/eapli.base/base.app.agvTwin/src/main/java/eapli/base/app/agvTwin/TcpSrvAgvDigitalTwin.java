@@ -1,4 +1,4 @@
-package eapli;
+package eapli.base.app.agvTwin;
 
 public class TcpSrvAgvDigitalTwin {
     public static void main(String[] args) {

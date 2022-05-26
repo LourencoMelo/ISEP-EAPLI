@@ -29,6 +29,8 @@ public class MessageParser {
             return new TestRequest(message);
         } else if (message[Constants.CODE_OFFSET] == Constants.DISCONN) {
             return new EndRequest(message);
+        } else if (message[Constants.CODE_OFFSET] == Constants.AGV_HELLO) {
+            return new TestRequest(message);
         }
 
         return null;
