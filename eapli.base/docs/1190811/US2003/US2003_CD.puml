@@ -1,0 +1,51 @@
+@startuml
+
+class BaseBackoffice{
+    -MainMenu menu
+}
+
+class ForceOrderOnAGVUI{
+    ForceOrderOnAGVController forceOrderOnAGVController;
+}
+
+class ForceOrderOnAGVController{
+    -AuthorizationService authz;
+    -ListOrderToBePreparedService listOrderToBePreparedService;
+    -FindOrderByIdService findOrderByIdService;
+    -FindAGVReadyService findAGVReadyService;
+    -FindAGVByIdService findAGVByIdService;
+}
+
+
+class ListOrderToBePreparedService{
+}
+
+class FindOrderByIdService{
+}
+
+interface AGVRepository{
+}
+
+interface OrderRepository{
+}
+
+class TcpSrvAgvManager{
+}
+
+
+BaseBackoffice -> ForceOrderOnAGVUI
+
+ForceOrderOnAGVUI -> ForceOrderOnAGVController
+
+ForceOrderOnAGVController -down-> ListOrderToBePreparedService
+ForceOrderOnAGVController -down-> FindOrderByIdService
+ForceOrderOnAGVController -down-> FindAGVReadyService
+ForceOrderOnAGVController -down-> FindAGVByIdService
+
+ListOrderToBePreparedService -down-> OrderRepository
+FindOrderByIdService -down-> OrderRepository
+FindAGVReadyService -down-> AGVRepository
+FindAGVByIdService -down-> AGVRepository
+
+
+@enduml

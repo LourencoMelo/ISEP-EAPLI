@@ -1,0 +1,21 @@
+@startuml
+
+autonumber
+
+actor WarehouseEmployee
+
+WarehouseEmployee -> System : Wants to Force an Order to an AGV
+System -> WarehouseEmployee : Shows all the Orders that are paided.
+System -> WarehouseEmployee : Asks to insert the order primary key
+WarehouseEmployee -> System : Inserts the order primary key
+
+group success case
+    System -> System : assigns the order to an available & capable AGV
+
+end
+
+group unsuccessful case
+
+     System -> WarehouseEmployee : Shows that are no available AGV or capable to prepare that order
+
+@enduml

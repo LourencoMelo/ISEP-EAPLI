@@ -1,0 +1,15 @@
+@startuml
+
+autonumber
+
+WarehouseEmployee --> ForceOrderOnAGVUI : chooses to configure the ConfigureAGVUI
+ForceOrderOnAGVUI --> ForceOrderOnAGVController : forceOrderOnAGVController.retrieveOrdersPrepared()
+ForceOrderOnAGVController --> ListOrderToBePreparedService : listOrderToBePreparedService.ordersToBePrepared()
+ListOrderToBePreparedService -> OrderRepository : orderRepository.ordersToBePrepared()
+OrderRepository -> ListOrderToBePreparedService : List<Order> orders
+ListOrderToBePreparedService -> ForceOrderOnAGVController : List<Order> orders
+ForceOrderOnAGVController -> ForceOrderOnAGVUI : List<Order> orders
+ForceOrderOnAGVUI -> WarehouseEmployee : Please insert an Order ID
+WarehouseEmployee ->ForceOrderOnAGVUI : Inserts an Order ID
+
+@enduml
