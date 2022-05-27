@@ -25,7 +25,7 @@ public class AssignOrderController {
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
 
     public void assignOrder(Order order){
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK, BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER);
         try{
             this.assignOrderService.assignOrderToAGV(currentUser, 5, order);
         } catch (IOException e) {
