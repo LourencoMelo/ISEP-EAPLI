@@ -16,12 +16,12 @@ import java.util.List;
 
 public class FindAGVReadyServiceTest {
 
-    /**
+
     ConfigureAGVController configureAGVController = new ConfigureAGVController();
     FindAGVReadyService findAGVReadyService = new FindAGVReadyService();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agv();
 
-
+    /**
     @Test
     public void findAvailableAGVSForWeight(){
         AGV agv1 =  configureAGVController.configureAGV("agv-1","Fast", "XPTO", 4,10,2,3,10,"1" );
