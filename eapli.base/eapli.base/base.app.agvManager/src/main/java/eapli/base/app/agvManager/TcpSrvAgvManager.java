@@ -4,7 +4,7 @@ import eapli.base.SPOMSPProtocol.Constants;
 import eapli.base.SPOMSPProtocol.MessageParser;
 import eapli.base.SPOMSPProtocol.SPOMSPRequest;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.warehousemanagement.domain.agv.AGV;
+import eapli.base.ordermanagement.application.AssignOrderController;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
@@ -15,9 +15,6 @@ import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class TcpSrvAgvManager {
 
@@ -64,6 +61,10 @@ public class TcpSrvAgvManager {
 class TcpSrvAgvManagerThread implements Runnable {
 
     private final Socket s;
+
+//    private AssignOrderController controller = new AssignOrderController();
+
+    private AGVRepository agvRepository  = PersistenceContext.repositories().agv();
 
     public TcpSrvAgvManagerThread(Socket cli_s) {
         s = cli_s;
@@ -186,7 +187,8 @@ class TcpSrvAgvManagerThread implements Runnable {
 
 
     private void changeToReady(String agvId) {
-        PersistenceContext.repositories().agv().findAGVById(agvId).get().activateAGV();
+//       agvRepository.findAGVById(agvId).get().activateAGV();
+//         agvController.findAGVById(agvId).get().activateAGV();
     }
 
   /*  private List<AGV> activatedAGVs() {
