@@ -102,7 +102,7 @@ public class AssignOrderService {
                     //Reads server response. Verifies if it contains confirmation code
                     byte[] serverMessageEnding = dataInputStream.readNBytes(4);
                     if (serverMessageEnding[1] == 2) {
-                        System.out.println("Server aproved the ending of the communication.");
+                        System.out.println("Server approved the ending of the communication.");
                         socket.close();
                         System.out.println("Disconnected!");
                     } else {

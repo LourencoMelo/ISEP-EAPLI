@@ -24,4 +24,7 @@ public class VAT implements ValueObject {
         this.vat = vat;
     }
 
+    public String vat() {
+        return vat;
+    }
 }

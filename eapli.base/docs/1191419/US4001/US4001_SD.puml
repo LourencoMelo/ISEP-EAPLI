@@ -18,7 +18,6 @@ end
 
 TcpSrvAgvManagerThread -> MessageParser:parse
 TcpSrvAgvManagerThread -> TcpSrvAgvManagerThread: execute
-TcpSrvAgvManagerThread -> MessageBuilder:build
 
 TcpSrvAgvManagerThread --> AgvDigitalTwin
 deactivate TcpSrvAgvManagerThread

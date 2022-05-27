@@ -28,4 +28,8 @@ public class PhoneNumber implements ValueObject {
     public String toString() {
         return String.valueOf(phoneNumber);
     }
+
+    public long phoneNumber() {
+        return phoneNumber;
+    }
 }
