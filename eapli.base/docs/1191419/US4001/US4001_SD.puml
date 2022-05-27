@@ -1,0 +1,26 @@
+@startuml
+
+participant AgvDigitalTwin <<client>>
+
+AVGManager -> TcpServerAgvManager : new
+loop true
+AVGManager -> TcpServerAgvManager: start
+Activate TcpServerAgvManager
+TcpServerAgvManager -> TcpServerAgvManager: accept
+
+AgvDigitalTwin --> TcpServerAgvManager
+
+participant TcpSrvAgvManagerThread <<thread>>
+activate TcpSrvAgvManagerThread
+TcpServerAgvManager -\ TcpSrvAgvManagerThread: start
+deactivate TcpServerAgvManager
+end
+
+TcpSrvAgvManagerThread -> MessageParser:parse
+TcpSrvAgvManagerThread -> TcpSrvAgvManagerThread: execute
+TcpSrvAgvManagerThread -> MessageBuilder:build
+
+TcpSrvAgvManagerThread --> AgvDigitalTwin
+deactivate TcpSrvAgvManagerThread
+
+@enduml
