@@ -138,4 +138,8 @@ public class AGV implements AggregateRoot<AGVId> {
     public void activateAGV() {
         this.status = Status.READY;
     }
+
+    public Status getStatus() {
+        return status;
+    }
 }

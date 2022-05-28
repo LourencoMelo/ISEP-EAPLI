@@ -5,7 +5,12 @@ import eapli.base.SPOMSPProtocol.MessageParser;
 import eapli.base.SPOMSPProtocol.SPOMSPRequest;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.application.AssignOrderController;
+import eapli.base.usermanagement.domain.BasePasswordPolicy;
+import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
+import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import eapli.base.ordermanagement.domain.Order;
@@ -26,6 +31,9 @@ public class TcpSrvAgvManager {
 
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) throws IOException {
+
+        System.out.println("Configuring the server");
+        AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
 
         SSLServerSocket sock = null;
         Socket cliSock;
@@ -62,9 +70,8 @@ class TcpSrvAgvManagerThread implements Runnable {
 
     private final Socket s;
 
-//    private AssignOrderController controller = new AssignOrderController();
-
-    private AGVRepository agvRepository  = PersistenceContext.repositories().agv();
+    private final TransactionalContext ctx = PersistenceContext.repositories().newTransactionalContext();
+    private final AGVRepository agvRepository = PersistenceContext.repositories().agv(ctx);
 
     public TcpSrvAgvManagerThread(Socket cli_s) {
         s = cli_s;
@@ -156,9 +163,9 @@ class TcpSrvAgvManagerThread implements Runnable {
                             }
                             break;
                         case 4:
-                            System.out.println("chegou");
+                            System.out.println("Arrived");
                             System.out.println("AVG ID : agv-" + clientsOption[3]);
-                            changeToReady(String.valueOf("agv-" + clientsOption[3]));
+                            changeToReady("agv-" + clientsOption[3]);
                             break;
                         case 5:
                             //does something
@@ -187,8 +194,15 @@ class TcpSrvAgvManagerThread implements Runnable {
 
 
     private void changeToReady(String agvId) {
-//       agvRepository.findAGVById(agvId).get().activateAGV();
-//         agvController.findAGVById(agvId).get().activateAGV();
+        ctx.beginTransaction();
+        AGV agv = agvRepository.findAGVById(agvId).get();
+
+        agvRepository.findAGVById(agvId).get().activateAGV();
+
+        agvRepository.save(agv);
+        ctx.commit();
+
+        System.out.println("AVG set to ready");
     }
 
   /*  private List<AGV> activatedAGVs() {
