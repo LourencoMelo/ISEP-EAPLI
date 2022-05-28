@@ -4,9 +4,10 @@ import eapli.base.SPOMSPProtocol.Constants;
 import eapli.base.SPOMSPProtocol.MessageParser;
 import eapli.base.SPOMSPProtocol.SPOMSPRequest;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.ordermanagement.application.AssignOrderController;
+import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.base.warehousemanagement.domain.agv.AGV;
+import eapli.base.warehousemanagement.domain.agv.Status;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -20,6 +21,7 @@ import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.*;
 
 public class TcpSrvAgvManager {
 
@@ -72,6 +74,8 @@ class TcpSrvAgvManagerThread implements Runnable {
 
     private final TransactionalContext ctx = PersistenceContext.repositories().newTransactionalContext();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agv(ctx);
+
+    private final OrderRepository orderRepository = PersistenceContext.repositories().orders(ctx);
 
     public TcpSrvAgvManagerThread(Socket cli_s) {
         s = cli_s;
@@ -140,12 +144,14 @@ class TcpSrvAgvManagerThread implements Runnable {
 
                 Thread.sleep(3000);
 
+                boolean isAGVClient = false;
+
 
                 if (option >= 3) {
                     switch (option) {
+                        //Case where the backoffice communicates with the server to assign an order manually
                         case 3:
                             ObjectInputStream sInputObject = new ObjectInputStream(s.getInputStream());
-                            ObjectOutputStream sOutputObject = new ObjectOutputStream(s.getOutputStream());
                             SystemUser systemUser = (SystemUser) sInputObject.readObject();
                             System.out.println("User logged in: " + systemUser.username());
 
@@ -162,13 +168,17 @@ class TcpSrvAgvManagerThread implements Runnable {
                                 sOut.flush(); //Forces the data out of the socket
                             }
                             break;
+                        //Case where the agvs communicate with the server telling they are ready
                         case 4:
                             System.out.println("Arrived");
                             System.out.println("AVG ID : agv-" + clientsOption[3]);
                             changeToReady("agv-" + clientsOption[3]);
                             break;
+                        //Case where the backoffice communicates with the server to enable the automatic assignemt of tasks
                         case 5:
-                            //does something
+                            System.out.println("Starting automatic assignment!");
+                            automaticTaskAssignment();
+                            System.out.println("Automatic assignment done!");
                             break;
                         default:
                             System.out.println("...");
@@ -180,7 +190,6 @@ class TcpSrvAgvManagerThread implements Runnable {
             System.out.println("Client " + clientIP.getHostAddress() + ",port number: " + s.getPort() + " disconnected");
             s.close();
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
-
             System.out.println(e.getMessage());
         } finally {
             try {
@@ -205,11 +214,43 @@ class TcpSrvAgvManagerThread implements Runnable {
         System.out.println("AVG set to ready");
     }
 
-  /*  private List<AGV> activatedAGVs() {
-        return PersistenceContext.repositories().agv().findAvailableAGVS();
+    private void automaticTaskAssignment(){
+        //Orders queue
+        //Auxiliar list to order the orders
+        List<Order> auxList = new ArrayList<>();
+        //Adds all the orders that are waiting to be prepared to the aux list
+        orderRepository.ordersToBePrepared().forEach(auxList :: add);
+
+        auxList.sort(Comparator.comparing(Order::getRegistDate));
+
+        Queue<Order> orders_queue = new LinkedList<>(auxList);
+
+        for (Order order : orders_queue) {
+
+            boolean wasAssigned = false;
+
+            ctx.beginTransaction();
+
+            //List of capableAgvs
+            List<AGV> capableAgvs = agvRepository.findAvailableAGVS(order.calculateTotalOderWeight(), order.calculateTotalOrderVolume());
+
+            for (AGV capableAgv : capableAgvs) {
+                if (capableAgv.getStatus() == Status.READY){
+                    capableAgv.assignOrder(order);
+                    agvRepository.save(capableAgv);
+                    orders_queue.remove(order);
+                    System.out.println("[INFO] Order with id -> " + order.identity() + "was assigned to agv with id " + capableAgv.identity().toString());
+                    wasAssigned = true;
+                    break;
+                }
+            }
+
+            if (!wasAssigned){
+                System.out.println("[INFO] No capable agvs were ready to assign the order with id : " + order.identity());
+                System.out.println("[INFO] Please try later");
+            }
+        }
+
+        ctx.commit();
     }
-
-   */
-
-
 }

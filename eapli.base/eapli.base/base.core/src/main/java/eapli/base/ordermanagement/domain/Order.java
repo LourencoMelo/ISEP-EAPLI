@@ -315,4 +315,8 @@ public class Order implements AggregateRoot<Long> {
     public Long identity() {
         return pk;
     }
+
+    public Calendar getRegistDate() {
+        return registDate;
+    }
 }

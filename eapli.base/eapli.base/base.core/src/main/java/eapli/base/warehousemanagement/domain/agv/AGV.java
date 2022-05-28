@@ -98,6 +98,7 @@ public class AGV implements AggregateRoot<AGVId> {
 
     public void assignOrder(Order order){
         this.order = order;
+        this.status = Status.BUSY;
     }
 
     @Override
