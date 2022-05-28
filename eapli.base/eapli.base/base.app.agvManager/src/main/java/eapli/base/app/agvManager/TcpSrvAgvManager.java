@@ -104,7 +104,7 @@ class TcpSrvAgvManagerThread implements Runnable {
             DataInputStream sIn = new DataInputStream(s.getInputStream());
             DataOutputStream sOut = new DataOutputStream(s.getOutputStream());
 
-            //Reads all bytes from client's message
+            //Reads first client's message
             byte[] clientMessage = sIn.readNBytes(4);
 
             //Parses the message from the client to return the correct answer
@@ -129,16 +129,19 @@ class TcpSrvAgvManagerThread implements Runnable {
                 System.out.println("version : " + answer[0]);
                 System.out.println("Code : " + answer[1]);
 
+                //Writes the confirmation message to the client. 1st message trade
                 sOut.write(answer);
                 //Forces the data out of the socket
                 sOut.flush();
 
 
+                //Reads the client's option. 2nd message trade
                 byte[] clientsOption = sIn.readNBytes(4);
                 int option = clientsOption[1];
 
                 System.out.println("Client option is : " + option);
 
+                //Sends confirmation to the client. 2nd message trade
                 sOut.write(answer);
                 sOut.flush(); //Forces the data out of the socket
 
@@ -180,6 +183,10 @@ class TcpSrvAgvManagerThread implements Runnable {
                             break;
                         //Case where the backoffice communicates with the server to enable the automatic assignemt of tasks
                         case 5:
+                            ObjectInputStream sInputObject2 = new ObjectInputStream(s.getInputStream());
+                            SystemUser systemUser2 = (SystemUser) sInputObject2.readObject();
+                            System.out.println("User logged in: " + systemUser2.username());
+
                             System.out.println("Starting automatic assignment!");
                             automaticTaskAssignment();
                             System.out.println("Automatic assignment done!");
@@ -219,6 +226,8 @@ class TcpSrvAgvManagerThread implements Runnable {
     }
 
     private void automaticTaskAssignment() {
+
+        ctx.beginTransaction();
         //Orders queue
         //Auxiliar list to order the orders
         List<Order> auxList = new ArrayList<>();
@@ -229,14 +238,15 @@ class TcpSrvAgvManagerThread implements Runnable {
 
         Queue<Order> orders_queue = new LinkedList<>(auxList);
 
+        System.out.println(orders_queue);
+
         for (Order order : orders_queue) {
 
             boolean wasAssigned = false;
 
-            ctx.beginTransaction();
-
             //List of capableAgvs
             List<AGV> capableAgvs = agvRepository.findAvailableAGVS(order.calculateTotalOderWeight(), order.calculateTotalOrderVolume());
+            System.out.println(capableAgvs);
 
             for (AGV capableAgv : capableAgvs) {
                 capableAgv.assignOrder(order);

@@ -28,6 +28,7 @@ import eapli.base.app.backoffice.console.presentation.Products.Action.AddProduct
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductAction;
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductsWithFiltersAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.AssignOrderAction;
+import eapli.base.app.backoffice.console.presentation.orders.Action.AutomaticAssignmentOrderAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.ChangeOrderToDispatchedAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.CreateOrderForClientAction;
 import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
@@ -94,6 +95,8 @@ public class MainMenu extends AbstractUI {
     private static final int CONFIGURE_AGV = 2;
     private static final int CHANGE_TO_DISPATCH_ORDER = 3;
     private static final int FORCE_ORDER_ON_AGV = 4;
+
+    private static final int AUTOMATIC_ASSIGNMENT_ORDER = 5;
 
 
 
@@ -215,6 +218,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(CONFIGURE_AGV, "Configure AGV", new ConfigureAGVAction());
         menu.addItem(CHANGE_TO_DISPATCH_ORDER, "Change to dispatch order", new ChangeOrderToDispatchedAction());
         menu.addItem(FORCE_ORDER_ON_AGV, "Force an Order to an AGV", new ForceOrderOnAGVAction());
+        menu.addItem(AUTOMATIC_ASSIGNMENT_ORDER, "Automatically assign orders", new AutomaticAssignmentOrderAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

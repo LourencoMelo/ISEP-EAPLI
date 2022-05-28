@@ -8,6 +8,11 @@ public enum Status{
     CHARGING,
 
     /**
+     * AGV is turned on but not ready
+     */
+    ON,
+
+    /**
      * AGV is Ready
      */
     READY,
