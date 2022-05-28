@@ -25,7 +25,7 @@ public class AssignOrderService {
     static InetAddress server_ip;
     static SSLSocket socket;
 
-    public void assignOrderToAGV(SystemUser user, int option, Order order) throws IOException {
+    public void assignOrderToAGV(SystemUser user, int option, Long orderId) throws IOException {
 
         try {
             server_ip = InetAddress.getByName(serverIPProperties);
@@ -88,11 +88,13 @@ public class AssignOrderService {
                     objectOutputStream.writeObject(user);
                     objectOutputStream.flush();
 
-                    System.out.println(order);
+                    System.out.println(orderId);
 
                     //Sends the wanted order to the server application
-                    objectOutputStream.writeObject(order);
-                    objectOutputStream.flush();
+//                    objectOutputStream.writeObject(orderId);
+//                    objectOutputStream.flush();
+                    dataOutputStream.write(new byte[]{(byte) 0, (byte) 0, (byte) 0,Byte.parseByte(String.valueOf(orderId))});
+                    dataOutputStream.flush();
 
                     //Communicates with server side requesting to end the connection
                     byte[] clientMessageEnding = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};

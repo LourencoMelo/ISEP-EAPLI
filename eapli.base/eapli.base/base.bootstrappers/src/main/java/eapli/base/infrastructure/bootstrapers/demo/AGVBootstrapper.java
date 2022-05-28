@@ -32,6 +32,7 @@ public class AGVBootstrapper implements Action {
                 120, "D1");
         registerAGV("agv-2", "agv numero 2", "xpto", 40.00, 50.00, 1, 5,
                 180, "D2");
+        registerAGV("agv-3","super agv","super",200.00,50000.00,1,13,180,"D3");
 
         System.out.println("AGV Bootstrapp done.");
         return true;

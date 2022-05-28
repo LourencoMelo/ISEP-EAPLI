@@ -17,10 +17,10 @@ import java.util.List;
 public class TcpClientAgvDigitalTwin {
 
     public static void main(String[] args) {
-        List<String> ids = Arrays.asList("agv-1");
+        List<String> ids = Arrays.asList("agv-3");
         for (String id : ids) {
             new Thread(new AgvDigitalTwinThread(id, ids.indexOf(id))).start(); //Creates a thread for each agv available simulating agv digital twin
-            System.out.println("Thread creada : " + id);
+            System.out.println("Thread created : " + id);
         }
 
     }

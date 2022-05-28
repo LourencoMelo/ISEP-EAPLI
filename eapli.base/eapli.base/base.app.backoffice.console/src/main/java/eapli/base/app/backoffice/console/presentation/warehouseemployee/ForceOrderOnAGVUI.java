@@ -1,51 +1,43 @@
 package eapli.base.app.backoffice.console.presentation.warehouseemployee;
 
+import eapli.base.app.backoffice.console.presentation.orders.Printer.OrderPrinter;
+import eapli.base.ordermanagement.application.AssignOrderController;
 import eapli.base.ordermanagement.domain.Order;
 import eapli.base.warehousemanagement.application.ForceOrderOnAGVController;
 import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.SelectWidget;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ForceOrderOnAGVUI extends AbstractUI{
+public class ForceOrderOnAGVUI extends AbstractUI {
 
     public long orderPk;
     public String agvId;
 
     private final ForceOrderOnAGVController forceOrderOnAGVController;
+    AssignOrderController controller = new AssignOrderController();
 
     public ForceOrderOnAGVUI() {
         this.forceOrderOnAGVController = new ForceOrderOnAGVController();
     }
 
+
     @Override
     protected boolean doShow() {
-        System.out.println("============ Orders ===========");
-        Iterable<Order> orders = forceOrderOnAGVController.retrieveOrdersPrepared();
-        for(Order order : orders){
-            System.out.println(order);
-        }
-        System.out.println("===============================");
+        final Iterable<Order> ordersPrepared = this.controller.ordersToBePrepared();
 
-        this.orderPk = Console.readLong("Insert the Order Identifier");
-        Optional<Order> order = forceOrderOnAGVController.findOrderById(orderPk);
-        System.out.println("============ AGVs =============");
-        List<AGV> agvs = forceOrderOnAGVController.findAvailableAGVS(order.get().calculateTotalOderWeight(), order.get().calculateTotalOrderVolume());
-        if(agvs.size() == 0){
-            System.out.println("At this time there is no AGV Ready!\n" +
-                    "Or the AGV can't carry your order");
-            System.out.println("===============================");
-        }else{
-            for(AGV agv : agvs){
-                System.out.println(agv);
-            }
-            System.out.println("===============================");
+        System.out.println("Please choose an order :");
 
-            this.agvId = Console.readLine("Insert the AGV Id");
-            Optional<AGV> agvForced = forceOrderOnAGVController.findAGVById(agvId);
-        }
+        final SelectWidget<Order> selectWidget = new SelectWidget<>("Orders :", ordersPrepared, new OrderPrinter());
+
+        selectWidget.show();
+
+        Order order = selectWidget.selectedElement();
+
+        this.controller.assignOrder(order.getPk());
 
         return false;
     }

@@ -155,9 +155,13 @@ class TcpSrvAgvManagerThread implements Runnable {
                             SystemUser systemUser = (SystemUser) sInputObject.readObject();
                             System.out.println("User logged in: " + systemUser.username());
 
-                            Order order = (Order) sInputObject.readObject();
-                            System.out.println("Order received :" + order.toString());
+//                            Order order = (Order) sInputObject.readObject();
+                            byte[] message = sIn.readNBytes(4);
+                            String id = String.valueOf(message[3]);
+                            System.out.println("Order received :" + id);
 
+                            forceOrder(id);
+                            
                             byte[] clientMessage2 = sIn.readNBytes(4); //Reads all bytes from client's message
 
                             //Checks if the client requests to end the conection
@@ -214,12 +218,12 @@ class TcpSrvAgvManagerThread implements Runnable {
         System.out.println("AVG set to ready");
     }
 
-    private void automaticTaskAssignment(){
+    private void automaticTaskAssignment() {
         //Orders queue
         //Auxiliar list to order the orders
         List<Order> auxList = new ArrayList<>();
         //Adds all the orders that are waiting to be prepared to the aux list
-        orderRepository.ordersToBePrepared().forEach(auxList :: add);
+        orderRepository.ordersToBePrepared().forEach(auxList::add);
 
         auxList.sort(Comparator.comparing(Order::getRegistDate));
 
@@ -235,22 +239,40 @@ class TcpSrvAgvManagerThread implements Runnable {
             List<AGV> capableAgvs = agvRepository.findAvailableAGVS(order.calculateTotalOderWeight(), order.calculateTotalOrderVolume());
 
             for (AGV capableAgv : capableAgvs) {
-                if (capableAgv.getStatus() == Status.READY){
-                    capableAgv.assignOrder(order);
-                    agvRepository.save(capableAgv);
-                    orders_queue.remove(order);
-                    System.out.println("[INFO] Order with id -> " + order.identity() + "was assigned to agv with id " + capableAgv.identity().toString());
-                    wasAssigned = true;
-                    break;
-                }
+                capableAgv.assignOrder(order);
+                agvRepository.save(capableAgv);
+                orders_queue.remove(order);
+                System.out.println("[INFO] Order with id -> " + order.identity() + "was assigned to agv with id " + capableAgv.identity().toString());
+                wasAssigned = true;
+                break;
             }
 
-            if (!wasAssigned){
+            if (!wasAssigned) {
                 System.out.println("[INFO] No capable agvs were ready to assign the order with id : " + order.identity());
                 System.out.println("[INFO] Please try later");
             }
         }
 
         ctx.commit();
+    }
+
+    private boolean forceOrder(String id) {
+        ctx.beginTransaction();
+        if (orderRepository.findOrderById(Long.valueOf(id)).isPresent()) {
+            Order orderWanted = orderRepository.findOrderById(Long.valueOf(id)).get();
+            List<AGV> capableAgvs = agvRepository.findAvailableAGVS(orderWanted.calculateTotalOderWeight(), orderWanted.calculateTotalOrderVolume());
+            if(capableAgvs.isEmpty()){
+                System.out.println("[INFO] No capable agvs were ready to assign the order with id : " + orderWanted.identity());
+                System.out.println("[INFO] Please try later");
+                return false;
+            }
+            AGV capableOne = capableAgvs.get(0);
+            capableOne.assignOrder(orderWanted);
+            agvRepository.save(capableOne);
+            System.out.println("[INFO] Order with id -> " + orderWanted.identity() + "was assigned to agv with id " + capableOne.identity().toString());
+            ctx.commit();
+            return true;
+        }
+        return false;
     }
 }

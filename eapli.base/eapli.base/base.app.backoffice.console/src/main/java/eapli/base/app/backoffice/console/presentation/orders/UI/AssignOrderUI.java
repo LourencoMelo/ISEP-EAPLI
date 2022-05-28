@@ -17,7 +17,7 @@ public class AssignOrderUI extends AbstractUI {
 
         try {
 
-            final Iterable<Order> ordersPrepared = this.controller.ordersPrepared();
+            final Iterable<Order> ordersPrepared = this.controller.ordersToBePrepared();
 
             System.out.println("Please choose an order :");
 
@@ -27,7 +27,7 @@ public class AssignOrderUI extends AbstractUI {
 
             Order order = selectWidget.selectedElement();
 
-            this.controller.assignOrder(order);
+            this.controller.assignOrder(order.getPk());
 
             return false;
         }catch (IllegalArgumentException exception){

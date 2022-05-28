@@ -24,16 +24,16 @@ public class AssignOrderController {
 
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
 
-    public void assignOrder(Order order){
+    public void assignOrder(Long orderID){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER);
         try{
-            this.assignOrderService.assignOrderToAGV(currentUser, 5, order);
+            this.assignOrderService.assignOrderToAGV(currentUser, 5, orderID);
         } catch (IOException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
-    public Iterable<Order> ordersPrepared() {
-        return orderRepository.ordersPrepared();
+    public Iterable<Order> ordersToBePrepared() {
+        return orderRepository.ordersToBePrepared();
     }
 }

@@ -30,7 +30,7 @@ public class ChangeOrderToDispatchedUI extends AbstractUI {
                     break;
                 case 1:
                     do {
-                        changeOrderToDispatched(ordersPrepared);
+                        changeOrderToDispatched(this.controller.ordersPrepared());
                         System.out.println("Order dispatched successfully!");
                         moreOrders = wantToChangeMoreOrder();
                     } while (moreOrders);
