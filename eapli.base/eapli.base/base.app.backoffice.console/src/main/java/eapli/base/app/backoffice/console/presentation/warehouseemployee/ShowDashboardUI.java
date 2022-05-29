@@ -29,6 +29,6 @@ public class ShowDashboardUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Showing Dashboard";
+        return "Dashboard";
     }
 }

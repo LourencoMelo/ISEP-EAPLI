@@ -1,11 +1,10 @@
 package eapli.base.dashboard.domain;
 
-import eapli.base.AppSettings;
-import eapli.base.Application;
 import eapli.base.dashboard.application.ShowDashboardController;
 import eapli.base.warehousemanagement.Services.FindAllAGVService;
 import eapli.base.warehousemanagement.domain.agv.AGV;
 
+import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
@@ -22,10 +21,11 @@ public class HttpServer extends Thread{
     static final String keyStorePassProperties = "forgotten";
     private static ShowDashboardController showDashboardController;
 
-    /**
-     * DataBase Services
-     */
-    static FindAllAGVService findAllAGVService = new FindAllAGVService();
+    private static Iterable<AGV> list;
+
+    public HttpServer(Iterable<AGV> agvs) {
+        list = agvs;
+    }
 
     public void changeController(ShowDashboardController showDashboardController){
         this.showDashboardController = showDashboardController;
@@ -34,7 +34,6 @@ public class HttpServer extends Thread{
     @Override
     public void run() {
         SSLSocket sslSocket = null;
-
 
         // TRUSTED_STORE -> "serverHTTP.jks"
         System.setProperty("javax.net.ssl.keyStore", TRUSTED_STORE);
@@ -47,7 +46,8 @@ public class HttpServer extends Thread{
 
             sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(PORT);
         } catch (IOException ioException) {
-            System.out.println("[INFO] Connection blocked");
+            System.out.println("Server failed to open local port " + PORT);
+            System.exit(1);
         }
 
         while (true){
@@ -64,21 +64,17 @@ public class HttpServer extends Thread{
 
     public static synchronized String refreshTable(){
         try {
-            if(findAllAGVService.findAll() == null){
-                Iterable<AGV>  agvResult = findAllAGVService.findAll();
-                System.out.println(agvResult);
+            if(list != null){
                 StringBuilder s = new StringBuilder();
-                for(AGV agv : agvResult){
+                for(AGV agv : list){
                     s.append("<tr class=\"active-row\">" +
-                            "<td>" + agv.identity().toString() + "</td>" +
-                            "<td>" + agv.getPosition()+ "</td>" +
-                            "<td>" + agv.getStatus()+ "</td>" +
+                            "<td style=\"color:black\">" + agv.identity().toString() + "</td>" +
+                            "<td style=\"color:black\">" + agv.getPosition()+ "</td>" +
+                            "<td style=\"color:black\">" + agv.getStatus()+ "</td>" +
                             "</tr>");
                 }
-                System.out.println("Teste #1");
                 return s.toString();
             }else {
-                System.out.println("Teste #2");
                 return " ";
             }
         }catch (Exception exception){

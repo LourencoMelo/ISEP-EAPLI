@@ -23,7 +23,8 @@ public class HTTPmessage {
             {".js", "application/javascript"},
             {".txt", "text/plain"},
             {".gif", "image/gif"},
-            {".png", "image/png"}
+            {".png", "image/png"},
+            {".css", "application/css"}
     };
 
     static private String readHeaderLine(DataInputStream in) throws IOException {
@@ -74,6 +75,8 @@ public class HTTPmessage {
         content = null;
         status = null;
         contentType = null;
+
+
 
         String[] firstLineComp = firstLine.split(" ");
         if (isRequest) {

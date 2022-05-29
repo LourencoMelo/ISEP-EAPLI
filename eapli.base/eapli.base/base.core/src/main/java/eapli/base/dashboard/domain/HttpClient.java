@@ -52,16 +52,16 @@ public class HttpClient extends Thread{
                     response.send(dataOutputStream);
                 }
             }else{
-                if(request.getMethod().equals("PUT") && request.getURI().startsWith("/info")){
+                if(request.getMethod().equals("PUT") && request.getURI().startsWith("/info/")){
                     response.setResponseStatus("200 Ok");
                 }else{
                     response.setContent("<html><body><h1>ERROR: 405 Method Not Allowed</h1></body></html>", "text/html");
                     response.setResponseStatus("405 Method Not Allowed");
                 }
             }
-
+            response.send(dataOutputStream);
         } catch (IOException ioException) {
-            System.out.println("[Error] Io exception!");;
+            System.out.println();
         }
 
         try {

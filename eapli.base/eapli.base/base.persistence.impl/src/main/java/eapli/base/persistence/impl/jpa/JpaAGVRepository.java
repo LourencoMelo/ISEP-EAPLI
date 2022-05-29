@@ -41,7 +41,21 @@ public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> imp
     }
 
     public Iterable<AGV> findAll(){
-        return findAll();
+        final Map<String, Object> params = new HashMap<>();
+        Status status = Status.READY;
+        Status status2 = Status.BUSY;
+        Status status3 = Status.CHARGING;
+        Status status4 = Status.ON;
+        Status status5 = Status.LOWBATTERY;
+        params.put("status", status);
+        params.put("status2", status2);
+        params.put("status3", status3);
+        params.put("status4", status4);
+        params.put("status5", status5);
+        return match("e.status = :status OR e.status = :status2 OR e.status = :status3 OR e.status = :status4 OR e.status = :status5", params);
     }
 
+    public Iterable<AGV> findAll2() {
+        return findAll();
+    }
 }

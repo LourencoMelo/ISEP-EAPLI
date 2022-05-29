@@ -43,9 +43,7 @@ public class AGVId implements ValueObject, Comparable<AGVId> {
 
     @Override
     public String toString() {
-        return "AGVId{" +
-                "agvId='" + agvId + '\'' +
-                '}';
+        return "AGV - " + agvId;
     }
 
     @Override
