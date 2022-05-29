@@ -28,10 +28,12 @@ public class HttpClient extends Thread{
 
         try {
             HTTPmessage request = new HTTPmessage(inputStream);
+            //Salta para as exceções ocasionalmente
             HTTPmessage response = new HTTPmessage();
 
             if(request.getMethod().equals("GET")){
                 if(request.getURI().equals("/info")){
+                    //Não acede ao método refresh table
                     response.setContentFromString(HttpServer.refreshTable(), "text/html");
                     response.setResponseStatus("200 Ok");
                 } else {
@@ -59,13 +61,14 @@ public class HttpClient extends Thread{
             }
 
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            System.out.println("[Error] Io exception!");;
         }
 
         try {
             socket.close();
         }catch (IOException ioException){
-            ioException.printStackTrace();
+            System.out.println("[Error] Couldn't close socket!");;
+
         }
     }
 }

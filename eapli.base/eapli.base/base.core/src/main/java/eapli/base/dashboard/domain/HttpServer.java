@@ -14,12 +14,11 @@ import java.io.IOException;
 
 public class HttpServer extends Thread{
 
-    static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/www";
+    static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
 
     static final int PORT = 8080;
     static private SSLServerSocket sslServerSocket;
     static final String TRUSTED_STORE = "serverHTTP.jks";
-    static AppSettings app = Application.settings();
     static final String keyStorePassProperties = "forgotten";
     private static ShowDashboardController showDashboardController;
 
@@ -48,14 +47,14 @@ public class HttpServer extends Thread{
 
             sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(PORT);
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            System.out.println("[INFO] Connection blocked");
         }
 
         while (true){
             try{
                 sslSocket = (SSLSocket) sslServerSocket.accept();
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                System.out.println("[INFO] Connection blocked");
             }
             HttpClient req = new HttpClient(sslSocket, BASE_FOLDER);
             req.start();
@@ -67,6 +66,7 @@ public class HttpServer extends Thread{
         try {
             if(findAllAGVService.findAll() == null){
                 Iterable<AGV>  agvResult = findAllAGVService.findAll();
+                System.out.println(agvResult);
                 StringBuilder s = new StringBuilder();
                 for(AGV agv : agvResult){
                     s.append("<tr class=\"active-row\">" +
@@ -75,15 +75,17 @@ public class HttpServer extends Thread{
                             "<td>" + agv.getStatus()+ "</td>" +
                             "</tr>");
                 }
+                System.out.println("Teste #1");
                 return s.toString();
             }else {
+                System.out.println("Teste #2");
                 return " ";
             }
         }catch (Exception exception){
             /**
              * Mudar esta mensagem
              */
-            exception.printStackTrace();
+            System.out.println("[INFO] Connection blocked!");
             return " ";
         }
     }
