@@ -1,11 +1,17 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
 autonumber
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+ProjectManager --> AutomaticAssignmentOrdersUI : automatically assign orders
+AutomaticAssignmentOrdersUI --> AutomaticAssignController :
+AutomaticAssignController --> AutomaticAssignOrderService
+AutomaticAssignOrderService --> TcpSrvAgvManager
+TcpSrvAgvManager -> TcpSrvAgvManager : automaticTaskAssignment()
+TcpSrvAgvManager --> orderRepository : ordersToBePrepared()
+TcpSrvAgvManager --> agvRepository : findAvailableAGVS()
+TcpSrvAgvManager --> AGV : assignOrder(order)
+TcpSrvAgvManager --> ForceOrderOnAGVUI
+ForceOrderOnAGVUI --> ProjectManager : orders assign
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+
 @enduml

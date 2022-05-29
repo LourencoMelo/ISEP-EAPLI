@@ -272,6 +272,8 @@ class TcpSrvAgvManagerThread implements Runnable {
                 AGV capableAgv = capableAgvs.get(0);
 
                 capableAgv.assignOrder(order);
+                order.isInPreparation();
+                orderRepository.save(order);
                 agvRepository.save(capableAgv);
                 orders_queue.remove(order);
                 i--;

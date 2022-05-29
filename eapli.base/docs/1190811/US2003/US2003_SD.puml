@@ -2,7 +2,7 @@
 
 autonumber
 
-WarehouseEmployee --> ForceOrderOnAGVUI : chooses to force an Order to an AGV
+WarehouseEmployee --> ForceOrderOnAGVUI : chooses to force an order
 ForceOrderOnAGVUI --> AssignOrderController :
 AssignOrderController --> ListOrderToBePreparedService
 ForceOrderOnAGVUI --> WarehouseEmployee : asks to choose an order
