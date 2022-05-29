@@ -40,4 +40,8 @@ public class JpaAGVRepository extends JpaAutoTxRepository<AGV, AGVId, AGVId> imp
         return match("e.status = :status AND e.maxWeight >= :maxWeight AND e.maxVolume >= :maxVolume", params);
     }
 
+    public Iterable<AGV> findAll(){
+        return findAll();
+    }
+
 }

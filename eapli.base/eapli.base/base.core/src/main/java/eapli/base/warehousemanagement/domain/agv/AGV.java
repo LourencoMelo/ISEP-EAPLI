@@ -143,4 +143,8 @@ public class AGV implements AggregateRoot<AGVId> {
     public Status getStatus() {
         return status;
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }
