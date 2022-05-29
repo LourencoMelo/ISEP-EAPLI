@@ -22,11 +22,11 @@ public class ForceOrderOnAGVUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        final Iterable<Order> ordersPrepared = this.controller.ordersToBePrepared();
+        final Iterable<Order> ordersToBePrepared = this.controller.ordersToBePrepared();
 
         System.out.println("Please choose an order :");
 
-        final SelectWidget<Order> selectWidget = new SelectWidget<>("Orders :", ordersPrepared, new OrderPrinter());
+        final SelectWidget<Order> selectWidget = new SelectWidget<>("Orders :", ordersToBePrepared, new OrderPrinter());
 
         selectWidget.show();
 

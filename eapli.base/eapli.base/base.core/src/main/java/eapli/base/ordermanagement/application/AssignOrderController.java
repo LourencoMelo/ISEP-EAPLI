@@ -2,6 +2,7 @@ package eapli.base.ordermanagement.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.Services.AssignOrderService;
+import eapli.base.ordermanagement.Services.ListOrderToBePreparedService;
 import eapli.base.ordermanagement.domain.Order;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
@@ -22,7 +23,7 @@ public class AssignOrderController {
 
     private final AssignOrderService assignOrderService = new AssignOrderService();
 
-    private final ListOrderToBeDispatchedService listOrderToBeDispatchedService = new ListOrderToBeDispatchedService();
+    private final ListOrderToBePreparedService listOrderToBePreparedService = new ListOrderToBePreparedService();
 
     public void assignOrder(Long orderID){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER);
@@ -34,6 +35,6 @@ public class AssignOrderController {
     }
 
     public Iterable<Order> ordersToBePrepared() {
-        return listOrderToBeDispatchedService.ordersPrepared();
+        return listOrderToBePreparedService.ordersToBePrepared();
     }
 }
