@@ -8,19 +8,20 @@ class ForceOrderOnAGVUI{
     ForceOrderOnAGVController forceOrderOnAGVController;
 }
 
-class ForceOrderOnAGVController{
+class AssignOrderController{
     -AuthorizationService authz;
-    -ListOrderToBePreparedService listOrderToBePreparedService;
-    -FindOrderByIdService findOrderByIdService;
-    -FindAGVReadyService findAGVReadyService;
-    -FindAGVByIdService findAGVByIdService;
+    -SystemUser currentUser;
+    -AssignOrderService assignOrderService
+    -ListOrderToBePreparedService listOrderToBePreparedService
 }
-
 
 class ListOrderToBePreparedService{
 }
 
 class FindOrderByIdService{
+}
+
+class AssignOrderService{
 }
 
 interface AGVRepository{
@@ -32,20 +33,21 @@ interface OrderRepository{
 class TcpSrvAgvManager{
 }
 
-
 BaseBackoffice -> ForceOrderOnAGVUI
 
-ForceOrderOnAGVUI -> ForceOrderOnAGVController
+ForceOrderOnAGVUI -> AssignOrderController
 
-ForceOrderOnAGVController -down-> ListOrderToBePreparedService
-ForceOrderOnAGVController -down-> FindOrderByIdService
-ForceOrderOnAGVController -down-> FindAGVReadyService
-ForceOrderOnAGVController -down-> FindAGVByIdService
+AssignOrderController -down-> ListOrderToBePreparedService
+AssignOrderController -down-> FindOrderByIdService
+AssignOrderController -down-> FindAGVReadyService
+AssignOrderController -down-> FindAGVByIdService
+AssignOrderController -down-> AssignOrderService
+
+AssignOrderService -right-> TcpSrvAgvManager : Connects
 
 ListOrderToBePreparedService -down-> OrderRepository
 FindOrderByIdService -down-> OrderRepository
 FindAGVReadyService -down-> AGVRepository
 FindAGVByIdService -down-> AGVRepository
-
 
 @enduml

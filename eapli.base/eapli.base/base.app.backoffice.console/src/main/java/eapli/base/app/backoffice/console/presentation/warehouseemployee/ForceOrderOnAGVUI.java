@@ -14,14 +14,9 @@ import java.util.Optional;
 
 public class ForceOrderOnAGVUI extends AbstractUI {
 
-    public long orderPk;
-    public String agvId;
-
-    private final ForceOrderOnAGVController forceOrderOnAGVController;
     AssignOrderController controller = new AssignOrderController();
 
     public ForceOrderOnAGVUI() {
-        this.forceOrderOnAGVController = new ForceOrderOnAGVController();
     }
 
 

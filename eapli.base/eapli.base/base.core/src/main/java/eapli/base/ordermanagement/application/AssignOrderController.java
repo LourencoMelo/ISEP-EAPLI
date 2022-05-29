@@ -22,7 +22,7 @@ public class AssignOrderController {
 
     private final AssignOrderService assignOrderService = new AssignOrderService();
 
-    private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
+    private final ListOrderToBeDispatchedService listOrderToBeDispatchedService = new ListOrderToBeDispatchedService();
 
     public void assignOrder(Long orderID){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.WAREHOUSE_EMPLOYEE, BaseRoles.POWER_USER);
@@ -34,6 +34,6 @@ public class AssignOrderController {
     }
 
     public Iterable<Order> ordersToBePrepared() {
-        return orderRepository.ordersToBePrepared();
+        return listOrderToBeDispatchedService.ordersPrepared();
     }
 }

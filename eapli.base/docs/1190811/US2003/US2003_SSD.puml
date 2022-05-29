@@ -6,8 +6,8 @@ actor WarehouseEmployee
 
 WarehouseEmployee -> System : Wants to Force an Order to an AGV
 System -> WarehouseEmployee : Shows all the Orders that are paided.
-System -> WarehouseEmployee : Asks to insert the order primary key
-WarehouseEmployee -> System : Inserts the order primary key
+System -> WarehouseEmployee : Asks to choose an order
+WarehouseEmployee -> System : Selects one order
 
 group success case
     System -> System : assigns the order to an available & capable AGV
