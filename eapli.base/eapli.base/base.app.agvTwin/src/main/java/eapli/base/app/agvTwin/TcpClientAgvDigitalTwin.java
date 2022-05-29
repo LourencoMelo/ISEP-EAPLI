@@ -51,12 +51,11 @@ class AgvDigitalTwinThread implements Runnable {
         System.out.println("[INFO] Agv with id " + id + "started!");
 
         try {
-            System.out.println("Teste #1");
             server_ip = InetAddress.getByName(serverIPProperties);
             System.out.println("Server ip = " + server_ip);
-            System.out.println("Teste #2");
         } catch (UnknownHostException exception) {
             System.out.println(exception.getMessage());
+
         }
 
         String certificate = "client" + (idPos + 3) + "AGV";
@@ -84,7 +83,7 @@ class AgvDigitalTwinThread implements Runnable {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
 
-            System.out.println("[INFO] Asked the server for communication test!\n\n");
+            System.out.println("[INFO] [" + id + "] Asked the server for communication test!\n\n");
 
             //Sends communication test to the server
             byte[] message = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
@@ -95,14 +94,13 @@ class AgvDigitalTwinThread implements Runnable {
 
             //Reads answer from the server
             byte[] anwser = dataInputStream.readNBytes(4);
-            System.out.println("Answer : ");
-            System.out.println("version : " + anwser[0]);
-            System.out.println("Code : " + anwser[1]);
 
             //Checks if the server answer is confirmation
             if (anwser[1] != 2){
-                throw new IOException("[ERROR] Server communication error!");
+                throw new IOException("[ERROR] [" + id + "] Server communication error!\n\n");
             }
+
+            System.out.println("[INFO] [" + id + "] Received confirmation message from Server!\n\n");
 
             Thread.sleep(3000);
 
@@ -110,27 +108,31 @@ class AgvDigitalTwinThread implements Runnable {
             //Sends message with code "4" and id that warns the agv manager about his status being ready
             message = new byte[]{(byte) 0, (byte) 4, (byte) 0, (byte) code};
 
+            System.out.println("[INFO] [" + id + "] Sending request to change my status to Ready!\n\n");
+
             dataOutputStream.write(message);
-
             dataOutputStream.flush();
-
 
             anwser = dataInputStream.readNBytes(4);
 
             //Checks if the server answer is confirmation
             if (anwser[1] != 2){
-                System.out.println("ola");
-                throw new IOException("[ERROR] Server communication error!");
+                throw new IOException("[ERROR] [" + id + "] Server communication error!");
             }
 
-            System.out.println("passosu");
+            dataOutputStream.write(new byte[]{(byte) 0, (byte) 1, (byte) 0, (byte) 0});
+            dataOutputStream.flush();
 
-            while (true) {
-
+            anwser = dataInputStream.readNBytes(4);
+            //Checks if the server answer is confirmation
+            if (anwser[1] != 2){
+                throw new IOException("[ERROR] [" + id + "] Server communication error!");
             }
+
+            while (true);
+
         } catch (IOException  | InterruptedException exception) {
-            //System.out.println("[ERROR] Error with server communication!");
-            System.out.println(exception.getMessage());
+            System.out.println("[ERROR] Error with server communication!");
         } finally {
             try {
                 socket.close(); //In case of server application doesn't response confirmation code

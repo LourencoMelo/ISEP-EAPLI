@@ -50,7 +50,7 @@ public class AutomaticAssignOrderService {
         try {
             socket = (SSLSocket) socketFactory.createSocket(server_ip, 9999);
         } catch (IOException exception) {
-            throw new IllegalArgumentException("Server problems!");
+            throw new IllegalArgumentException("[ERROR] Server problems!");
         }
 
         try {
@@ -70,7 +70,7 @@ public class AutomaticAssignOrderService {
 
             if (serverMessage[1] == 2) {
 
-                System.out.println("Received confirmation message from the server");
+                System.out.println("[INFO] Received confirmation message from the server!\n\n");
 
                 //Sends to the server the option choosen on the 2 offset from the message. 2nd message trade
                 byte[] clientOptionChoosen = {(byte) 0, (byte) 5, (byte) 0, (byte) 0};
@@ -85,7 +85,7 @@ public class AutomaticAssignOrderService {
                 //Verifies if the server response is a confirmation code
                 if (serverConfirmation[1] == 2) {
 
-                    System.out.println("Received confirmation message from the server (id -> 2)");
+                    System.out.println("[INFO] Received confirmation message from the server!\n\n");
 
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
@@ -101,21 +101,21 @@ public class AutomaticAssignOrderService {
                     //Reads server response. Verifies if it contains confirmation code
                     byte[] serverMessageEnding = dataInputStream.readNBytes(4);
                     if (serverMessageEnding[1] == 2) {
-                        System.out.println("Server approved the ending of the communication.");
+                        System.out.println("[INFO] Server approved the ending of the communication!\n\n");
                         socket.close();
-                        System.out.println("Disconnected!");
+                        System.out.println("[INFO] Disconnected!\n\n");
                     } else {
                         socket.close();
                     }
 
                 } else {
-                    throw new IllegalArgumentException("Server did not find that option!");
+                    throw new IllegalArgumentException("[ERROR] Server did not find that option!\n\n");
                 }
             } else {
-                throw new IllegalArgumentException("Error with server connection!");
+                throw new IllegalArgumentException("[Error] Server connection down!\n\n");
             }
         } catch (IOException e) {
-            throw new IOException("Error with server communication!");
+            throw new IOException("[Error] Server communication down!\n\n");
         } finally {
             socket.close(); //In case of server application doesn't response confirmation code
         }

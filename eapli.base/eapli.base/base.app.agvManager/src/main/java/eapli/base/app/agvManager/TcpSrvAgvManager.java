@@ -113,21 +113,17 @@ class TcpSrvAgvManagerThread implements Runnable {
             //If the clients message code is 0 represents test request
             if (clientMessage[Constants.CODE_OFFSET] == Constants.COMMTEST) {
 
-                System.out.println("Communication Test Request received by port : " + s.getPort());
+                System.out.println("[INFO] Communication Test Request received by port : " + s.getPort() + "\n\n");
 
                 //Saves the answer to be sent
                 byte[] answer = spomspRequest.execute();
 
                 //Checks if the answer is valid. If not, the protocol doesn't support
                 if (answer == null) {
-                    throw new IllegalArgumentException("Protocol Error");
+                    throw new IllegalArgumentException("[ERROR] Protocol Error \n\n");
                 }
 
-                System.out.println("Sent acknowledgment message to client.");
-
-                System.out.println("Answer : ");
-                System.out.println("version : " + answer[0]);
-                System.out.println("Code : " + answer[1]);
+                System.out.println("[INFO] Sent acknowledgment message to client\n\n");
 
                 //Writes the confirmation message to the client. 1st message trade
                 sOut.write(answer);
@@ -139,7 +135,7 @@ class TcpSrvAgvManagerThread implements Runnable {
                 byte[] clientsOption = sIn.readNBytes(4);
                 int option = clientsOption[1];
 
-                System.out.println("Client option is : " + option);
+                System.out.println("[INFO] Client option is : " + option + "\n\n");
 
                 //Sends confirmation to the client. 2nd message trade
                 sOut.write(answer);
@@ -156,20 +152,19 @@ class TcpSrvAgvManagerThread implements Runnable {
                         case 3:
                             ObjectInputStream sInputObject = new ObjectInputStream(s.getInputStream());
                             SystemUser systemUser = (SystemUser) sInputObject.readObject();
-                            System.out.println("User logged in: " + systemUser.username());
+                            System.out.println("[INFO] User logged in: " + systemUser.username() + "\n\n");
 
-//                            Order order = (Order) sInputObject.readObject();
                             byte[] message = sIn.readNBytes(4);
                             String id = String.valueOf(message[3]);
-                            System.out.println("Order received :" + id);
+                            System.out.println("[INFO] Order received :" + id + "\n\n");
 
                             forceOrder(id);
-                            
+
                             byte[] clientMessage2 = sIn.readNBytes(4); //Reads all bytes from client's message
 
                             //Checks if the client requests to end the conection
                             if (clientMessage2[Constants.CODE_OFFSET] == Constants.DISCONN) {
-                                System.out.println("Request to end the communication received.");
+                                System.out.println("[INFO] Request to end the communication received.\n\n");
 
                                 sOut.write(answer);
                                 sOut.flush(); //Forces the data out of the socket
@@ -177,37 +172,59 @@ class TcpSrvAgvManagerThread implements Runnable {
                             break;
                         //Case where the agvs communicate with the server telling they are ready
                         case 4:
-                            System.out.println("Arrived");
-                            System.out.println("AVG ID : agv-" + clientsOption[3]);
+
+                            System.out.println("[INFO] AGV ID : agv-" + clientsOption[3] + " connected!\n\n");
                             changeToReady("agv-" + clientsOption[3]);
+
+                            byte[] clientMessage3 = sIn.readNBytes(4); //Reads all bytes from client's message
+
+                            //Checks if the client requests to end the conection
+                            if (clientMessage3[Constants.CODE_OFFSET] == Constants.DISCONN) {
+                                System.out.println("[INFO] Request to end the communication received\n\n");
+
+                                sOut.write(answer);
+                                sOut.flush(); //Forces the data out of the socket
+                            }
+
                             break;
                         //Case where the backoffice communicates with the server to enable the automatic assignemt of tasks
                         case 5:
                             ObjectInputStream sInputObject2 = new ObjectInputStream(s.getInputStream());
                             SystemUser systemUser2 = (SystemUser) sInputObject2.readObject();
-                            System.out.println("User logged in: " + systemUser2.username());
+                            System.out.println("[INFO] User logged in: " + systemUser2.username() + "\n\n");
 
-                            System.out.println("Starting automatic assignment!");
+                            System.out.println("[INFO] Starting automatic assignment!\n\n");
                             automaticTaskAssignment();
-                            System.out.println("Automatic assignment done!");
+                            System.out.println("[INFO] Automatic assignment done!\n\n");
+
+                            byte[] clientMessage4 = sIn.readNBytes(4); //Reads all bytes from client's message
+
+                            //Checks if the client requests to end the conection
+                            if (clientMessage4[Constants.CODE_OFFSET] == Constants.DISCONN) {
+                                System.out.println("[INFO] Request to end the communication received\n\n");
+
+                                sOut.write(answer);
+                                sOut.flush(); //Forces the data out of the socket
+                            }
+
                             break;
                         default:
-                            System.out.println("...");
+                            System.out.println("[INFO] Unexistent option!\n\n");
                     }
                 }
 
             }
 
-            System.out.println("Client " + clientIP.getHostAddress() + ",port number: " + s.getPort() + " disconnected");
+            System.out.println("[INFO] Client " + clientIP.getHostAddress() + ",port number: " + s.getPort() + " disconnected!\n\n");
             s.close();
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
             System.out.println(e.getMessage());
         } finally {
             try {
                 this.s.close();
-                System.out.println("Socket closed!");
+                System.out.println("[INFO] Socket closed!\n\n");
             } catch (IOException e) {
-                System.out.println("Error : Could not close the socket");
+                System.out.println("[Error] Could not close the socket!\n\n");
             }
         }
     }
@@ -236,28 +253,31 @@ class TcpSrvAgvManagerThread implements Runnable {
 
         auxList.sort(Comparator.comparing(Order::getRegistDate));
 
-        Queue<Order> orders_queue = new LinkedList<>(auxList);
+        LinkedList<Order> orders_queue = new LinkedList<>(auxList);
 
-        System.out.println(orders_queue);
+        int i;
 
-        for (Order order : orders_queue) {
+        for (i = 0; i < orders_queue.size(); i++) {
 
-            boolean wasAssigned = false;
+            Order order = orders_queue.get(i);
+
+            System.out.println("=====================" + order.identity() + "=====================");
 
             //List of capableAgvs
             List<AGV> capableAgvs = agvRepository.findAvailableAGVS(order.calculateTotalOderWeight(), order.calculateTotalOrderVolume());
-            System.out.println(capableAgvs);
 
-            for (AGV capableAgv : capableAgvs) {
+            if (!capableAgvs.isEmpty()) {
+
+                //Gets the first capable agv and assigns order to it
+                AGV capableAgv = capableAgvs.get(0);
+
                 capableAgv.assignOrder(order);
                 agvRepository.save(capableAgv);
                 orders_queue.remove(order);
-                System.out.println("[INFO] Order with id -> " + order.identity() + "was assigned to agv with id " + capableAgv.identity().toString());
-                wasAssigned = true;
-                break;
-            }
+                i--;
+                System.out.println("[INFO] Order with id " + order.identity() + " was assigned to agv with id " + capableAgv.identity().toString());
 
-            if (!wasAssigned) {
+            } else {
                 System.out.println("[INFO] No capable agvs were ready to assign the order with id : " + order.identity());
                 System.out.println("[INFO] Please try later");
             }
@@ -271,7 +291,7 @@ class TcpSrvAgvManagerThread implements Runnable {
         if (orderRepository.findOrderById(Long.valueOf(id)).isPresent()) {
             Order orderWanted = orderRepository.findOrderById(Long.valueOf(id)).get();
             List<AGV> capableAgvs = agvRepository.findAvailableAGVS(orderWanted.calculateTotalOderWeight(), orderWanted.calculateTotalOrderVolume());
-            if(capableAgvs.isEmpty()){
+            if (capableAgvs.isEmpty()) {
                 System.out.println("[INFO] No capable agvs were ready to assign the order with id : " + orderWanted.identity());
                 System.out.println("[INFO] Please try later");
                 return false;
