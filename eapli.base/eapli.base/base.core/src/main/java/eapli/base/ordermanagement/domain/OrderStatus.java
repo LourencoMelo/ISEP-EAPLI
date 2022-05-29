@@ -20,6 +20,12 @@ public enum OrderStatus {
      */
     PREPARE_PENDING,
 
+
+    /**
+     * In preparation
+     */
+    IN_PREPARATION,
+
     /**
      * Prepared by the AGV
      */

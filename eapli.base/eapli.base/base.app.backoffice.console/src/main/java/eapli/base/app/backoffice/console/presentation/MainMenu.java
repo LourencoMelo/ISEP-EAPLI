@@ -27,7 +27,6 @@ import eapli.base.app.backoffice.console.presentation.Products.Action.AddProduct
 import eapli.base.app.backoffice.console.presentation.Products.Action.AddProductCategoryAction;
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductAction;
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductsWithFiltersAction;
-import eapli.base.app.backoffice.console.presentation.orders.Action.AssignOrderAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.AutomaticAssignmentOrderAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.ChangeOrderToDispatchedAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.CreateOrderForClientAction;
@@ -206,7 +205,6 @@ public class MainMenu extends AbstractUI {
         menu.addItem(LIST_ALL_PRODUCTS, "List all Products", new ListProductAction());
         menu.addItem(CREATE_ORDER, "Create a order for a client", new CreateOrderForClientAction());
         menu.addItem(LIST_FILTERED_PRODUCTS, "List products with filters", new ListProductsWithFiltersAction());
-        menu.addItem(ASSIGN_ORDER, "Assign an order to a AGV", new AssignOrderAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

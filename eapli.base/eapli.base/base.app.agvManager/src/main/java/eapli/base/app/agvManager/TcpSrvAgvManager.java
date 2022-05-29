@@ -298,6 +298,8 @@ class TcpSrvAgvManagerThread implements Runnable {
             }
             AGV capableOne = capableAgvs.get(0);
             capableOne.assignOrder(orderWanted);
+            orderWanted.isInPreparation();
+            orderRepository.save(orderWanted);
             agvRepository.save(capableOne);
             System.out.println("[INFO] Order with id -> " + orderWanted.identity() + "was assigned to agv with id " + capableOne.identity().toString());
             ctx.commit();
