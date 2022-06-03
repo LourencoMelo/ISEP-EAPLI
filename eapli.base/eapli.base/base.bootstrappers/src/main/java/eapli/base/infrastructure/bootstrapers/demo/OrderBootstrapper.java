@@ -35,6 +35,7 @@ public class OrderBootstrapper implements Action {
     public boolean execute() {
         createOrders();
         createPaidedOrders();
+        createDispatchedOrders();
 
         System.out.println("Order Bootstrap done.");
 
@@ -167,6 +168,60 @@ public class OrderBootstrapper implements Action {
         return true;
     }
 
+    private boolean createDispatchedOrders(){
+        Map<Product, Integer> map1 = new HashMap<>();
+        Map<Product, Integer> map2 = new HashMap<>();
+        Map<Product, Integer> map3 = new HashMap<>();
+        Map<Product, Integer> map4 = new HashMap<>();
+
+        Optional<Product> product = catalogController.findById(10L);
+        final int quantityProduct = 1;
+        if(product.isPresent()){
+            map1.put(product.get(), quantityProduct);
+        }else{
+            product.ifPresent(value -> map1.put(value, quantityProduct));
+        }
+
+        product = catalogController.findById(12L);
+        final int quantityMap2 = 2;
+        if (product.isPresent()) {
+            map2.put(product.get(), quantityMap2);
+        } else product.ifPresent(value -> map2.put(value, quantityMap2));
+
+        product = catalogController.findById(13L);
+        final int quantityMap3 = 3;
+        if (product.isPresent()) {
+            map3.put(product.get(), quantityMap3);
+        } else product.ifPresent(value -> map3.put(value, quantityMap3));
+
+        product = catalogController.findById(11L);
+        final int quantityMap4 = 1;
+        if (product.isPresent()) {
+            map4.put(product.get(), quantityMap4);
+        } else product.ifPresent(value -> map4.put(value, quantityMap4));
+
+
+
+        Address addressBilling = new Address("Street abc", 54, "4431-321", "Lisboa", "Portugal");
+        Address addressDelivering = new Address("Street def", 234, "4423-210", "Lisboa", "Portugal");
+        PaymentMethod paymentMethod = new PaymentMethod("Card");
+        ShipmentMethod shipmentMethod = new ShipmentMethod("Car", new Cash(30, null));
+
+        Customer customer = registerCustomerController.registerCustomer("Carlota", "Ramos", "carlota@gmail.com", "Female", 912344343L, "251234432", 12,3,1990,null);
+
+        Optional<Order> order1 = registerOrder(map1, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
+        Optional<Order> order2 = registerOrder(map2, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
+        Optional<Order> order3 = registerOrder(map3, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
+        Optional<Order> order4 = registerOrder(map4, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
+
+        order1.ifPresent(this::changeToDispatched);
+        order2.ifPresent(this::changeToDispatched);
+        order3.ifPresent(this::changeToDispatched);
+        order4.ifPresent(this::changeToDispatched);
+
+        return true;
+    }
+
     public boolean changeToPaid(Order order){
         try{
             order.makePaid();
@@ -177,5 +232,14 @@ public class OrderBootstrapper implements Action {
         }
     }
 
+    public boolean changeToDispatched(Order order){
+        try{
+            order.isDispatched();
+            orderRepository.save(order);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 
 }

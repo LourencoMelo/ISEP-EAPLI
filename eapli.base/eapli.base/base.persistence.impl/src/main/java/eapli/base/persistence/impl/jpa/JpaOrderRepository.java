@@ -47,6 +47,14 @@ public class JpaOrderRepository extends JpaAutoTxRepository<Order, Long, Long> i
     }
 
     @Override
+    public Iterable<Order> ordersDispatched() {
+        final Map<String, Object> params = new HashMap<>();
+        OrderStatus status = OrderStatus.DISPATCHED;
+        params.put("status", status);
+        return match("e.status = :status", params);
+    }
+
+    @Override
     public Optional<Order> findOrderById(Long orderId) {
         final Map<String, Object> params = new HashMap<>();
         params.put("pk", orderId);

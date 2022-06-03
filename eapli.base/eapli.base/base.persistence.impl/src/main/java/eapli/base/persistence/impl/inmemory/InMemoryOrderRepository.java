@@ -28,6 +28,11 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<Order, Lon
     }
 
     @Override
+    public Iterable<Order> ordersDispatched() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<Order> findOrderById(Long id) {
         throw new UnsupportedOperationException();
     }

@@ -258,6 +258,10 @@ public class Order implements AggregateRoot<Long> {
         status = OrderStatus.DISPATCHED;
     }
 
+    public void isBeingDelivered() {
+        status = OrderStatus.BEING_DELIVERED;
+    }
+
     public void isInPreparation(){
         status = OrderStatus.IN_PREPARATION;
     }

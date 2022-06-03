@@ -29,7 +29,9 @@ import eapli.base.app.backoffice.console.presentation.Products.Action.ListProduc
 import eapli.base.app.backoffice.console.presentation.Products.Action.ListProductsWithFiltersAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.AutomaticAssignmentOrderAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.ChangeOrderToDispatchedAction;
+import eapli.base.app.backoffice.console.presentation.orders.Action.ChangerOrderToBeingDeliveredAction;
 import eapli.base.app.backoffice.console.presentation.orders.Action.CreateOrderForClientAction;
+import eapli.base.app.backoffice.console.presentation.orders.UI.ChangeOrderToBeingDeliveredUI;
 import eapli.base.app.backoffice.console.presentation.registerCustomer.RegisterCustomerAction;
 import eapli.base.app.backoffice.console.presentation.warehouseemployee.ConfigureAGVAction;
 import eapli.base.app.backoffice.console.presentation.warehouseemployee.ForceOrderOnAGVAction;
@@ -87,7 +89,8 @@ public class MainMenu extends AbstractUI {
     private static final int LIST_ALL_PRODUCTS = 4;
     private static final int CREATE_ORDER = 5;
     private static final int LIST_FILTERED_PRODUCTS = 6;
-    private static final int ASSIGN_ORDER = 7;
+    private static final int CHANGE_TO_BEING_DELIVERED_ORDER = 7;
+    private static final int ASSIGN_ORDER = 8;
 
 
     //WAREHOUSE_EMPLOYEE
@@ -205,6 +208,8 @@ public class MainMenu extends AbstractUI {
         menu.addItem(LIST_ALL_PRODUCTS, "List all Products", new ListProductAction());
         menu.addItem(CREATE_ORDER, "Create a order for a client", new CreateOrderForClientAction());
         menu.addItem(LIST_FILTERED_PRODUCTS, "List products with filters", new ListProductsWithFiltersAction());
+        menu.addItem(CHANGE_TO_BEING_DELIVERED_ORDER, "List dispatched orders and change to being delivered",
+                new ChangerOrderToBeingDeliveredAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
@@ -219,6 +224,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(FORCE_ORDER_ON_AGV, "Force an Order to an AGV", new ForceOrderOnAGVAction());
         menu.addItem(AUTOMATIC_ASSIGNMENT_ORDER, "Automatically assign orders", new AutomaticAssignmentOrderAction());
         menu.addItem(SHOW_DASHBOARD, "Show Dashboard", new ShowDashboardAction());
+
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
