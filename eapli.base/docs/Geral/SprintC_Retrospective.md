@@ -3,21 +3,21 @@
 # 1. Each person shares how they’re feeling following the sprint:
 
 
-| Student Nr.	                 | Thoughts			                                                                                                                                                                                                                           |
-|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **[1190718](/docs/1190718)** |                                                                                                                                        |
-| **[1190782](/docs/1190782)** |	 	             |
-| **[1190811](/docs/1190811)** |  I started to work earlier but on some improvements on the previous sprint. Because of that I couldn't begin even earlier than I wanted. At the end the implementations were done. 
-| **[1191419](/docs/1191419)** | This sprint went very well. We started sooner so we had more time to perfect the US's and to make everything work.|
+| Student Nr.	                 | Thoughts			                                                                                                                                                                       |
+|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **[1190718](/docs/1190718)** |                                                                                                                                                                                   |
+| **[1190782](/docs/1190782)** | This sprint went really well. This time we started to work on previous sprint problems. With this everything was perfect to continue other US's.	 	                               |
+| **[1190811](/docs/1190811)** | I started to work earlier but on some improvements on the previous sprint. Because of that I couldn't begin even earlier than I wanted. At the end the implementations were done. |
+| **[1191419](/docs/1191419)** | This sprint went very well. We started sooner so we had more time to perfect the US's and to make everything work.                                                                |
 
 # 2. How we feel it went in one word:
 
 | Student Nr.	                 | Thoughts			 |
 |------------------------------|-------------|
-| **[1190718](/docs/1190718)** |         |
-| **[1190782](/docs/1190782)** |  Great	 	    |
-| **[1190811](/docs/1190811)** |  Great      |
-| **[1191419](/docs/1191419)** | Better        |
+| **[1190718](/docs/1190718)** |             |
+| **[1190782](/docs/1190782)** | Fantastic	 	|
+| **[1190811](/docs/1190811)** | Great       |
+| **[1191419](/docs/1191419)** | Better      |
 
 # 3. What went well:
 
