@@ -17,9 +17,7 @@ import java.util.List;
 public class TcpClientAgvDigitalTwin {
 
     public static void main(String[] args) {
-//        List<String> ids = List.of("agv-3");
-//        List<String> ids = List.of("agv-1","agv-2");
-        List<String> ids = List.of("agv-1","agv-2","agv-3","agv-4","agv-5","agv-6");
+        List<String> ids = List.of("agv-1","agv-2","agv-3","agv-4");
 //
         for (String id : ids) {
             new Thread(new AgvDigitalTwinThread(id, ids.indexOf(id))).start(); //Creates a thread for each agv available simulating agv digital twin

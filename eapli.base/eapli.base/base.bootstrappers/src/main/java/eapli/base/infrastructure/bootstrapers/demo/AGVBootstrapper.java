@@ -28,14 +28,11 @@ public class AGVBootstrapper implements Action {
     @Override
     public boolean execute() {
 
-        registerAGV("agv-1", "agv numero 1", "xpto", 25.00, 30.00, 1, 3,
+        registerAGV("agv-1", "agv number 1", "weak", 25.00, 30.00, 1, 3,
                 120, "D1");
-        registerAGV("agv-2", "agv numero 2", "xpto", 40.00, 50.00, 1, 5,
-                180, "D2");
-        registerAGV("agv-3","agv numero 3","super",200.00,50000.00,1,13,180,"D3");
-        registerAGV("agv-4","agv numero 4","super",200.00,50000.00,1,15,180,"D4");
-        registerAGV("agv-5","agv numero 5","mega",20000.00,5000000.00,20,4,180,"D5");
-        registerAGV("agv-6","agv numero 6","mega",20000.00,5000000.00,20,14,180,"D6");
+        registerAGV("agv-2","agv number 2","super",200.00,50000.00,1,13,180,"D2");
+        registerAGV("agv-3","agv number 3","super",200.00,50000.00,1,15,180,"D3");
+        registerAGV("agv-4","agv number 4","mega",20000.00,5000000.00,20,4,180,"D4");
 
         System.out.println("AGV Bootstrapp done.");
         return true;

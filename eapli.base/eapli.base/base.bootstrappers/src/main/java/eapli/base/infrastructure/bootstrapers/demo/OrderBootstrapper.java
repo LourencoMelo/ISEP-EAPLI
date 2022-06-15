@@ -18,6 +18,7 @@ import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import org.springframework.transaction.TransactionSystemException;
 
+import javax.management.OperationsException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -119,6 +120,8 @@ public class OrderBootstrapper implements Action {
         Map<Product, Integer> map2 = new HashMap<>();
         Map<Product, Integer> map3 = new HashMap<>();
         Map<Product, Integer> map4 = new HashMap<>();
+        Map<Product, Integer> map5 = new HashMap<>();
+        Map<Product, Integer> map6 = new HashMap<>();
 
         Optional<Product> product = catalogController.findById(9L);
         final int quantityProduct = 1;
@@ -146,6 +149,17 @@ public class OrderBootstrapper implements Action {
             map4.put(product.get(), quantityMap4);
         } else product.ifPresent(value -> map4.put(value, quantityMap4));
 
+        product = catalogController.findById(14L);
+        final int quantityMap5 = 4;
+        if (product.isPresent()) {
+            map5.put(product.get(), quantityMap5);
+        } else product.ifPresent(value -> map5.put(value, quantityMap5));
+
+        product = catalogController.findById(11L);
+        final int quantityMap6 = 4;
+        if (product.isPresent()) {
+            map6.put(product.get(), quantityMap6);
+        } else product.ifPresent(value -> map6.put(value, quantityMap6));
 
 
         Address addressBilling = new Address("Street AAA", 11, "4440-322", "Porto", "Portugal");
@@ -154,16 +168,22 @@ public class OrderBootstrapper implements Action {
         ShipmentMethod shipmentMethod = new ShipmentMethod("Car", new Cash(30, null));
 
         Customer customer = registerCustomerController.registerCustomer("Joao", "Beires", "joao@gmail.com", "Male", 911108522L, "432112345", 12,3,2002,null);
+        Customer customer2 = registerCustomerController.registerCustomer("Jose", "Maia", "jose@gmail.com", "Male", 911108533L, "432112333", 14,5,2002,null);
 
         Optional<Order> order1 = registerOrder(map1, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
         Optional<Order> order2 = registerOrder(map2, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
         Optional<Order> order3 = registerOrder(map3, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
-        Optional<Order> order4 = registerOrder(map4, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer);
+        Optional<Order> order4 = registerOrder(map4, addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer2);
+        Optional<Order> order5 = registerOrder(map5,addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer2);
+        Optional<Order> order6 = registerOrder(map5,addressBilling, addressDelivering, paymentMethod, shipmentMethod, "method", null, "comment", customer2);
+
 
         order1.ifPresent(this::changeToPaid);
         order2.ifPresent(this::changeToPaid);
         order3.ifPresent(this::changeToPaid);
         order4.ifPresent(this::changeToPaid);
+        order5.ifPresent(this::changeToPaid);
+        order6.ifPresent(this::changeToPaid);
 
         return true;
     }
