@@ -7,7 +7,6 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.base.warehousemanagement.domain.agv.AGV;
-import eapli.base.warehousemanagement.domain.agv.Status;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -25,9 +24,7 @@ import java.util.*;
 
 public class TcpSrvAgvManager {
 
-
     static int SERVER_PORT = 9999;
-
     static final String TRUSTED_STORE = "serverAgvManager.jks";
     static final String KEYSTORE_PASS = "forgotten";
 
@@ -58,8 +55,10 @@ public class TcpSrvAgvManager {
             System.exit(1);
         }
 
+        System.out.println("Server is open and running stable!");
+        System.out.println("Waiting for clients...\n");
+
         while (true) {
-            System.out.println("Server is open and running stable!");
             cliSock = sock.accept();
             new Thread(new TcpSrvAgvManagerThread(cliSock)).start(); //Creates new thread to handle the client and still be open for more requests
         }
@@ -74,11 +73,10 @@ class TcpSrvAgvManagerThread implements Runnable {
 
     private final TransactionalContext ctx = PersistenceContext.repositories().newTransactionalContext();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agv(ctx);
-
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders(ctx);
 
     public TcpSrvAgvManagerThread(Socket cli_s) {
-        s = cli_s;
+        this.s = cli_s;
     }
 
     /**
@@ -95,14 +93,17 @@ class TcpSrvAgvManagerThread implements Runnable {
     @Override
     public void run() {
 
+        DataInputStream sIn = null;
+        DataOutputStream sOut = null;
+
         InetAddress clientIP;
 
         clientIP = s.getInetAddress();
         System.out.println("New connection from " + clientIP.getHostAddress() + ",port number " + s.getPort() + ".");
 
         try {
-            DataInputStream sIn = new DataInputStream(s.getInputStream());
-            DataOutputStream sOut = new DataOutputStream(s.getOutputStream());
+            sIn = new DataInputStream(s.getInputStream());
+            sOut = new DataOutputStream(s.getOutputStream());
 
             //Reads first client's message
             byte[] clientMessage = sIn.readNBytes(4);
@@ -123,28 +124,27 @@ class TcpSrvAgvManagerThread implements Runnable {
                     throw new IllegalArgumentException("[ERROR] Protocol Error \n\n");
                 }
 
-                System.out.println("[INFO] Sent acknowledgment message to client\n\n");
+//                System.out.println("[INFO] Sent acknowledgment message to client\n\n");
 
                 //Writes the confirmation message to the client. 1st message trade
                 sOut.write(answer);
                 //Forces the data out of the socket
                 sOut.flush();
 
+                System.out.println("[INFO - " + s.getPort() + "] Sent acknowledgment message to client\n\n");
+
 
                 //Reads the client's option. 2nd message trade
                 byte[] clientsOption = sIn.readNBytes(4);
                 int option = clientsOption[1];
 
-                System.out.println("[INFO] Client option is : " + option + "\n\n");
+                System.out.println("[INFO - " + s.getPort() + "] Client option is : " + option + "\n\n");
 
                 //Sends confirmation to the client. 2nd message trade
                 sOut.write(answer);
                 sOut.flush(); //Forces the data out of the socket
 
                 Thread.sleep(3000);
-
-                boolean isAGVClient = false;
-
 
                 if (option >= 3) {
                     switch (option) {

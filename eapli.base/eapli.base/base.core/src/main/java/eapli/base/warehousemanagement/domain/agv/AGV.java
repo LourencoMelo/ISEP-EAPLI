@@ -61,7 +61,7 @@ public class AGV implements AggregateRoot<AGVId> {
     @Column(unique = true)
     private String agvDockId;
 
-    @OneToOne
+    @OneToOne(mappedBy = "responsableAGV")
     private Order order;
 
     /**

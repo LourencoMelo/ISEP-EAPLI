@@ -4,6 +4,7 @@ import eapli.base.customermanagement.domain.Address;
 import eapli.base.customermanagement.domain.Customer;
 import eapli.base.productmanagement.domain.Cash;
 import eapli.base.productmanagement.domain.Product;
+import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.base.warehousemanagement.domain.agv.MaxVolume;
 import eapli.base.warehousemanagement.domain.agv.MaxWeight;
 import eapli.framework.domain.model.AggregateRoot;
@@ -134,6 +135,19 @@ public class Order implements AggregateRoot<Long> {
     @AttributeOverride(name = "name", column = @Column(name = "Shipment_Method"))
     private ShipmentMethod shipmentMethod;
 
+    @OneToOne
+    @JoinColumn(name = "AGV_ID")
+    private AGV responsableAGV;
+
+    public AGV getResponsableAGV() {
+        return responsableAGV;
+    }
+
+    public void setResponsableAGV(AGV responsableAGV) {
+        this.responsableAGV = responsableAGV;
+    }
+
+
     public Address getDeliveringAddress() {
         return deliveringAddress;
     }
@@ -179,6 +193,7 @@ public class Order implements AggregateRoot<Long> {
         this.paymentMethod = paymentMethod;
         this.shipmentMethod = shipmentMethod;
         this.status = OrderStatus.PAYMENT_PENDING;
+        this.responsableAGV = null;
     }
 
     /**

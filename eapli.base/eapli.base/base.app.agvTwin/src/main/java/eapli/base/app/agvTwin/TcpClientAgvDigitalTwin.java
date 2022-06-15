@@ -17,7 +17,10 @@ import java.util.List;
 public class TcpClientAgvDigitalTwin {
 
     public static void main(String[] args) {
-        List<String> ids = Arrays.asList("agv-3");
+//        List<String> ids = List.of("agv-3");
+//        List<String> ids = List.of("agv-1","agv-2");
+        List<String> ids = List.of("agv-1","agv-2","agv-3","agv-4","agv-5","agv-6");
+//
         for (String id : ids) {
             new Thread(new AgvDigitalTwinThread(id, ids.indexOf(id))).start(); //Creates a thread for each agv available simulating agv digital twin
             System.out.println("Thread created : " + id);
@@ -30,8 +33,6 @@ class AgvDigitalTwinThread implements Runnable {
 
     static final AppSettings app = Application.settings();
     static final String serverIPProperties = app.getServerIpKey();
-    //    static final int serverPortProperties = app.getServerPortKey();
-//    static final String keyStorePassProperties = app.getKeysStorePassAgvManagerKey();
     static final String keyStorePassProperties = "forgotten";
 
     static InetAddress server_ip;
@@ -48,7 +49,9 @@ class AgvDigitalTwinThread implements Runnable {
     @Override
     public void run() {
 
-        System.out.println("[INFO] Agv with id " + id + "started!");
+        int sleep = idPos * 10000;
+
+        System.out.println("[INFO] Agv with id " + id + " started!");
 
         try {
             server_ip = InetAddress.getByName(serverIPProperties);
@@ -72,12 +75,15 @@ class AgvDigitalTwinThread implements Runnable {
         SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
         try {
+            Thread.sleep(sleep);
             socket = (SSLSocket) socketFactory.createSocket(server_ip, 9999);
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-
         try {
+
             socket.startHandshake();
 
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
