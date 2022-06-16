@@ -28,4 +28,8 @@ public class ChangeOrderToBeingDeliveredController {
         }
     }
 
+    public Iterable<Order> ordersDispatched(){
+        return changeAllToBeingDeliveredService.ordersDispatched();
+    }
+
 }
