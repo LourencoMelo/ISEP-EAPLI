@@ -273,6 +273,7 @@ class TcpSrvAgvManagerThread implements Runnable {
 
                 capableAgv.assignOrder(order);
                 order.isInPreparation();
+                order.setResponsableAGV(capableAgv);
                 orderRepository.save(order);
                 agvRepository.save(capableAgv);
                 orders_queue.remove(order);
@@ -301,6 +302,7 @@ class TcpSrvAgvManagerThread implements Runnable {
             AGV capableOne = capableAgvs.get(0);
             capableOne.assignOrder(orderWanted);
             orderWanted.isInPreparation();
+            orderWanted.setResponsableAGV(capableOne);
             orderRepository.save(orderWanted);
             agvRepository.save(capableOne);
             System.out.println("[INFO] Order with id -> " + orderWanted.identity() + "was assigned to agv with id " + capableOne.identity().toString());
