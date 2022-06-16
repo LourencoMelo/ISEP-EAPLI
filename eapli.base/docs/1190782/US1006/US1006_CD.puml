@@ -1,0 +1,42 @@
+@startuml
+
+class BaseBackoffice{
+    -MainMenu menu
+}
+
+class ChangeOrderToBeingDeliveredUI{
+    ChangeOrderToBeingDeliveredController changeOrderToBeingDeliveredController;
+}
+
+class ChangeOrderToBeingDeliveredController{
+    -AuthorizationService authz
+    -SystemUser currentUser
+    -AssignOrderService assignOrderService
+    -ListOrderToBePreparedService listOrderToBePreparedService
+}
+
+class ChangeAllToBeingDeliveredService{
+    +ordersDispatched()
+    +changeAllToBeingDelivered()
+}
+
+class ChangeToBeingDeliveredService{
+    +changeToBeingDelivered(Order order)
+}
+
+interface OrderRepository{
+}
+
+BaseBackoffice -> ChangeOrderToBeingDeliveredUI
+
+ChangeOrderToBeingDeliveredUI -> ChangeOrderToBeingDeliveredController
+
+ChangeOrderToBeingDeliveredController -down-> ChangeAllToBeingDeliveredService
+ChangeOrderToBeingDeliveredController -down-> ChangeToBeingDeliveredService
+
+
+ChangeAllToBeingDeliveredService -down-> OrderRepository
+ChangeToBeingDeliveredService -down-> OrderRepository
+
+
+@enduml

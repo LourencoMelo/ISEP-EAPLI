@@ -1,10 +1,8 @@
 package eapli.base.ordermanagement.application;
 
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.Services.AssignOrderService;
 import eapli.base.ordermanagement.Services.ListOrderToBePreparedService;
 import eapli.base.ordermanagement.domain.Order;
-import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;

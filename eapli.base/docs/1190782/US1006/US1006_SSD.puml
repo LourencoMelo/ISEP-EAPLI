@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor SalesClerk
+
+SalesClerk -> System : Update the status of dispatched orders to "Being delivered" for customer delivery.
+System --> SalesClerk : Shows all the orders that are dispatched.
+System --> SalesClerk : Asks if he wants to change one order or all of them.
+group allOrders
+   SalesClerk --> System : Selects all orders
+   System --> SalesClerk : All the orders are modified in their status
+end
+
+group oneOrder
+    SalesClerk --> System : Selects one order
+    System --> SalesClerk : Asks to choose one of the orders
+    SalesClerk --> System : Selects the order he wants to change status
+    System --> SalesClerk : Informs that is changed
+end
+
+@enduml

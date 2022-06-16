@@ -3,9 +3,7 @@ package eapli.base.ordermanagement.application;
 import eapli.base.ordermanagement.Services.ChangeAllToBeingDeliveredService;
 import eapli.base.ordermanagement.Services.ChangeToBeingDeliveredService;
 import eapli.base.ordermanagement.domain.Order;
-import eapli.framework.application.ApplicationService;
 
-@ApplicationService
 public class ChangeOrderToBeingDeliveredController {
 
     private final ChangeAllToBeingDeliveredService changeAllToBeingDeliveredService = new ChangeAllToBeingDeliveredService();
