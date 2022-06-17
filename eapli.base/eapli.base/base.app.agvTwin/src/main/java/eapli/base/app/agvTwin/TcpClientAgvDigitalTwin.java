@@ -100,7 +100,7 @@ class AgvDigitalTwinThread implements Runnable {
             byte[] anwser = dataInputStream.readNBytes(4);
 
             //Checks if the server answer is confirmation
-            if (anwser[1] != 2){
+            if (anwser[1] != 2) {
                 throw new IOException("[ERROR] [" + id + "] Server communication error!\n\n");
             }
 
@@ -108,7 +108,7 @@ class AgvDigitalTwinThread implements Runnable {
 
             Thread.sleep(3000);
 
-            int code = Integer.parseInt(String.valueOf(id.charAt(id.length()-1)));
+            int code = Integer.parseInt(String.valueOf(id.charAt(id.length() - 1)));
             //Sends message with code "4" and id that warns the agv manager about his status being ready
             message = new byte[]{(byte) 0, (byte) 4, (byte) 0, (byte) code};
 
@@ -120,7 +120,7 @@ class AgvDigitalTwinThread implements Runnable {
             anwser = dataInputStream.readNBytes(4);
 
             //Checks if the server answer is confirmation
-            if (anwser[1] != 2){
+            if (anwser[1] != 2) {
                 throw new IOException("[ERROR] [" + id + "] Server communication error!");
             }
 
@@ -129,13 +129,39 @@ class AgvDigitalTwinThread implements Runnable {
 
             anwser = dataInputStream.readNBytes(4);
             //Checks if the server answer is confirmation
-            if (anwser[1] != 2){
+            if (anwser[1] != 2) {
                 throw new IOException("[ERROR] [" + id + "] Server communication error!");
             }
 
-            while (true);
+            //Code where the agv digital twiw will actively wait for server requests
+            while (true) {
 
-        } catch (IOException  | InterruptedException exception) {
+                anwser = dataInputStream.readNBytes(4);
+
+                switch (anwser[1]) {
+                    case 1:
+                        System.out.println("[INFO] [" + id + "] Received request to end communication!\n\n");
+                        //Fazer codigo
+                    case 2:
+                        System.out.println("[INFO] [" + id + "] Received confirmation message from Server!\n\n");
+                        break;
+                    case 5:
+                        System.out.println("[INFO] [" + id + "] Executing order with id : " + anwser[4] + "!\n\n");
+                        //Simulates time executing order
+                        Thread.sleep(15000);
+                        //Sends message to server indicating that order is prepared
+                        System.out.println("[INFO] [" + id + "] Order prepared!\n\n");
+                        dataOutputStream.write(new byte[]{(byte) 0, (byte) 4, (byte) 0, (byte) 0});
+                        dataOutputStream.flush();
+                        break;
+                    default:
+                        System.out.println("[INFO] Unexistent option!\n\n");
+                        break;
+                }
+
+            }
+
+        } catch (IOException | InterruptedException exception) {
             System.out.println("[ERROR] Error with server communication!");
         } finally {
             try {

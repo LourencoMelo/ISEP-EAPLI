@@ -32,8 +32,11 @@ public class ForceOrderOnAGVUI extends AbstractUI {
 
         Order order = selectWidget.selectedElement();
 
-        this.controller.assignOrder(order.getPk());
-
+        if (order == null){
+            System.out.println("Ok. No order was selected!");
+        }else {
+            this.controller.assignOrder(order.getPk());
+        }
         return false;
     }
 

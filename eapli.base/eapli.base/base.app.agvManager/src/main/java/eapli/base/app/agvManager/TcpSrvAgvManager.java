@@ -251,8 +251,6 @@ class TcpSrvAgvManagerThread implements Runnable {
         //Adds all the orders that are waiting to be prepared to the aux list
         orderRepository.ordersToBePrepared().forEach(auxList::add);
 
-        auxList.sort(Comparator.comparing(Order::getRegistDate));
-
         LinkedList<Order> orders_queue = new LinkedList<>(auxList);
 
         int i;

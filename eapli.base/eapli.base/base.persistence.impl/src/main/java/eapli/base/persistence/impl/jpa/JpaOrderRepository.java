@@ -4,9 +4,11 @@ import eapli.base.Application;
 import eapli.base.ordermanagement.domain.Order;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.repositories.OrderRepository;
+import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import javax.persistence.TypedQuery;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +34,15 @@ public class JpaOrderRepository extends JpaAutoTxRepository<Order, Long, Long> i
 
     @Override
     public Iterable<Order> ordersToBePrepared() {
-        final Map<String, Object> params = new HashMap<>();
-        OrderStatus status = OrderStatus.PAID;
-        params.put("status", status);
-        return match("e.status = :status", params);
+//        final Map<String, Object> params = new HashMap<>();
+//        OrderStatus status = OrderStatus.PAID;
+//        params.put("status", status);
+//        return match("e.status = :status", params);
+
+        final TypedQuery<Order> query = entityManager().createQuery("SELECT o FROM Order o WHERE o.status = :parameter order by o.id", Order.class);
+        query.setParameter("parameter", OrderStatus.PAID);
+        return query.getResultList();
+
     }
 
     @Override
