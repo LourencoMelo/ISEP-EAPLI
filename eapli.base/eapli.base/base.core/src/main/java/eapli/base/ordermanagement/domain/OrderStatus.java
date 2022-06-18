@@ -16,12 +16,6 @@ public enum OrderStatus {
     PAID,
 
     /**
-     * Waiting to be prepared
-     */
-    PREPARE_PENDING,
-
-
-    /**
      * In preparation
      */
     IN_PREPARATION,

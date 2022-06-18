@@ -63,4 +63,8 @@ public class AGVId implements ValueObject, Comparable<AGVId> {
     public int hashCode() {
         return Objects.hash(agvId);
     }
+
+    public String getAgvId() {
+        return agvId;
+    }
 }

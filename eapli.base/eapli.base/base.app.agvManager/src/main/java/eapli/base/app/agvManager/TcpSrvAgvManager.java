@@ -6,6 +6,7 @@ import eapli.base.SPOMSPProtocol.SPOMSPRequest;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
+import eapli.base.warehousemanagement.Services.ConnectAgvTwinService;
 import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -287,7 +288,8 @@ class TcpSrvAgvManagerThread implements Runnable {
         ctx.commit();
     }
 
-    private boolean forceOrder(String id) {
+    private boolean forceOrder(String id) throws IOException {
+        ConnectAgvTwinService connectAgvTwinService = new ConnectAgvTwinService();
         ctx.beginTransaction();
         if (orderRepository.findOrderById(Long.valueOf(id)).isPresent()) {
             Order orderWanted = orderRepository.findOrderById(Long.valueOf(id)).get();
@@ -301,9 +303,11 @@ class TcpSrvAgvManagerThread implements Runnable {
             capableOne.assignOrder(orderWanted);
             orderWanted.isInPreparation();
             orderWanted.setResponsableAGV(capableOne);
+            connectAgvTwinService.connectTwin(10,orderWanted.getPk(),capableOne.identity().getAgvId());
+            orderWanted.isPrepared();
+            capableOne.activateAGV();
             orderRepository.save(orderWanted);
             agvRepository.save(capableOne);
-            System.out.println("[INFO] Order with id -> " + orderWanted.identity() + "was assigned to agv with id " + capableOne.identity().toString());
             ctx.commit();
             return true;
         }

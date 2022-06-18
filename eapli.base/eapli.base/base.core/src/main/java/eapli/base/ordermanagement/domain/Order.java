@@ -281,10 +281,6 @@ public class Order implements AggregateRoot<Long> {
         status = OrderStatus.IN_PREPARATION;
     }
 
-    public boolean isPreparePending() {
-        return status() == OrderStatus.PREPARE_PENDING;
-    }
-
     public void isPrepared() {
         status = OrderStatus.PREPARED;
     }

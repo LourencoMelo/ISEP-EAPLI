@@ -38,7 +38,7 @@ public class OrderTest {
         new Order(map,billing,delivering,paymentMethod,shipmentMethod, Cash.euros(20), Cash.euros(25), clerksEmail,"email", calendar, "vazio", customer);
     }
 
-    @Test
+    /*@Test
     public void ordersSelectedAreBeingDispatched() {
         ChangeAllToBeingDeliveredService service = new ChangeAllToBeingDeliveredService();
 
@@ -54,6 +54,6 @@ public class OrderTest {
 
         assertTrue(done);
 
-    }
+    }**/
 
 }
