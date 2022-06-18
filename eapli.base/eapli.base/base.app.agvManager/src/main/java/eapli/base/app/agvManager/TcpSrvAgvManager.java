@@ -243,7 +243,7 @@ class TcpSrvAgvManagerThread implements Runnable {
         System.out.println("AVG set to ready");
     }
 
-    private void automaticTaskAssignment() {
+    private void automaticTaskAssignment() throws IOException {
 
         ctx.beginTransaction();
         //Orders queue
@@ -251,6 +251,8 @@ class TcpSrvAgvManagerThread implements Runnable {
         List<Order> auxList = new ArrayList<>();
         //Adds all the orders that are waiting to be prepared to the aux list
         orderRepository.ordersToBePrepared().forEach(auxList::add);
+
+        ConnectAgvTwinService connectAgvTwinService = new ConnectAgvTwinService();
 
         LinkedList<Order> orders_queue = new LinkedList<>(auxList);
 
@@ -275,9 +277,23 @@ class TcpSrvAgvManagerThread implements Runnable {
                 order.setResponsableAGV(capableAgv);
                 orderRepository.save(order);
                 agvRepository.save(capableAgv);
+
+                ctx.commit();
+
+                connectAgvTwinService.connectTwin(10,order.getPk(),capableAgv.identity().getAgvId());
+
+                ctx.beginTransaction();
+
+                order.isPrepared();
+                capableAgv.activateAGV();
+
+                orderRepository.save(order);
+                agvRepository.save(capableAgv);
+
+                ctx.commit();
+
                 orders_queue.remove(order);
                 i--;
-                System.out.println("[INFO] Order with id " + order.identity() + " was assigned to agv with id " + capableAgv.identity().toString());
 
             } else {
                 System.out.println("[INFO] No capable agvs were ready to assign the order with id : " + order.identity());
