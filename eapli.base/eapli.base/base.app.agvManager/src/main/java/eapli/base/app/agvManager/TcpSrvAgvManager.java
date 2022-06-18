@@ -303,11 +303,21 @@ class TcpSrvAgvManagerThread implements Runnable {
             capableOne.assignOrder(orderWanted);
             orderWanted.isInPreparation();
             orderWanted.setResponsableAGV(capableOne);
-            connectAgvTwinService.connectTwin(10,orderWanted.getPk(),capableOne.identity().getAgvId());
-            orderWanted.isPrepared();
-            capableOne.activateAGV();
             orderRepository.save(orderWanted);
             agvRepository.save(capableOne);
+
+            ctx.commit();
+
+            connectAgvTwinService.connectTwin(10,orderWanted.getPk(),capableOne.identity().getAgvId());
+
+            ctx.beginTransaction();
+
+            orderWanted.isPrepared();
+            capableOne.activateAGV();
+
+            orderRepository.save(orderWanted);
+            agvRepository.save(capableOne);
+
             ctx.commit();
             return true;
         }

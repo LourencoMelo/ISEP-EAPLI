@@ -46,7 +46,7 @@ public class ConnectAgvTwinService {
         SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
         try {
-            socket = (SSLSocket) socketFactory.createSocket(server_ip, 9991);
+            socket = (SSLSocket) socketFactory.createSocket(server_ip, 9990);
         } catch (IOException exception) {
             throw new IllegalArgumentException("Server problems!");
         }
@@ -80,7 +80,9 @@ public class ConnectAgvTwinService {
 
                     System.out.println("Received confirmation message from the server (id -> 2)");
 
-                    dataOutputStream.write(new byte[]{(byte) 0, (byte) 0, Byte.parseByte(String.valueOf(orderId)), Byte.parseByte(agvId)});
+                    int code = Integer.parseInt(String.valueOf(agvId.charAt(agvId.length() - 1)));
+
+                    dataOutputStream.write(new byte[]{(byte) 0, (byte) 0, Byte.parseByte(String.valueOf(orderId)), (byte) code});
                     dataOutputStream.flush();
 
                     serverConfirmation = dataInputStream.readNBytes(4);

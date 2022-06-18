@@ -61,8 +61,10 @@ public class AGV implements AggregateRoot<AGVId> {
     @Column(unique = true)
     private String agvDockId;
 
-    @OneToOne(mappedBy = "responsableAGV")
-    private Order order;
+
+//    @ManyToOne
+//    @JoinColumn(name = "order_identity")
+//    private Order order;
 
     /**
      * AGV Constructor
@@ -86,7 +88,7 @@ public class AGV implements AggregateRoot<AGVId> {
         this.position = position;
         this.autonomyMin = autonomyHours;
         this.agvDockId = agvDockId;
-        this.order = null;
+//        this.order = null;
     }
 
     /**
@@ -97,7 +99,7 @@ public class AGV implements AggregateRoot<AGVId> {
     }
 
     public void assignOrder(Order order){
-        this.order = order;
+//        this.order = order;
         this.status = Status.BUSY;
     }
 

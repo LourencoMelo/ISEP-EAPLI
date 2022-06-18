@@ -3,10 +3,6 @@ package eapli.base.app.agvTwin;
 import eapli.base.SPOMSPProtocol.Constants;
 import eapli.base.SPOMSPProtocol.MessageParser;
 import eapli.base.SPOMSPProtocol.SPOMSPRequest;
-import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.usermanagement.domain.BasePasswordPolicy;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -20,7 +16,7 @@ public class TcpSrvAgvDigitalTwin {
 
     static int SERVER_PORT = 9990;
 
-    static final String TRUSTED_STORE = "serverAgvDigitalTwin.jks";
+    static final String TRUSTED_STORE = "serverAgvManager.jks";
 
     static final String KEYSTORE_PASS = "forgotten";
 
@@ -28,7 +24,6 @@ public class TcpSrvAgvDigitalTwin {
     public static void main(String[] args) throws IOException {
 
         System.out.println("Configuring the server");
-        AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
 
         SSLServerSocket sock = null;
         Socket cliSock;
@@ -139,8 +134,9 @@ class TcpSrvAgvDigitalTwinThread implements Runnable{
 
                     byte[] orderInfo = dataInputStream.readNBytes(4);
 
-                    long orderId = orderInfo[2];
-                    String agvId = String.valueOf(orderInfo[3]);
+                    String orderId = String.valueOf(orderInfo[2]);
+                    System.out.println(orderId);
+                    String agvId = "agv-" + String.valueOf(orderInfo[3]);
 
                     System.out.println("[INFO] [" + agvId + "] The order with id " + orderId + "was assigned to me!");
                     System.out.println("[INFO] [" + agvId + "] Preparing the order...");
