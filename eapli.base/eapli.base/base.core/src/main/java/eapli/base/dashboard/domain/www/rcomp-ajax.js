@@ -4,7 +4,7 @@ function refreshTable() {
 
     request.onload = function() {
         vBoard.innerHTML = this.responseText;
-        vBoard.style.color="white";
+        vBoard.style.color="red";
         setTimeout(refreshTable, 2000);
     };
 

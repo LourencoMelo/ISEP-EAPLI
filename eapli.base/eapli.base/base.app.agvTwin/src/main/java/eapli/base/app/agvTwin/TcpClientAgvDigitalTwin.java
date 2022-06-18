@@ -133,34 +133,6 @@ class AgvDigitalTwinThread implements Runnable {
                 throw new IOException("[ERROR] [" + id + "] Server communication error!");
             }
 
-            //Code where the agv digital twiw will actively wait for server requests
-            while (true) {
-
-                anwser = dataInputStream.readNBytes(4);
-
-                switch (anwser[1]) {
-                    case 1:
-                        System.out.println("[INFO] [" + id + "] Received request to end communication!\n\n");
-                        //Fazer codigo
-                    case 2:
-                        System.out.println("[INFO] [" + id + "] Received confirmation message from Server!\n\n");
-                        break;
-                    case 5:
-                        System.out.println("[INFO] [" + id + "] Executing order with id : " + anwser[4] + "!\n\n");
-                        //Simulates time executing order
-                        Thread.sleep(15000);
-                        //Sends message to server indicating that order is prepared
-                        System.out.println("[INFO] [" + id + "] Order prepared!\n\n");
-                        dataOutputStream.write(new byte[]{(byte) 0, (byte) 4, (byte) 0, (byte) 0});
-                        dataOutputStream.flush();
-                        break;
-                    default:
-                        System.out.println("[INFO] Unexistent option!\n\n");
-                        break;
-                }
-
-            }
-
         } catch (IOException | InterruptedException exception) {
             System.out.println("[ERROR] Error with server communication!");
         } finally {

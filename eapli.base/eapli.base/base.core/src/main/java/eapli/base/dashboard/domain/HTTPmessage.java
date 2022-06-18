@@ -24,7 +24,6 @@ public class HTTPmessage {
             {".txt", "text/plain"},
             {".gif", "image/gif"},
             {".png", "image/png"},
-            {".css", "application/css"}
     };
 
     static private String readHeaderLine(DataInputStream in) throws IOException {

@@ -23,12 +23,11 @@ public class HttpClient extends Thread{
          dataOutputStream = new DataOutputStream(socket.getOutputStream());
          inputStream = new DataInputStream(socket.getInputStream());
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            System.out.println("[ERROR] Failed to create data streams!");;
         }
 
         try {
             HTTPmessage request = new HTTPmessage(inputStream);
-            //Salta para as exceções ocasionalmente
             HTTPmessage response = new HTTPmessage();
 
             if(request.getMethod().equals("GET")){
@@ -60,9 +59,7 @@ public class HttpClient extends Thread{
                 }
             }
             response.send(dataOutputStream);
-        } catch (IOException ioException) {
-            System.out.println();
-        }
+        } catch (IOException ignored) {}
 
         try {
             socket.close();

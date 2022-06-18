@@ -280,7 +280,7 @@ class TcpSrvAgvManagerThread implements Runnable {
 
                 ctx.commit();
 
-                connectAgvTwinService.connectTwin(10,order.getPk(),capableAgv.identity().getAgvId());
+//                connectAgvTwinService.connectTwin(10,order.getPk(),capableAgv.identity().getAgvId());
 
                 ctx.beginTransaction();
 

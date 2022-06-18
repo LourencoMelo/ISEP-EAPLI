@@ -1,10 +1,8 @@
 package eapli.base.dashboard.domain;
 
 import eapli.base.dashboard.application.ShowDashboardController;
-import eapli.base.warehousemanagement.Services.FindAllAGVService;
 import eapli.base.warehousemanagement.domain.agv.AGV;
 
-import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
@@ -15,7 +13,7 @@ public class HttpServer extends Thread{
 
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
 
-    static final int PORT = 8080;
+    static final int PORT = 55090;
     static private SSLServerSocket sslServerSocket;
     static final String TRUSTED_STORE = "serverHTTP.jks";
     static final String keyStorePassProperties = "forgotten";
@@ -66,7 +64,7 @@ public class HttpServer extends Thread{
         try {
             if(list != null){
                 StringBuilder s = new StringBuilder();
-                for(AGV agv : list){
+                for(AGV agv : showDashboardController.getAllAgv()){
                     s.append("<tr class=\"active-row\">" +
                             "<td style=\"color:black\">" + agv.identity().toString() + "</td>" +
                             "<td style=\"color:black\">" + agv.getPosition()+ "</td>" +
