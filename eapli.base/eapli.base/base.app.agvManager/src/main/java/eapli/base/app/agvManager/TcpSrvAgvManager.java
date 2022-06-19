@@ -255,13 +255,19 @@ class TcpSrvAgvManagerThread implements Runnable {
         //Adds all the orders that are waiting to be prepared to the aux list
         orderRepository.ordersToBePrepared().forEach(auxList::add);
 
+        ctx.commit();
+
         ConnectAgvTwinFIFOService connectAgvTwinFIFOService = new ConnectAgvTwinFIFOService();
 
         LinkedList<Order> orders_queue = new LinkedList<>(auxList);
 
+        List<Order> auxOrdersList = new ArrayList<>();
+
         int i;
 
         for (i = 0; i < orders_queue.size(); i++) {
+
+            ctx.beginTransaction();
 
             Order order = orders_queue.get(i);
 
@@ -287,13 +293,21 @@ class TcpSrvAgvManagerThread implements Runnable {
                 connectAgvTwinFIFOService.connectTwinFIFO(12,order.getPk(),capableAgv.identity().getAgvId());
 
                 orders_queue.remove(order);
+                auxOrdersList.add(order);
                 i--;
 
             } else {
                 System.out.println("[INFO] No capable agvs were ready to assign the order with id : " + order.identity());
                 System.out.println("[INFO] Please try later");
+                ctx.commit();
             }
         }
+        ctx.beginTransaction();
+
+        for (Order order : auxOrdersList) {
+            order.isPrepared();
+        }
+
         for (AGV agv: auxAGV) {
             agv.activateAGV();
             agvRepository.save(agv);
