@@ -6,6 +6,7 @@ import eapli.base.SPOMSPProtocol.SPOMSPRequest;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
+import eapli.base.warehousemanagement.Services.ConnectAgvTwinFIFOService;
 import eapli.base.warehousemanagement.Services.ConnectAgvTwinService;
 import eapli.base.warehousemanagement.domain.agv.AGV;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
@@ -249,10 +250,12 @@ class TcpSrvAgvManagerThread implements Runnable {
         //Orders queue
         //Auxiliar list to order the orders
         List<Order> auxList = new ArrayList<>();
+        List<AGV> auxAGV = new ArrayList<>();
+
         //Adds all the orders that are waiting to be prepared to the aux list
         orderRepository.ordersToBePrepared().forEach(auxList::add);
 
-        ConnectAgvTwinService connectAgvTwinService = new ConnectAgvTwinService();
+        ConnectAgvTwinFIFOService connectAgvTwinFIFOService = new ConnectAgvTwinFIFOService();
 
         LinkedList<Order> orders_queue = new LinkedList<>(auxList);
 
@@ -272,25 +275,16 @@ class TcpSrvAgvManagerThread implements Runnable {
                 //Gets the first capable agv and assigns order to it
                 AGV capableAgv = capableAgvs.get(0);
 
+                auxAGV.add(capableAgv);
+
                 capableAgv.assignOrder(order);
                 order.isInPreparation();
                 order.setResponsableAGV(capableAgv);
                 orderRepository.save(order);
-                agvRepository.save(capableAgv);
 
                 ctx.commit();
 
-//                connectAgvTwinService.connectTwin(10,order.getPk(),capableAgv.identity().getAgvId());
-
-                ctx.beginTransaction();
-
-                order.isPrepared();
-                capableAgv.activateAGV();
-
-                orderRepository.save(order);
-                agvRepository.save(capableAgv);
-
-                ctx.commit();
+                connectAgvTwinFIFOService.connectTwinFIFO(12,order.getPk(),capableAgv.identity().getAgvId());
 
                 orders_queue.remove(order);
                 i--;
@@ -300,7 +294,10 @@ class TcpSrvAgvManagerThread implements Runnable {
                 System.out.println("[INFO] Please try later");
             }
         }
-
+        for (AGV agv: auxAGV) {
+            agv.activateAGV();
+            agvRepository.save(agv);
+        }
         ctx.commit();
     }
 

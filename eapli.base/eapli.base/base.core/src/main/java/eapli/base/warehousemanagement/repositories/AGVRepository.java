@@ -16,4 +16,6 @@ public interface AGVRepository extends DomainRepository<AGVId, AGV> {
     Optional<AGV> findAGVById(String agvId);
 
     List<AGV> findAvailableAGVS(MaxWeight orderWeight, MaxVolume orderVolume);
+
+
 }

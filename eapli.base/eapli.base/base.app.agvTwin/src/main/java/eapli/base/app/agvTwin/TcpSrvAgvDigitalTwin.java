@@ -160,6 +160,32 @@ class TcpSrvAgvDigitalTwinThread implements Runnable{
                     }
                     socket.close();
                 }
+                if(code == 12){
+                    byte[] orderInfo = dataInputStream.readNBytes(4);
+
+                    String orderId = String.valueOf(orderInfo[2]);
+                    System.out.println(orderId);
+                    String agvId = "agv-" + String.valueOf(orderInfo[3]);
+
+                    System.out.println("[INFO] [" + agvId + "] The order with id " + orderId + "was assigned to me!");
+                    System.out.println("[INFO] [" + agvId + "] Preparing the order...");
+                    System.out.println("[INFO] [" + agvId + "] Preparing the order...");
+                    System.out.println("[INFO] [" + agvId + "] Finished order with id " + orderId + "!");
+
+                    //Sends to client confirmation that the order was prepared
+                    dataOutputStream.write(answer);
+                    dataOutputStream.flush();
+
+                    byte[] thirdMessage = dataInputStream.readNBytes(4);
+                    if(thirdMessage[1] == 1){
+                        System.out.println("[INFO] Request to end the communication received.\n\n");
+
+                        dataOutputStream.write(answer);
+                        dataOutputStream.flush(); //Forces the data out of the socket
+                        socket.close();
+                    }
+                    socket.close();
+                }
             }
         }catch (IOException | InterruptedException e){
             System.out.println(e.getMessage());
