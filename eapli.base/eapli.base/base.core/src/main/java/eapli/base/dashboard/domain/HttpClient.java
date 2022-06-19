@@ -67,9 +67,7 @@ public class HttpClient extends Thread{
                 }
             }
             response.send(dataOutputStream);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        } catch (IOException ignored) {}
 
         try {
             socket.close();

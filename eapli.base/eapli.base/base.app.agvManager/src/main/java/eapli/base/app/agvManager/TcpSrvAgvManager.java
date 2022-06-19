@@ -160,8 +160,6 @@ class TcpSrvAgvManagerThread implements Runnable {
                             String id = String.valueOf(message[3]);
                             System.out.println("[INFO] Order received :" + id + "\n\n");
 
-                            forceOrder(id);
-
                             byte[] clientMessage2 = sIn.readNBytes(4); //Reads all bytes from client's message
 
                             //Checks if the client requests to end the conection
@@ -171,6 +169,8 @@ class TcpSrvAgvManagerThread implements Runnable {
                                 sOut.write(answer);
                                 sOut.flush(); //Forces the data out of the socket
                             }
+                            forceOrder(id);
+
                             break;
                         //Case where the agvs communicate with the server telling they are ready
                         case 4:
