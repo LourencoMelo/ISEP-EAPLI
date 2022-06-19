@@ -305,7 +305,7 @@ class TcpSrvAgvManagerThread implements Runnable {
         ctx.beginTransaction();
 
         for (Order order : auxOrdersList) {
-            order.isPrepared();
+            order.isDispatched();
         }
 
         for (AGV agv: auxAGV) {
@@ -339,7 +339,7 @@ class TcpSrvAgvManagerThread implements Runnable {
 
             ctx.beginTransaction();
 
-            orderWanted.isPrepared();
+            orderWanted.isDispatched();
             capableOne.activateAGV();
 
             orderRepository.save(orderWanted);

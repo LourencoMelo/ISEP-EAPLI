@@ -53,7 +53,6 @@ class AgvDigitalTwinThread implements Runnable {
 
         try {
             server_ip = InetAddress.getByName(serverIPProperties);
-            System.out.println("Server ip = " + server_ip);
         } catch (UnknownHostException exception) {
             System.out.println(exception.getMessage());
 
@@ -61,7 +60,7 @@ class AgvDigitalTwinThread implements Runnable {
 
         String certificate = "client" + (idPos + 3) + "AGV";
 
-        System.out.println("Cretificate prefix : " + certificate);
+        System.out.println("Certificate prefix : " + certificate);
 
         //Certificates provided by servers
         System.setProperty("javax.net.ssl.trustStore", certificate + ".jks");
