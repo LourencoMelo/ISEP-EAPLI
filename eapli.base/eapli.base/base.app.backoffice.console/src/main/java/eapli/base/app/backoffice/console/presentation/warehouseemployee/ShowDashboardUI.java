@@ -18,7 +18,7 @@ public class ShowDashboardUI extends AbstractUI {
 
         URI uri;
         try {
-            uri = new URI("https://localhost:55090/");
+            uri = new URI("http://localhost:55091/");
             Desktop.getDesktop().browse(uri);
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();

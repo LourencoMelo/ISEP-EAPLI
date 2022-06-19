@@ -4,15 +4,23 @@ import javax.net.ssl.SSLSocket;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 
 public class HttpClient extends Thread{
 
     String baseFolder;
-    SSLSocket socket;
+//    SSLSocket socket;
+    Socket socket;
+
     DataInputStream inputStream;
     DataOutputStream dataOutputStream;
 
-    public HttpClient(SSLSocket s, String file){
+//    public HttpClient(SSLSocket s, String file){
+//        socket = s;
+//        baseFolder = file;
+//    }
+
+    public HttpClient(Socket s, String file){
         socket = s;
         baseFolder = file;
     }
@@ -59,7 +67,9 @@ public class HttpClient extends Thread{
                 }
             }
             response.send(dataOutputStream);
-        } catch (IOException ignored) {}
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
         try {
             socket.close();

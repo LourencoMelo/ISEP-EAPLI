@@ -7,16 +7,22 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 
 public class HttpServer extends Thread{
 
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
 
-    static final int PORT = 55090;
-    static private SSLServerSocket sslServerSocket;
-    static final String TRUSTED_STORE = "serverHTTP.jks";
-    static final String keyStorePassProperties = "forgotten";
+    static final int PORT = 55091;
+//    static private SSLServerSocket sslServerSocket;
+
+    static private ServerSocket sslServerSocket;
+
+
+    //    static final String TRUSTED_STORE = "serverHTTP.jks";
+//    static final String keyStorePassProperties = "forgotten";
     private static ShowDashboardController showDashboardController;
 
     private static Iterable<AGV> list;
@@ -31,18 +37,22 @@ public class HttpServer extends Thread{
 
     @Override
     public void run() {
-        SSLSocket sslSocket = null;
+//        SSLSocket sslSocket = null;
 
-        // TRUSTED_STORE -> "serverHTTP.jks"
-        System.setProperty("javax.net.ssl.keyStore", TRUSTED_STORE);
+        Socket clisocket = null;
 
-        // KEYSTORE_PASS -> "forgotten"
-        System.setProperty("javax.net.ssl.keyStorePassword", keyStorePassProperties);
+//        // TRUSTED_STORE -> "serverHTTP.jks"
+//        System.setProperty("javax.net.ssl.keyStore", TRUSTED_STORE);
+//
+//        // KEYSTORE_PASS -> "forgotten"
+//        System.setProperty("javax.net.ssl.keyStorePassword", keyStorePassProperties);
 
         try {
-            SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+//            SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 
-            sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(PORT);
+//            sslServerSocket =  sslServerSocketFactory.createServerSocket(PORT);
+            sslServerSocket =  new ServerSocket(PORT);
+
         } catch (IOException ioException) {
             System.out.println("Server failed to open local port " + PORT);
             System.exit(1);
@@ -50,11 +60,12 @@ public class HttpServer extends Thread{
 
         while (true){
             try{
-                sslSocket = (SSLSocket) sslServerSocket.accept();
+//                sslSocket = (SSLSocket) sslServerSocket.accept();
+                clisocket = sslServerSocket.accept();
             } catch (IOException ioException) {
                 System.out.println("[INFO] Connection blocked");
             }
-            HttpClient req = new HttpClient(sslSocket, BASE_FOLDER);
+            HttpClient req = new HttpClient(clisocket, BASE_FOLDER);
             req.start();
         }
 
