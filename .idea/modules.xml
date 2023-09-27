@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/eapli.base/eapli.base/base.iml" filepath="$PROJECT_DIR$/eapli.base/eapli.base/base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/eapli.base/base.app.agvTwin/base.app.agvTwin.iml" filepath="$PROJECT_DIR$/eapli.base/eapli.base/base.app.agvTwin/base.app.agvTwin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eapli.base/eapli.base/base.app.agvManager/base.app.agvmanager.iml" filepath="$PROJECT_DIR$/eapli.base/eapli.base/base.app.agvManager/base.app.agvmanager.iml" />
       <module fileurl="file://$PROJECT_DIR$/eapli.base/eapli.base/base.app.backoffice.console/base.app.backoffice.console.iml" filepath="$PROJECT_DIR$/eapli.base/eapli.base/base.app.backoffice.console/base.app.backoffice.console.iml" />
       <module fileurl="file://$PROJECT_DIR$/eapli.base/eapli.base/base.app.bootstrap/base.app.bootstrap.iml" filepath="$PROJECT_DIR$/eapli.base/eapli.base/base.app.bootstrap/base.app.bootstrap.iml" />
       <module fileurl="file://$PROJECT_DIR$/eapli.base/eapli.base/base.app.common.console/base.app.common.console.iml" filepath="$PROJECT_DIR$/eapli.base/eapli.base/base.app.common.console/base.app.common.console.iml" />

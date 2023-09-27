@@ -6,6 +6,12 @@
         <option value="$PROJECT_DIR$/eapli.base/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/eapli.base/base.app.agvManager/pom.xml" />
+        <option value="$PROJECT_DIR$/eapli.base/base.app.agvTwin/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="openjdk-17 (2)" project-jdk-type="JavaSDK" />
   <component name="ProjectType">
